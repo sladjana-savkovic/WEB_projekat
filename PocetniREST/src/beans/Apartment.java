@@ -13,6 +13,8 @@ public class Apartment {
 	private ArrayList<LocalDate> rentingDates;
 	private ArrayList<LocalDate> availableDates;
 	private String hostUsername;
+	private ArrayList<Comment> comments;
+	private ArrayList<String> pictures;
 	private double pricePerNight;
 	private LocalTime checkInTime;
 	private LocalTime checkOutTime;
@@ -21,9 +23,10 @@ public class Apartment {
 	private ArrayList<Integer> reservations;
 	
 	public Apartment() {}
-
+	
 	public Apartment(int id, TypeOfApartment type, int numberOfRooms, int numberOfGuests, Location location, String hostUsername,
-			double pricePerNight, LocalTime checkInTime, LocalTime checkOutTime, StatusOfApartment status) {
+			double pricePerNight, LocalTime checkInTime,
+			LocalTime checkOutTime, StatusOfApartment status) {
 		this.id = id;
 		this.type = type;
 		this.numberOfRooms = numberOfRooms;
@@ -32,6 +35,8 @@ public class Apartment {
 		this.rentingDates = new ArrayList<LocalDate>();
 		this.availableDates = new ArrayList<LocalDate>();
 		this.hostUsername = hostUsername;
+		this.comments = new ArrayList<Comment>();
+		this.pictures = new ArrayList<String>();
 		this.pricePerNight = pricePerNight;
 		this.checkInTime = checkInTime;
 		this.checkOutTime = checkOutTime;
@@ -39,7 +44,9 @@ public class Apartment {
 		this.amenities = new ArrayList<Integer>();
 		this.reservations = new ArrayList<Integer>();
 	}
-	
+
+
+
 	public Apartment(Apartment apartment) {
 		this.id = apartment.id;
 		this.type = apartment.type;
@@ -49,6 +56,8 @@ public class Apartment {
 		this.rentingDates = new ArrayList<LocalDate>();
 		this.availableDates = new ArrayList<LocalDate>();
 		this.hostUsername = apartment.hostUsername;
+		this.comments = new ArrayList<Comment>();
+		this.pictures = new ArrayList<String>();
 		this.pricePerNight = apartment.pricePerNight;
 		this.checkInTime = apartment.checkInTime;
 		this.checkOutTime = apartment.checkOutTime;
@@ -167,6 +176,22 @@ public class Apartment {
 
 	public void setReservations(ArrayList<Integer> reservations) {
 		this.reservations = reservations;
+	}
+
+	public ArrayList<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(ArrayList<Comment> comments) {
+		this.comments = comments;
+	}
+
+	public ArrayList<String> getPictures() {
+		return pictures;
+	}
+
+	public void setPictures(ArrayList<String> pictures) {
+		this.pictures = pictures;
 	}
 	
 	
