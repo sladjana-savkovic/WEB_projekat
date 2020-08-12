@@ -18,7 +18,7 @@ public class Apartment {
 	private double pricePerNight;
 	private LocalTime checkInTime;
 	private LocalTime checkOutTime;
-	private StatusOfApartment status;
+	private boolean isActive;
 	private ArrayList<Integer> amenities;
 	private ArrayList<Integer> reservations;
 	
@@ -26,7 +26,7 @@ public class Apartment {
 	
 	public Apartment(int id, TypeOfApartment type, int numberOfRooms, int numberOfGuests, Location location, String hostUsername,
 			double pricePerNight, LocalTime checkInTime,
-			LocalTime checkOutTime, StatusOfApartment status) {
+			LocalTime checkOutTime, boolean isActive) {
 		this.id = id;
 		this.type = type;
 		this.numberOfRooms = numberOfRooms;
@@ -40,7 +40,7 @@ public class Apartment {
 		this.pricePerNight = pricePerNight;
 		this.checkInTime = checkInTime;
 		this.checkOutTime = checkOutTime;
-		this.status = status;
+		this.isActive = isActive;
 		this.amenities = new ArrayList<Integer>();
 		this.reservations = new ArrayList<Integer>();
 	}
@@ -61,7 +61,7 @@ public class Apartment {
 		this.pricePerNight = apartment.pricePerNight;
 		this.checkInTime = apartment.checkInTime;
 		this.checkOutTime = apartment.checkOutTime;
-		this.status = apartment.status;
+		this.isActive = apartment.isActive;
 		this.amenities = new ArrayList<Integer>();
 		this.reservations = new ArrayList<Integer>();
 	}
@@ -154,12 +154,12 @@ public class Apartment {
 		this.checkOutTime = checkOutTime;
 	}
 
-	public StatusOfApartment getStatus() {
-		return status;
+	public boolean isActive() {
+		return isActive;
 	}
 
-	public void setStatus(StatusOfApartment status) {
-		this.status = status;
+	public void setActive(boolean isActive) {
+		this.isActive = isActive;
 	}
 
 	public ArrayList<Integer> getAmenities() {

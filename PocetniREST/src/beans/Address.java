@@ -1,6 +1,7 @@
 package beans;
 
 public class Address {
+	private String country;
 	private String city;
 	private int zipCode;
 	private String street;
@@ -8,7 +9,8 @@ public class Address {
 	
 	public Address() {}
 	
-	public Address(String city, int zipCode, String street, int number) {
+	public Address(String country,String city, int zipCode, String street, int number) {
+		this.country = country;
 		this.city = city;
 		this.zipCode = zipCode;
 		this.street = street;
@@ -16,12 +18,21 @@ public class Address {
 	}
 	
 	public Address(Address address) {
+		this.country = address.country;
 		this.city = address.city;
 		this.zipCode = address.zipCode;
 		this.street = address.street;
 		this.number = address.number;
 	}
 	
+	public String getCountry() {
+		return country;
+	}
+
+	public void setCountry(String country) {
+		this.country = country;
+	}
+
 	public String getCity() {
 		return city;
 	}
