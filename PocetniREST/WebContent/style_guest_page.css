@@ -1,0 +1,22 @@
+#border_reservation{
+	margin-top:80px;
+	margin-right: 20px;
+	margin-left: 50px;
+	border-style:solid;
+	border-color: darkgray;
+	border-width: 1px;
+	height: 280px;
+	width: 600px;
+}
+
+#submit_btn{
+	margin-top: 30px;
+	margin-left: 50px;
+	width: 150px;
+	color: white;
+}
+
+#apartment_name{
+	text-align: center;
+	margin-top: 20px;
+}
