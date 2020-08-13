@@ -5,7 +5,7 @@ document.write(`
   <div class="modal-dialog" role="document">
     <div class="modal-content" >
       <div class="modal-header text-center">
-        <h4 class="modal-title w-100 font-weight-bold">Registruj se</h4>
+        <h4 class="modal-title w-100 font-weight-bold">Registracija</h4>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -45,7 +45,7 @@ document.write(`
 	</form>
  
       <div class="modal-footer d-flex justify-content-center">
-        <button class="btn btn-primary mb-2 register">Registracija</button>
+        <button class="btn btn-primary mb-2 register">Registruj se</button>
       </div>
       
       <div class="container signin">

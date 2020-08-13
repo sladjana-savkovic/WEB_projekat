@@ -180,3 +180,48 @@ a {
   background-color: #f1f1f1;
   text-align: center;
 }
+
+/* Main page style */
+#border_filter{
+	margin-top: 90px;
+	margin-right: 20px;
+	margin-left: 40px;
+	border-style:solid;
+	border-color: darkgray;
+	border-width: 1px;
+	height: 380px;
+	width: 260px;
+
+}
+
+#border_apartment{
+	margin-top: 90px;
+	margin-right: 220px;
+	margin-left: 40px;
+	border-style:solid;
+	border-color: darkgray;
+	border-width: 1px;
+	height: 240px;
+	width: 700px;
+	float: right;
+}
+
+.column {
+  float: left;
+  width: 33%;
+  padding: 10px;
+  height: 300px;
+}
+
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+#map{
+	margin-top: 90px;
+	padding-left:60px;
+	
+}
