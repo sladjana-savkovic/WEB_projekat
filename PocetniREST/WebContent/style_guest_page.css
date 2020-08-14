@@ -20,3 +20,73 @@
 	text-align: center;
 	margin-top: 20px;
 }
+
+#apartment{
+	margin-top: 60px;
+	margin-left: 20px;
+	margin-bottom: 20px;
+	
+}
+
+row_left{
+	position: absolute;
+	left: 150px;
+	width: 200px;
+	padding-left: 20px;
+}
+
+#sort_reservation{
+	border: 1px solid black; 
+	position: absolute; 
+	left: 50px; 
+	width: 300px; 
+	top: 20px;
+}
+
+#title-my-res{
+	margin: auto;
+	width:50%;
+	margin-top: 20px;
+	text-align: center;
+}
+
+#info_apartment{
+	background-color: #f1f1f1;
+	border: 1px solid black; 
+	position: absolute; 
+	padding-top:60px;	
+	margin-top:30px;
+	width: 33%;
+	margin-left: 33%;
+	left: 0px;
+	
+}
+
+
+#table{
+	width: 100%; 
+	margin: auto;
+}
+
+#images{
+	padding-top: 37%;
+}
+
+#list{
+	width: 33%; 
+	margin-left: 33%;
+	color: black;
+}
+
+#title{
+	padding-top: 40px; 
+	color: black;
+}
+
+#list_entity{
+	width: 40%; 
+	margin-left: 33%;
+	
+	color: gray;
+}
+}

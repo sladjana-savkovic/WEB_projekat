@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="mdb/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="mdb/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_guest_page.css">
+  <title>Rezervacija apartmana</title>
+</head>
+<body>
+
+<script src="guest_navbar.js"></script>
+<script src="feedback.js"></script>
+
+<div id="border">
+  <h3 style="text-align: center;">Pretražite smještaj</h3>
+  <form class="form-inline">
+  	<div>
+      <label class="help">Država/Grad</label>
+ 	  <input type="text" class="form-control" style="width: 200px"/>
+  	</div>
+  	<div >
+  		<label class="help">Datum prijave/odjave</label>
+  		<input type="date" class="form-control" style="width: 180px"/>
+  		<input type="date" class="form-control" style="width: 180px; margin-left: 5px"/>
+    </div>
+  	<div>
+  		<label class="help">Cijena</label>
+  		<input type="number" placeholder="min" class="form-control" min="0" style="width: 80px"/>
+  		<input type="number" placeholder="max" class="form-control" style="width: 80px; margin-left: 5px"/>
+  	</div>
+  	<div>
+  		<label class="help">Broj soba</label>
+  		<input type="number" placeholder="min" class="form-control" min="1" style="width: 80px"/>
+  		<input type="number" placeholder="max" class="form-control" style="width: 80px; margin-left: 5px"/>
+  	</div>
+  	<div>
+  		<label class="help">Broj osoba</label>
+  		<input type="number" placeholder="min" class="form-control" min="1" style="width: 80px"/>
+  		<input type="number" placeholder="max" class="form-control" style="width: 80px; margin-left: 5px"/>
+  	</div>
+  	<div>
+      <button type="submit" class="btn btn-primary mb-2" id="search_btn">Pretraži</button>
+    </div>	
+  </form>
+  </div>
+  
+  <h1 id="title-my-res">Prenoćište Konak</h1>
+ 
+    <div class="container" id="info_apartment">
+  <div>
+	 	<table class="table">
+		  <tr>
+		  <p>Tip apartmana:  <b>Soba</b></p>
+		   <p>Adresa:  <b>Bulevar Despota Stefana 7, Novi Sad 21000</b></p>
+		   <p>Datum početka rezervacije:  <b>13.08.2020.</b></p>
+		   <p>Ukupno noćenja:  <b>3</b></p>
+		   <p>Ukupna cijena:  <b>14000 RSD</b></p>
+		   <p>Status:<b style="color: red;">  ODBIJENO</p>
+		  </tr>
+		  
+		  <tr>
+		 	
+		  	<td>
+		  		<button data-toggle="modal" data-target="#modalFeedbackForm" style="margin-left: 33%; color: white;" class="btn btn-brown" type="button" class="btn btn-primary mb-2" id="submit_btn">
+		  		  Komentar
+		  		 </button>
+		  	</td>
+		  </tr>
+	 
+		</table>
+  </div>
+  </div>
+  
+	
+	
+	<div class="row justify-content-center" id="images">
+    <div class="col-md-8">
+        <div class="row">
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049047.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049047.jpg" class="img-fluid">
+            </a>
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049227.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049227.jpg" class="img-fluid">
+            </a>
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197078121.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197078121.jpg" class="img-fluid">
+            </a>
+        </div>
+        <div class="row">
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049284.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049284.jpg" class="img-fluid">
+            </a>
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049253.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049253.jpg" class="img-fluid">
+            </a>
+            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049277.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
+                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049277.jpg" class="img-fluid">
+            </a>
+            
+            
+        </div>
+    </div>
+</div>
+
+<p style="margin-left: 20%; margin-right: 20%; text-align: left;" class="row justify-content-center" id="title">Objekat Apartmani Sunce nude smeštaj sa balkonom i besplatnim WiFi internetom u Novom Sadu. Iz objekta se pruža pogled na grad.<br> Ovaj apartman sa 1 spavaćom sobom sadrži flat-screen TV sa satelitskim kanalima, opremljenu kuhinju sa frižiderom i mašinom za sudove, mašinu za pranje veša i 1 kupatilo sa tušem.<br> Parovima se posebno svidela lokacija - ocenili su je sa 9,8 za boravak udvoje.
+
+<br>Govorimo vaš jezik!</p>
+
+	<h3 class="row justify-content-center" id="title">Okolina objekta: </h3>
+	<br>
+	<div id="list">
+	<ul class="list-group">
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Aerodrom
+    <span class="badge badge-primary badge-pill">14 km</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Autobuska stanica
+    <span class="badge badge-primary badge-pill">2 km</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Centar grada
+    <span class="badge badge-primary badge-pill">1 km</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Rijeka
+    <span class="badge badge-primary badge-pill">1,5 km</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Plaža
+    <span class="badge badge-primary badge-pill">5 km</span>
+  </li>
+  <li class="list-group-item d-flex justify-content-between align-items-center">
+    Katolička crkva
+    <span class="badge badge-primary badge-pill">2 km</span>
+  </li>
+</ul>
+</div>
+	
+	<h3 class="row justify-content-center" id="title">Sadržaji jedinice: </h3>
+	<br>
+	
+	<div id="list_entity">
+	<ul class="list-group list-group-flush">
+  <ul class="list-group">
+  <li class="list-group-item">
+    <div class="md-v-line"></div><i class="fas fa-wifi mr-5"></i>besplatan WiFi
+  </li>
+  <li class="list-group-item">
+    <div class="md-v-line"></div><i class="far fa-snowflake mr-5"></i>klima-uredjaj
+  </li>
+  <li class="list-group-item">
+    <div class="md-v-line"></div><i class="fas fa-tv mr-5"></i>tv
+  </li>
+  <li class="list-group-item">
+    <div class="md-v-line"><i class="fas fa-parking mr-5"></i>parking
+  </li>
+  <li class="list-group-item">
+    <div class="md-v-line"></div><i class="fas fa-bath mr-5"></i>kada
+  </li>
+</ul>
+</ul>
+</div>
+
+ <!-- jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+
+</body>
+</html>
