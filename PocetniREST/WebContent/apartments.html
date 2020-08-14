@@ -44,7 +44,7 @@
   <form class="form-inline">
   	<div>
       <label class="help">Država/Grad</label>
- 	  <input type="text" class="form-control" style="width: 200px"/>
+ 	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite državu ili grad"/>
   	</div>
   	<div >
   		<label class="help">Datum prijave/odjave</label>
@@ -63,8 +63,7 @@
   	</div>
   	<div>
   		<label class="help">Broj osoba</label>
-  		<input type="number" placeholder="min" class="form-control" min="1" style="width: 80px"/>
-  		<input type="number" placeholder="max" class="form-control" style="width: 80px; margin-left: 5px"/>
+  		<input type="number" placeholder="Unesite broj osoba" class="form-control" min="1" style="width: 200px"/>
   	</div>
   	<div>
       <button type="submit" class="btn btn-primary mb-2" id="search_btn">Pretraži</button>
@@ -74,8 +73,8 @@
   
   <div class="container container_colored" id="sort" style="margin-top: 180px;">		
     	<h5  style="font-weight:bolder; text-align: center;">Sortiraj po cijeni</h5>
-    	<button class="btn btn-default" type="submit" id="first_highest">Prvo najviša</button>   	
-    	<button class="btn btn-default" type="submit" id="first_lowest">Prvo najniža</button>
+    	<button class="btn btn-default" type="submit" id="first_lowest"><i class="fas fa-sort-up"></i>Prvo najniža</button>
+    	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
    </div>
   
   <div class="container container_colored" id="filters" style="margin-top: 180px;">
@@ -124,32 +123,90 @@
     <label class="form-check-label" for="spaFilter">spa centar</label>
 	</div>
 	<div>
-      <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="filter">Filtriraj</button>
+      <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="filter"><i class="fas fa-filter"></i>Filtriraj</button>
     </div>  
   </div>
   </div>
   
   <div class="container" id="apartments" style="margin-top: 150px;">
-  <div class="border_apartment">
-	 	<table class="table_apartment">	 
-	 		<tr>
-		 		<td><img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"></td>
-		     	<td><h5>Apartmani Sunce</h5><p>Dvokrevetne i troktevetne sobe sa pogledom na rijeku</p><p><b>Cijena: 2000RSD</b></p><p><b>Ocjena:</b> Vrlo dobar</p><p>Besplatno otkazivanje</p>
-		     	</td>
-		     	<td ><button class="btn btn-dark-green edit_delete" type="submit">Rezerviši</button></td>
-	     	</tr>
-	  </table>
+  <div class="border_apartments">
+ 		<table class="table_apartments">
+ 			<tr>
+ 				<td>
+ 					<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</td>
+	 	   <td>
+		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
+		 	   <tr>
+		 	   		<td colspan="2"><h5>Apartman 1</h5></td>
+		 	   </tr>
+		 		<tr>
+			 		<th>Tip apartmana:</th>
+			     	<td>Soba</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Adresa:</th>
+			     	<td>Sutjeska 3, Novi Sad 21 000</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Cijena po noći:</th>
+			     	<td>50e</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Domaćin:</th>
+			     	<td>Sima Simić</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Sadržaj:</th>
+			     	<td>Klima, TV, Veš mašina, WiFi</td>
+		     	</tr>
+		 	 </table>
+	    </td>
+	    <td>
+	       <button class="btn btn-dark-green edit_delete" type="submit" >Izmijeni/Obriši</button>
+	    </td>
+     	</tr>
+ 	</table>	
   </div>
   
-  <div class="border_apartment">
-	 	<table class="table_apartment">	 
-	 		<tr>
-		 		<td><img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"></td>
-		     	<td><h5>Apartmani Sunce</h5><p>Dvokrevetne i troktevetne sobe sa pogledom na rijeku</p><p><b>Cijena: 2000RSD</b></p><p><b>Ocjena:</b> Vrlo dobar</p><p>Besplatno otkazivanje</p>
-		     	</td>
-		     	<td ><button class="btn btn-dark-green edit_delete" type="submit" >Rezerviši</button></td>
-	     	</tr>
-	  </table>
+  <div class="border_apartments">
+ 		<table class="table_apartments">
+ 			<tr>
+ 				<td>
+ 					<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</td>
+	 	   <td>
+		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
+		 	   <tr>
+		 	   		<td colspan="2"><h5>Apartman 2</h5></td>
+		 	   </tr>
+		 		<tr>
+			 		<th>Tip apartmana:</th>
+			     	<td>Cijeli apartman</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Adresa:</th>
+			     	<td>Tolstojeva 54, Novi Sad 21 000</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Cijena po noći:</th>
+			     	<td>250e</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Domaćin:</th>
+			     	<td>Sima Simić</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Sadržaj:</th>
+			     	<td>Klima, TV, Veš mašina, WiFi</td>
+		     	</tr>
+		 	 </table>
+	    </td>
+	    <td>
+	       <button class="btn btn-dark-green edit_delete" type="submit" >Izmijeni/Obriši</button>
+	    </td>
+     	</tr>
+ 	</table>	
   </div>
   </div>
   

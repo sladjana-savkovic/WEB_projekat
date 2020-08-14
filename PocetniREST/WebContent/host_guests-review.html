@@ -22,13 +22,27 @@
 <body id="guests-review">
   <script src="host_navbar.js"></script>
 
-	<form class="form-inline search">
-		  <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Pretraži goste"
-		    aria-label="Search" style="height: 40px; font-size: 20px;">
-		  <i class="fas fa-search fa-lg" aria-hidden="true"></i>
-	</form>
+	<div id="border" style="background: white; width: 50%; margin:auto; margin-top: 30px;">
+  <h3 style="text-align: center;">Pretražite goste</h3>
+  <form class="form-inline" style="margin-left: 50px;">
+  	<div>
+      <label class="help">Korisničko ime</label>
+ 	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime"/>
+  	</div>
+  	<div style="margin-left: 20px;">
+  		<label class="help">Pol</label>
+  		<select class="mdb-select md-form colorful-select dropdown-primary" style="width: 200px; height: 38px; padding: 0px;margin: 0px;">
+		  <option value="male" selected>Muški</option>
+		  <option value="female">Ženski</option>
+		</select>
+    </div>
+  	<div>
+      <button type="submit" class="btn btn-primary mb-2" id="search_btn">Pretraži</button>
+    </div>	
+  </form>
+  </div>
 
-	<table class="guests">
+	<table class="guests" style="background: white;">
 		<tr style="border:1px solid gray; background: gray;">
 			<th>Ime</th>
 			<th>Prezime</th>

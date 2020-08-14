@@ -1,4 +1,4 @@
-body#add-apart, body#guests-review{
+body#add-apart, body#guests-review, body#comments{
 	background-color: #f2f2f2;
 }
 
@@ -125,6 +125,7 @@ div.border_comment{
 	border-width: 1px;
 	height: 190px;
 	width: 750px;
-	float: right;
 	margin-top: 20px;
+	margin-left:380px;
+	background-color: white;
 }
