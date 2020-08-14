@@ -1,4 +1,4 @@
-body{
+body#add-apart, body#guests-review{
 	background-color: #f2f2f2;
 }
 
@@ -48,14 +48,6 @@ input[type=submit] {
   float: right;
 }
 
-/* Style the container */
-.container {
-  border-radius: 5px;
-  background-color: #f2f2f2;
-  padding: 20px;
-  width: 100%;
-  margin: auto;
-}
 
 /* Floating column for labels: 25% width */
 .col-25 {
@@ -90,4 +82,49 @@ input[type=submit] {
 	margin: auto;
 	width: 150px;
 	margin-top: 15px;
+}
+
+.container_edit {
+  padding: 16px;
+}
+
+h2#title-active{
+	margin: auto;
+	width:50%;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.yes{
+	color: green; 
+	left: 610px;
+}
+.no{
+	 color: red; 
+	 left:280px;
+}
+div#comments{
+	background-color: white; 
+	position: absolute; 
+	top: 200px; 
+	height: 800px;
+	width: 100%; 
+	margin: auto; 
+	left:0px;
+}
+
+table.table_comment{
+	width: 100%; 
+	margin-top: 20px; 
+	margin-left:10px;
+}
+
+div.border_comment{
+	border-style:solid;
+	border-color: darkgray;
+	border-width: 1px;
+	height: 190px;
+	width: 750px;
+	float: right;
+	margin-top: 20px;
 }

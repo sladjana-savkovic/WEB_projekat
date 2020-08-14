@@ -182,46 +182,64 @@ a {
 }
 
 /* Main page style */
-#border_filter{
-	margin-top: 90px;
-	margin-right: 20px;
-	margin-left: 40px;
+
+
+div.border_apartment{
 	border-style:solid;
 	border-color: darkgray;
 	border-width: 1px;
-	height: 380px;
-	width: 260px;
-
-}
-
-#border_apartment{
-	margin-top: 90px;
-	margin-right: 220px;
-	margin-left: 40px;
-	border-style:solid;
-	border-color: darkgray;
-	border-width: 1px;
-	height: 240px;
-	width: 700px;
+	height: 230px;
+	width: 800px;
 	float: right;
+	margin-top: 20px;
 }
 
-.column {
-  float: left;
-  width: 33%;
-  padding: 10px;
-  height: 300px;
+div#sort{
+	border: 1px solid black; 
+	position: absolute; 
+	left: 50px; 
+	width: 18%; 
+	top: 200px;
+}
+div#filters{
+	width: 18%; 
+	position: absolute; 
+	left:50px; 
+	border: 1px solid black; 
+	top: 420px; 
+	height: 450px;
+}
+div#apartments{
+	background-color: white; 
+	position: absolute; 
+	left: 450px; 
+	top: 200px; 
+	width:800px;
+}
+table.table_apartment{
+	width: 100%; 
+	margin-top: 20px; 
+	margin-left:10px;
+}
+img.img_apartment{
+	width: 220px; 
+	height: 190px;
 }
 
-
-.row:after {
-  content: "";
-  display: table;
-  clear: both;
+/* Style the container */
+.container_colored {
+  border-radius: 5px;
+  background-color: #f2f2f2;
+  padding: 20px;
+  width: 100%;
+  margin: auto;
 }
-
-#map{
-	margin-top: 90px;
-	padding-left:60px;
-	
+button#first_highest,button#first_lowest,button#filter{
+	color: white; 
+	left: 38px;
+	width: 140px;
+}
+button.edit_delete{
+	color: white; 
+	top:80px;
 }
