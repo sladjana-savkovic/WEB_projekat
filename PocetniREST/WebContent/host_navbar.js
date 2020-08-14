@@ -84,7 +84,7 @@ document.write(`
       <a class="nav-link" href="host_guests-review.html">Pregled gostiju</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="#">Pregled rezervacija</a>
+      <a class="nav-link" href="host_reservations.html">Pregled rezervacija</a>
     </li>
 	<li class="nav-item dropdown">
         <a class="nav-link dropdown-toggle" id="navbarDropdownMenuLink-333" data-toggle="dropdown"
