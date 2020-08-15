@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Modifikacija sadržaja</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="mdb/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="mdb/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_host_page.css">
+  <link rel="stylesheet" href="style_admin_page.css">
+</head>
+<body id="guests-review">
+
+  	<script src="admin_navbar.js"></script>
+  
+	<div class="container" id="border" style="background:white; width: 55%; margin:auto; margin-top: 30px;">
+	  <form id="add_amen">
+	    <div class="row">
+	      <div class="col">
+	        <label for="name_amen" id="amen">Dodaj sadržaj:</label>
+	      </div>
+	      <div class="col">
+	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="name_amen" name="name_amen" placeholder="Unesite naziv sadržaja">
+	      </div>
+		    <div class="col">
+		      <input type="submit" class="btn btn-primary mb-2 btn-dark-green" value="Dodaj" id="btn_amen">
+		    </div>
+	    </div>
+	  </form>
+		
+	  <form id="edit_amen">
+	    <div class="row">
+	      <div class="col">
+	        <label for="name_amen" id="amen">Izmijeni sadržaj:</label>
+	      </div>
+	      <div class="col">
+	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="name_amen" name="name_amen" placeholder="Unesite naziv sadržaja">
+	      </div>
+		    <div class="col">
+		      <input type="submit" class="btn btn-primary mb-2 btn-orange" value="Izmijeni" id="btn_amen">
+		    </div>
+	    </div>
+	  </form>
+    </div>
+
+	<table class="guests" style="background: white;">
+		<tr style="background: gray;">
+			<th style="width:70%;">Naziv sadržaja</th>
+			<th>Brisanje sadržaja</th>
+		</tr>
+		<tr>
+			<td>TV</td>
+			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
+		</tr>
+		<tr>
+			<td>Klima</td>
+			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
+		</tr>
+		<tr>
+			<td>WiFi</td>
+			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
+		</tr>
+	</table>
+
+ <script src="jquery-3.3.1.min.js"></script>
+<!-- jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+</body>
+</html>

@@ -20,27 +20,10 @@
   <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
-   <script src="signin.js"></script>
-   <script src="register.js"></script>
-
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;" >
-	  <div class="container">
-	    <h4 class="navbar-brand" id="title">DSTOURS.COM</h4>
-	    <div class="collapse navbar-collapse" id="navbarResponsive">
-	      <ul class="navbar-nav ml-auto">
-	        <li class="nav-item">
-	          <a class="nav-link" id="register" href="" data-toggle="modal" data-target="#modalRegisterForm">Registruj se</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" id="sign_in" href="" data-toggle="modal" data-target="#modalLoginForm">Prijavi se</a>
-	        </li>
-	      </ul>
-	    </div>
-	  </div>
-  </nav>
+   <script src="admin_navbar.js"></script>
   
-  <div id="border">
-  <h3 style="text-align: center;">Pretražite smještaj</h3>
+  <div id="border" style="margin-top: 30px;">
+  <h3 style="text-align: center;">Pretražite apartmane</h3>
   <form class="form-inline">
   	<div>
       <label class="help">Država/Grad</label>
@@ -77,8 +60,8 @@
     	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
    </div>
   
-  <div class="container container_colored" id="filters" style="margin-top: 180px;">
-  <div id="border_filter" class="column">
+  <div class="container container_colored" id="filters" style="margin-top: 180px; height: 580px;">
+  <div id="border_filter" style="height: 580px;">
   <h5 style="text-align: center; font-weight: bolder; margin-bottom: 20px;" >Filteri</h5>
   
   <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
@@ -122,6 +105,19 @@
     <input type="checkbox" class="form-check-input" id="spaFilter">
     <label class="form-check-label" for="spaFilter">spa centar</label>
 	</div>
+	<hr/>
+	
+	<h5 style="text-align: left; margin-left: 10px">Status apartmana:</h5>
+  	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="active_apart">
+    <label class="form-check-label" for="active">Aktivan</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="inactive_apart">
+    <label class="form-check-label" for="inactive_apart">Neaktivan</label>
+	</div>
+	
 	<div>
       <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="filter"><i class="fas fa-filter"></i>Filtriraj</button>
     </div>  
@@ -145,6 +141,10 @@
 			     	<td>Soba</td>
 		     	</tr>
 		     	<tr>
+			 		<th>Status:</th>
+			     	<td style="color: green; font-weight: bolder;">Aktivan</td>
+		     	</tr>
+		     	<tr>
 			 		<th>Adresa:</th>
 			     	<td>Sutjeska 3, Novi Sad 21 000</td>
 		     	</tr>
@@ -163,7 +163,8 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>
+	       <button class="btn btn-orange edit_delete" type="submit">Izmijeni</button>
+	       <button class="btn btn-red edit_delete" type="submit"  data-toggle="modal" data-target="#modalConfirmDelete" >Obriši</button>
 	    </td>
      	</tr>
  	</table>	
@@ -185,6 +186,10 @@
 			     	<td>Cijeli apartman</td>
 		     	</tr>
 		     	<tr>
+			 		<th>Status:</th>
+			     	<td style="color: red; font-weight: bolder;">Neaktivan</td>
+		     	</tr>
+		     	<tr>
 			 		<th>Adresa:</th>
 			     	<td>Tolstojeva 54, Novi Sad 21 000</td>
 		     	</tr>
@@ -203,12 +208,42 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>
+	       <button class="btn btn-orange edit_delete" type="submit" >Izmijeni</button>
+	       <button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmDelete">Obriši</button>
 	    </td>
      	</tr>
  	</table>	
   </div>
   </div>
+  
+  <!--Modal: modalConfirmDelete-->
+<div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Da li ste sigurni da želite obrisati apartman?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="" class="btn  btn-outline-danger">Da</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Ne</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->
   
   <!-- jQuery -->
   <script type="text/javascript" src="mdb/js/jquery.min.js"></script>

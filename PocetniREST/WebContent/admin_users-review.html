@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Pregled gostiju</title>
+  <title>Pregled korisnika</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
@@ -21,15 +21,22 @@
   <link rel="stylesheet" href="style_admin_page.css">
 </head>
 <body id="guests-review">
-  <script src="host_navbar.js"></script>
+  <script src="admin_navbar.js"></script>
 
-	<div id="border" style="background: white; width: 50%; margin:auto; margin-top: 30px;">
-  <h3 style="text-align: center;">Pretražite goste</h3>
+	<div id="border" style="background: white; width: 65%; margin:auto; margin-top: 30px;">
+  <h3 style="text-align: center;">Pretražite korisnike</h3>
   <form class="form-inline" style="margin-left: 50px;">
   	<div>
       <label class="help">Korisničko ime</label>
  	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime"/>
   	</div>
+  	<div style="margin-left: 20px;">
+  		<label class="help">Uloga</label>
+  		<select class="mdb-select md-form colorful-select dropdown-primary" id="user_type">
+		  <option value="guest" selected>Gost</option>
+		  <option value="host">Domaćin</option>
+		</select>
+    </div>
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
   		<select class="mdb-select md-form colorful-select dropdown-primary" id="user_type">
@@ -42,25 +49,35 @@
     </div>	
   </form>
   </div>
+  
+  <div id="container" style="right; margin-top: 30px;">
+  	<button class="btn btn-green" id="add_host"><i class="fas fa-user-plus fa-lg"></i>  Dodaj domaćina</button>
+  </div>
 
 	<table class="guests" style="background: white;">
 		<tr style="border:1px solid gray; background: gray;">
 			<th>Ime</th>
 			<th>Prezime</th>
 			<th>Pol</th>
+			<th>Uloga</th>
 			<th>Korisničko ime</th>
+			<th>Blokiranje korisnika</th>
 		</tr>
 		<tr>
 			<td>Marko</td>
 			<td>Marković</td>
 			<td>Muški</td>
+			<td>Domaćin</td>
 			<td>marko</td>
+			<td><button class="btn del_amen"><i class="fas fa-ban" style="color: red;"></i></button></td>
 		</tr>
 		<tr>
 			<td>Sava</td>
 			<td>Savić</td>
 			<td>Muški</td>
+			<td>Gost</td>
 			<td>savaa</td>
+			<td><button class="btn del_amen"><i class="fas fa-ban" style="color: red;"></i></button></td>
 		</tr>
 	</table>
 

@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Pregled rezervacija</title>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="mdb/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="mdb/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_host_page.css">
+  <script src="jquery-3.3.1.min.js"></script>
+
+</head>
+<body>
+   <script src="admin_navbar.js"></script>
+   
+   <form class="form-inline search">
+		  <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Pretraži goste po korisničkom imenu"
+		    aria-label="Search" style="height: 40px; font-size: 20px;">
+		  <button class="btn"><i class="fas fa-search fa-lg" aria-hidden="true" style="color: blue;"></i></button>
+	</form>
+  
+  <div class="container container_colored" id="sort" style="margin-top: 60px;">		
+    	<h5  style="font-weight:bolder; text-align: center;">Sortiraj po cijeni</h5>
+    	<button class="btn btn-default" type="submit" id="first_lowest"><i class="fas fa-sort-up"></i>Prvo najniža</button>
+    	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
+   </div>
+  
+  <div class="container container_colored" id="filters" style="margin-top: 60px; height: 300px;">
+  <div id="border_filter" class="column">
+  <h5 style="text-align: center; font-weight: bolder; margin-bottom: 20px;" >Filteri</h5>
+  
+  <h5 style="text-align: left; margin-left: 10px">Status rezervacije:</h5>
+  	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="apartmentFilter">
+    <label class="form-check-label" for="apartmentFilter">Kreirana</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="roomFilter">
+    <label class="form-check-label" for="roomFilter">Odbijena</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="roomFilter">
+    <label class="form-check-label" for="roomFilter">Poništena</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="roomFilter">
+    <label class="form-check-label" for="roomFilter">Prihvaćena</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="roomFilter">
+    <label class="form-check-label" for="roomFilter">Završena</label>
+	</div>
+	
+	<div>
+      <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="filter"><i class="fas fa-filter"></i>Filtriraj</button>
+    </div>  
+	
+	</div>
+  </div>
+  
+  <div class="container" id="apartments" style="margin-top: 40px; ">
+  <div class="border_apartments">
+ 		<table class="table_apartments">
+ 			<tr>
+ 				<td>
+ 					<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</td>
+	 	   <td>
+		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
+		 	   <tr>
+		 	   		<td colspan="2"><h5>Rezervacija 1</h5></td>
+		 	   </tr>
+		 		<tr>
+			 		<th>Tip apartmana:</th>
+			     	<td>Soba</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Početni datum:</th>
+			     	<td>25.05.2020.</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Ukupno noćenja:</th>
+			     	<td>5</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Ukupna cijena:</th>
+			     	<td>200e</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Status:</th>
+			     	<td>Kreirana</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Poruka:</th>
+			     	<td>Besplatno otkazivanje</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Gost:</th>
+			     	<td>pera72</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Domaćin:</th>
+			     	<td>marko88</td>
+		     	</tr>
+		 	 </table>
+	    </td>
+     	</tr>
+ 	</table>	
+  </div>
+  
+  <div class="border_apartments">
+ 		<table class="table_apartments">
+ 			<tr>
+ 				<td>
+ 					<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</td>
+	 	   <td>
+		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
+		 	   <tr>
+		 	   		<td colspan="2"><h5>Rezervacija 2</h5></td>
+		 	   </tr>
+		 		<tr>
+			 		<th>Tip apartmana:</th>
+			     	<td>Soba</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Početni datum:</th>
+			     	<td>25.05.2020.</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Ukupno noćenja:</th>
+			     	<td>5</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Ukupna cijena:</th>
+			     	<td>200e</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Status:</th>
+			     	<td>Prihvaćena</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Poruka:</th>
+			     	<td>Besplatno otkazivanje</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Gost:</th>
+			     	<td>pera72</td>
+		     	</tr>
+		     	<tr>
+			 		<th>Domaćin:</th>
+			     	<td>marko88</td>
+		     	</tr>
+		 	 </table>
+	    </td>
+     	</tr>
+ 	</table>
+	</div>
+  </div>
+  
+  <!-- jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+</body>
+</html>
