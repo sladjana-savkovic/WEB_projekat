@@ -22,7 +22,7 @@
 <body>
 <script src="guest_navbar.js"></script>
 <script src="quit.js"></script>
-
+<script src="feedback.js"></script>
 <br>
 <h2 id="title-my-res">Moje rezervacije</h2>
 
@@ -36,13 +36,18 @@
   <div class="border_apartments">
  		<table class="table_apartments"> 
 	 		<tr>
- 				<td>
+ 				<td><a href="reserve_an-apartment.html">
  					<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</a>
 	 			</td>
 	 	   <td>
 		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
 		 	   <tr>
-		 	   		<td colspan="2"><h5>Apartman Sunce</h5></td>
+		 	   		<td colspan="2">
+		 	   		<a href="reserve_an-apartment.html">
+		 	   		<h5>Apartman Sunce</h5>
+		 	   		</a>
+		 	   		</td>
 		 	   </tr>
 		 		<tr>
 			 		<th>Dana:</th>
@@ -78,12 +83,18 @@
  		<table class="table_apartments">
  			<tr>
  				<td>
+ 				<a href="reserve_an-apartment.html">
  					<img class="img_apartment" src="https://cf.bstatic.com/images/hotel/max1024x768/261/261702936.jpg" alt="thumbnail" class="img-thumbnail"/>
+	 			</a>
 	 			</td>
 	 	   <td>
 		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
 		 	   <tr>
-		 	   		<td colspan="2"><h5>Prenoćište Konak</h5></td>
+		 	   		<td colspan="2">
+		 	   		<a href="reserve_an-apartment.html">
+		 	   		<h5>Prenoćište Konak</h5>
+		 	   		</a>
+		 	   		</td>
 		 	   </tr>
 		 		<tr>
 			 		<th>Dana:</th>
@@ -108,7 +119,10 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button onclick="window.location.href='guest_add-feedback.html'" class="btn btn-brown edit_delete" type="submit" >Komentarišite</button>
+	       <button data-toggle="modal" data-target="#modalFeedbackForm" style="margin-left: 33%; color: white;" class="btn btn-brown" type="submit" id="submit_btn">
+		  		  Komentarišite
+		  		 </button>
+		 
 	    </td>
      	</tr>
  	</table>	

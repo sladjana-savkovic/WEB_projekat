@@ -61,9 +61,10 @@ document.write(`
         </p>
         <!--Basic textarea-->
         <div class="md-form">
-          <textarea type="text" id="form79textarea" class="md-textarea form-control" rows="3"></textarea>
-          <label for="form79textarea">Unesite komentar</label>
-        </div>
+  <i class="fas fa-pencil-alt prefix"></i>
+  <textarea id="form10" class="md-textarea form-control" rows="5"></textarea>
+  <label for="form10">Unesite komentar</label>
+</div>
 
       </div>
 

@@ -7,6 +7,14 @@
 	border-width: 1px;
 	height: 280px;
 	width: 600px;
+	
+	
+}
+
+#table_reservation{
+	width: 70%; 
+	margin-top: 20px; 
+	margin-left:10px;
 }
 
 #submit_btn{
@@ -56,7 +64,7 @@ row_left{
 	position: absolute; 
 	padding-top:60px;	
 	margin-top:30px;
-	width: 33%;
+	width: 30%;
 	margin-left: 33%;
 	left: 0px;
 	
@@ -69,7 +77,11 @@ row_left{
 }
 
 #images{
+	position: absolute;
 	padding-top: 37%;
+	margin-left: 10%;
+	
+	
 }
 
 #list{
@@ -89,4 +101,11 @@ row_left{
 	
 	color: gray;
 }
+
+#about_apartment{
+	background-color: white; 
+	position: absolute; 
+	left: 450px; 
+	top: 200px; 
+	width:600px;
 }
