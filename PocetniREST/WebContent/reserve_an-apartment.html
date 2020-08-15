@@ -22,7 +22,7 @@
 <body>
   <script src="signin.js"></script>
    <script src="register.js"></script>
-   
+   <script src="images.js"></script>
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;" >
 	  <div class="container">
@@ -140,45 +140,81 @@
       </div>
        
    </div>
+   
+   <div class="container container_colored" id="sort" style="margin-top: 1300px; left: 50px; 
+	width: 18%; ">		
+    	<h5  style="font-weight:bolder; text-align: center; margin-bottom: 20px;">Raspoloživost</h5>
+    	 <div >
+  		<label class="help">Datum prijave:</label>
+  		<input type="date" class="form-control" style="width: 180px" value="2020-08-26"/>
+  		
+    </div>
+
+<div >
+  		<label class="help">Datum odjave:</label>
+  		<input type="date" class="form-control" style="width: 180px" value="2020-08-28" min="2020-08-18" max="2020-09-08"/>
+  		
+    </div>
+
+
+	<div>
+  		<label class="help">Broj osoba</label>
+  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="2" min="1" style="width: 180px"/>
+  	</div>
+  	
+  	<div>
+  		<label class="help">Ukupna cijena (RSD):</label>
+  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="4000" min="1" style="width: 180px" readonly/>
+  	</div>
+  	
+  	<button class="btn btn-green" type="submit" id="first_highest" style="margin-top: 30px;">Rezervišite</button> 
+  	
+  	
+  	
+  	
+   </div>
 
 	<h2 id="title" style="margin-left: 50%; margin-top: 40px;">Apartmani Sunce</h2>
 	<br>
 
 	
-  <div class="container" id="images" style="margin-left: 33%;">
-    <div class="col-md-8">
-        <div class="row">
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049047.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049047.jpg" class="img-fluid">
-            </a>
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049227.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049227.jpg" class="img-fluid">
-            </a>
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197078121.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197078121.jpg" class="img-fluid">
-            </a>
-            
-        </div>
-        <div class="row">
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049284.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049284.jpg" class="img-fluid">
-            </a>
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049253.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049253.jpg" class="img-fluid">
-            </a>
-            <a href="https://cf.bstatic.com/images/hotel/max1024x768/197/197049277.jpg" data-toggle="lightbox" data-gallery="example-gallery" class="col-sm-4">
-                <img src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049277.jpg" class="img-fluid">
-            </a>
-            
-            
-        </div>
-    </div>
+  <div class="container" id="images" style="margin-left: 27%;">
+    
+
+<!-- The expanding image container -->
+<div class="container">
+  <!-- Close the image -->
+  <span onclick="this.parentElement.style.display='none'" class="closebtn">&times;</span>
+
+  <!-- Expanded image -->
+  <img id="expandedImg" style="width:100%">
+
+  <!-- Image text -->
+  <div id="imgtext"></div>
+</div>
+<div class="row" style="margin-left: 30px;">
+  <div class="column">
+    <img height="160px" width="190px" src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049047.jpg" alt="Kuhinja" onclick="myFunction(this);">
+  </div>
+  <div class="column">
+    <img height="160px" width="190px" src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049227.jpg" alt="Trpezarija" onclick="myFunction(this);">
+  </div>
+  <div class="column">
+    <img height="160px" width="190px" src="https://cf.bstatic.com/images/hotel/max1024x768/197/197078121.jpg" alt="Dnevni boravak" onclick="myFunction(this);">
+  </div>
+  <div class="column">
+    <img height="160px" width="190px" src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049284.jpg" alt="Spavaca soba" onclick="myFunction(this);">
+  </div>
+  <div class="column">
+    <img height="160px" width="190px" src="https://cf.bstatic.com/images/hotel/max1024x768/197/197049277.jpg" alt="Dnevni boravak" onclick="myFunction(this);">
+  </div>
+</div>
 </div>
 
 	  
   
   
-		<div class="container" id="apartments" style="margin-top: 600px; margin-left: 70px;">
+		<div class="container" id="apartments" style="margin-top: 20px; margin-left: 600px; ">
   <div class="border_apartments" style="width: 680px; ">
  		<table class="table_apartments">
  			<tr>
@@ -219,11 +255,13 @@
 		     	<tr>
 			 		<th>Domaćin:</th>
 			     	<td>Sima Simić</td>
+			  
 		     	</tr>
-		     	
+		     		
 		 	 </table>
 	    </td>
-	    <td>
+	    
+	     <td>
 	    <div>
   	 <button class="btn btn-dark-green edit_delete" type="submit" >Rezervišite</button>
   	</div>
@@ -272,37 +310,7 @@
 </ul>
 </div>
 
-<div class="container container_colored" id="sort" style="margin-top: 180px; margin-left: 360px; width: 300px;">		
-    	<h5  style="font-weight:bolder; text-align: center; margin-bottom: 20px;">Raspoloživost</h5>
-    	 <div >
-  		<label class="help">Datum prijave:</label>
-  		<input type="date" class="form-control" style="width: 180px" value="2020-08-26"/>
-  		
-    </div>
 
-<div >
-  		<label class="help">Datum odjave:</label>
-  		<input type="date" class="form-control" style="width: 180px" value="2020-08-28" min="2020-08-18" max="2020-09-08"/>
-  		
-    </div>
-
-
-	<div>
-  		<label class="help">Broj osoba</label>
-  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="2" min="1" style="width: 180px"/>
-  	</div>
-  	
-  	<div>
-  		<label class="help">Ukupna cijena (RSD):</label>
-  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="4000" min="1" style="width: 180px" readonly/>
-  	</div>
-  	
-  	<button class="btn btn-default" type="submit" id="first_highest" style="margin-top: 30px;">Izračunaj cijenu</button> 
-  	
-  	
-  	
-  	
-   </div>
 
   <!-- jQuery -->
   <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
