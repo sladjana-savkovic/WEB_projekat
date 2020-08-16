@@ -20,28 +20,11 @@
   <script src="jquery-3.3.1.min.js"></script>
 </head>
 <body>
-  <script src="signin.js"></script>
-   <script src="register.js"></script>
    <script src="images.js"></script>
-
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;" >
-	  <div class="container">
-	    <h4 class="navbar-brand" id="title">DSTOURS.COM</h4>
-	    <div class="collapse navbar-collapse" id="navbarResponsive">
-	      <ul class="navbar-nav ml-auto">
-	        <li class="nav-item">
-	          <a class="nav-link" id="register" href="" data-toggle="modal" data-target="#modalRegisterForm">Registruj se</a>
-	        </li>
-	        <li class="nav-item">
-	          <a class="nav-link" id="sign_in" href="" data-toggle="modal" data-target="#modalLoginForm">Prijavi se</a>
-	        </li>
-	      </ul>
-	    </div>
-	  </div>
-  </nav>
+   <script src="admin_navbar.js"></script>
   
-   <div id="border">
-  <h3 style="text-align: center;">Pretražite smještaj</h3>
+   <div id="border" style="margin-top: 30px;">
+  <h3 style="text-align: center;">Pretražite apartmane</h3>
   <form class="form-inline">
   	<div>
       <label class="help">Država/Grad</label>
@@ -77,8 +60,8 @@
     	
     	<div class="testimonial">
       
-        <h5 class="font-weight-bold dark-grey-text mt-4">Ana Toč</h5>
-        <h6 class="font-weight-bold blue-text my-3">Hrvatska</h6>
+        <h5 class="font-weight-bold dark-grey-text mt-4">ana782</h5>
+        <h6 style="color: red; margin-top: 15px;">Odbijen</h6>
         <p class="font-weight-normal dark-grey-text">
           <i class="fas fa-quote-left pr-2"></i>Sobe su jako lepe, krevet je preudoban i terasa je super. Jako mi se svidelo pametno ogledalo u kupatlu i vidi se da je dosta ulozeno u samo opremanje soba. Osoblje je jako ljubazno.</p>
         
@@ -93,8 +76,8 @@
       
       <div class="testimonial">
    
-        <h5 class="font-weight-bold dark-grey-text mt-4">Jovan Marić</h5>
-        <h6 class="font-weight-bold blue-text my-3">Srbija</h6>
+        <h5 class="font-weight-bold dark-grey-text mt-4">jovan.maric88</h5>
+        <h6 style="color: green; margin-top: 15px;">Odobren</h6>
         <p class="font-weight-normal dark-grey-text">
           <i class="fas fa-quote-left pr-2"></i>Ljubazno osoblje, lep i veliki spa centar. Dorucak je takodje raznovrstan. Uzivali smo za vreme boravka.</p>
         
@@ -109,8 +92,8 @@
       
       
       <div class="testimonial">
-       <h5 class="font-weight-bold dark-grey-text mt-4">Marija Simonov</h5>
-        <h6 class="font-weight-bold blue-text my-3">Njemačka</h6>
+       <h5 class="font-weight-bold dark-grey-text mt-4">marija.mara</h5>
+        <h6 style="color: green; margin-top: 15px;">Odobren</h6>
         <p class="font-weight-normal dark-grey-text">
           <i class="fas fa-quote-left pr-2"></i>Sve je bilo odlicno, bilo nam je lepo za vreme boravka.</p>
         
@@ -125,8 +108,8 @@
       
       
       <div class="testimonial">
-       <h5 class="font-weight-bold dark-grey-text mt-4">Katarina Tot</h5>
-        <h6 class="font-weight-bold blue-text my-3">Srbija</h6>
+       <h5 class="font-weight-bold dark-grey-text mt-4">kaca-tot</h5>
+        <h6 style="color: green; margin-top: 15px;">Odobren</h6>
         <p class="font-weight-normal dark-grey-text">
           <i class="fas fa-quote-left pr-2"></i>Odlican apartman. Jako sam zadovoljna gostoprimstvom. Domacini veoma ljubazni i skoro neprimjetni.</p>
         
@@ -138,43 +121,8 @@
           <i class="far fa-star"> </i>
         </div>
       </div>
-      
-     
-       
    </div>
-   
-   <div class="container container_colored" id="sort" style="border: 1px solid black;  margin-top: 1300px; padding-top: 10px;  
-	width: 18%; ">		
-    	<h5  style="font-weight:bolder; text-align: center; margin-bottom: 20px;">Raspoloživost</h5>
-    	 <div >
-  		<label class="help">Datum prijave:</label>
-  		<input type="date" class="form-control" style="width: 180px" value="2020-08-26"/>
-  		
-    </div>
-
-<div >
-  		<label class="help">Datum odjave:</label>
-  		<input type="date" class="form-control" style="width: 180px" value="2020-08-28" min="2020-08-18" max="2020-09-08"/>
-  		
-    </div>
-
-
-	<div>
-  		<label class="help">Broj osoba</label>
-  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="2" min="1" style="width: 180px"/>
-  	</div>
-  	
-  	<div>
-  		<label class="help">Ukupna cijena (RSD):</label>
-  		<input type="number" placeholder="Unesite broj osoba" class="form-control" value="4000" min="1" style="width: 180px" readonly/>
-  	</div>
-  	
-  	<button class="btn btn-green reservation" type="submit" id="first_highest" style="margin-top: 30px;">Rezervišite</button> 
-  	
-  	
-  	
-  	
-   </div>
+  
 
 	<h2 id="title" style="margin-left: 50%; margin-top: 40px;">Apartmani Sunce</h2>
 	<br>
@@ -265,7 +213,8 @@
 	    
 	     <td>
 	    <div>
-  	 <button class="btn btn-dark-green edit_delete" type="submit" >Rezervišite</button>
+  		   <button class="btn btn-orange edit_delete" type="submit" >Izmijeni</button>
+	       <button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmDelete">Obriši</button>
   	</div>
 	    </td>
 	    

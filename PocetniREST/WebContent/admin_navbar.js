@@ -93,10 +93,7 @@ document.write(`
       <a class="nav-link" href="admin_amenities.html">Modifikacija sadržaja</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="admin_comments.html">Komentari</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link" href="">Praznični dani</a>
+      <a class="nav-link" href="admin_holidays.html">Praznični dani</a>
     </li>
     
   </ul>
