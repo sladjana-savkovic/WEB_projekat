@@ -7,16 +7,18 @@ public abstract class User {
 	private String surname;
 	private Gender gender;
 	private TypeOfUser typeOfUser;
+	private boolean isBlocked;
 	
 	public User() {}
 	
-	public User(String username, String password, String name, String surname, Gender gender, TypeOfUser typeOfUser) {
+	public User(String username, String password, String name, String surname, Gender gender, TypeOfUser typeOfUser,boolean isBlocked) {
 		this.username = username;
 		this.password = password;
 		this.name = name;
 		this.surname = surname;
 		this.gender = gender;
 		this.typeOfUser = typeOfUser;
+		this.isBlocked = isBlocked;
 	}
 	
 	public User(User user) {
@@ -26,6 +28,7 @@ public abstract class User {
 		this.surname = user.surname;
 		this.gender = user.gender;
 		this.typeOfUser = user.typeOfUser;
+		this.isBlocked = user.isBlocked;
 	}
 
 	public String getUsername() {
@@ -74,6 +77,14 @@ public abstract class User {
 
 	public void setTypeOfUser(TypeOfUser typeOfUser) {
 		this.typeOfUser = typeOfUser;
+	}
+
+	public boolean isBlocked() {
+		return isBlocked;
+	}
+
+	public void setBlocked(boolean isBlocked) {
+		this.isBlocked = isBlocked;
 	}
 	
 }

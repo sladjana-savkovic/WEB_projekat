@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Apartment {
 	private int id;
+	private String name;
 	private TypeOfApartment type;
 	private int numberOfRooms;
 	private int numberOfGuests;
@@ -21,13 +22,15 @@ public class Apartment {
 	private boolean isActive;
 	private ArrayList<Integer> amenities;
 	private ArrayList<Integer> reservations;
+	private boolean isDeleted;
 	
 	public Apartment() {}
 	
-	public Apartment(int id, TypeOfApartment type, int numberOfRooms, int numberOfGuests, Location location, String hostUsername,
+	public Apartment(int id,String name, TypeOfApartment type, int numberOfRooms, int numberOfGuests, Location location, String hostUsername,
 			double pricePerNight, LocalTime checkInTime,
-			LocalTime checkOutTime, boolean isActive) {
+			LocalTime checkOutTime, boolean isActive, boolean isDeleted) {
 		this.id = id;
+		this.name = name;
 		this.type = type;
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfGuests = numberOfGuests;
@@ -43,12 +46,14 @@ public class Apartment {
 		this.isActive = isActive;
 		this.amenities = new ArrayList<Integer>();
 		this.reservations = new ArrayList<Integer>();
+		this.isDeleted = isDeleted;
 	}
 
 
 
 	public Apartment(Apartment apartment) {
 		this.id = apartment.id;
+		this.name = apartment.name;
 		this.type = apartment.type;
 		this.numberOfRooms = apartment.numberOfRooms;
 		this.numberOfGuests = apartment.numberOfGuests;
@@ -64,6 +69,7 @@ public class Apartment {
 		this.isActive = apartment.isActive;
 		this.amenities = new ArrayList<Integer>();
 		this.reservations = new ArrayList<Integer>();
+		this.isDeleted = apartment.isDeleted;
 	}
 
 	public int getId() {
@@ -72,6 +78,14 @@ public class Apartment {
 
 	public void setId(int id) {
 		this.id = id;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	public TypeOfApartment getType() {
@@ -193,6 +207,13 @@ public class Apartment {
 	public void setPictures(ArrayList<String> pictures) {
 		this.pictures = pictures;
 	}
-	
+
+	public boolean isDeleted() {
+		return isDeleted;
+	}
+
+	public void setDeleted(boolean isDeleted) {
+		this.isDeleted = isDeleted;
+	}
 	
 }

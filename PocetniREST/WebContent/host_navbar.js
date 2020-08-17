@@ -39,7 +39,7 @@ document.write(`
       </div>
       
       <form>
-	  <div class="container_edit">
+	  <div class="container">
 	    
 	    <label for="name"><b>Ime</b></label>
 	    <input type="text" placeholder="Unesite ime" name="name" id="name" class="register" required>

@@ -11,8 +11,8 @@ public class Host extends User{
 		apartmentsForRent = new ArrayList<Integer>();
 	}
 
-	public Host(String username, String password, String name, String surname, Gender gender) {
-		super(username, password, name, surname, gender, TypeOfUser.HOST);
+	public Host(String username, String password, String name, String surname, Gender gender,boolean isBlocked) {
+		super(username, password, name, surname, gender, TypeOfUser.HOST,isBlocked);
 		apartmentsForRent = new ArrayList<Integer>();
 	}
 

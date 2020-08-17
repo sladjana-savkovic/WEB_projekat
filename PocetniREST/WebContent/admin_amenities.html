@@ -24,7 +24,7 @@
 
   	<script src="admin_navbar.js"></script>
   
-	<div class="container" id="border" style="background:white; width: 55%; margin:auto; margin-top: 30px; height: 95px;">
+	<div class="container" id="border" style="background:white; width: 55%; margin:auto; margin-top: 30px;">
 	  <form id="add_amen">
 	    <div class="row">
 	      <div class="col">
@@ -38,25 +38,43 @@
 		    </div>
 	    </div>
 	  </form>
+	  
+	  <form id="edit_amen">
+	    <div class="row">
+	      <div class="col">
+	        <label for="name_amen" id="amen">Izmijeni sadržaj:</label>
+	      </div>
+	      <div class="col">
+	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="name_amen" name="name_amen" placeholder="Odaberite sadržaj iz tabele">
+	      </div>
+		    <div class="col">
+		      <input type="submit" class="btn btn-primary mb-2 btn-orange" value="Izmijeni" id="btn_amen">
+		    </div>
+	    </div>
+	  </form>
 	
     </div>
 
 	<div id="table" class="table-editable">
 	<table class="guests" style="background: white;">
 		<tr style="background: gray;">
-			<th style="width:70%;">Naziv sadržaja</th>
+			<th style="width:75%;">Naziv sadržaja</th>
+			<th>Izmjena sadržaja</th>
 			<th>Brisanje sadržaja</th>
 		</tr>
 		<tr>
-			<td contenteditable="true">TV</td>
+			<td>TV</td>
+			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 		<tr>
-			<td contenteditable="true">Klima</td>
+			<td>Klima</td>
+			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>	
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 		<tr>
-			<td contenteditable="true">WiFi</td>
+			<td>WiFi</td>
+			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>		
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 	</table>

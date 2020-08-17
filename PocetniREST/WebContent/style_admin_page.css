@@ -1,6 +1,9 @@
 button.del_amen{
 	color: red;
 }
+button.edit_amen{
+	color: orange;
+}
 button#add_host{
 	float:right; 
 	margin-right: 270px; 

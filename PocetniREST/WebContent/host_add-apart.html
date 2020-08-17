@@ -32,16 +32,24 @@
   <form action="action_page.php">
     <div class="row">
       <div class="col-25">
-        <label for="fname" class="form">Tip apartmana</label>
+        <label for="lname" class="form">Naziv apartmana</label>
       </div>
       <div class="col-75">
+        <input type="text" id="name" name="name" placeholder="Unesite naziv apartmana">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname" class="form">Tip apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: 15px;">
 		<div class="custom-control custom-radio custom-control-inline">
-		  <input type="radio" class="custom-control-input" id="apartment" name="inlineDefaultRadiosExample" checked="checked">
+		  <input type="radio" class="custom-control-input" id="apartment" name="type_apar" checked="checked">
 		  <label class="custom-control-label" for="apartment">Cijeli apartman</label>
 		</div>
 		
 		<div class="custom-control custom-radio custom-control-inline">
-		  <input type="radio" class="custom-control-input" id="room" name="inlineDefaultRadiosExample">
+		  <input type="radio" class="custom-control-input" id="room" name="type_apar">
 		  <label class="custom-control-label" for="room">Soba</label>
 		</div>
       </div>
@@ -143,6 +151,22 @@
 		    <input type="checkbox" class="custom-control-input" id="air">
 		    <label class="custom-control-label" for="air">Klima</label>
 	   </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname" class="form">Status apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: 15px;">
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="inactive" name="status" checked="checked">
+		  <label class="custom-control-label" for="inactive">Neaktivan</label>
+		</div>
+		
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="active" name="status">
+		  <label class="custom-control-label" for="active">Aktivan</label>
+		</div>
       </div>
     </div>
     <div class="row">

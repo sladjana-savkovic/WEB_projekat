@@ -16,8 +16,8 @@ document.write(`
 			    <i class="fa fa-user icon"></i>
 			    <input class="input-field sign" type="text" placeholder="Korisničko ime" name="username">
 			  </div>
-			
-			  <div class="input-container">
+			  
+			  <div class="input-container" style="margin-top:25px;">
 			    <i class="fa fa-key icon"></i>
 			    <input class="input-field sign" type="password" placeholder="Lozinka" name="password">
 			  </div>	

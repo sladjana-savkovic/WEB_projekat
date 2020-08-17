@@ -23,7 +23,7 @@
 <body>
    <script src="host_navbar.js"></script>
    
-   <form class="form-inline search">
+   <form class="form-inline search" style="margin-left: 450px;">
 		  <input class="form-control form-control-sm mr-3 w-75" type="text" placeholder="Pretraži goste po korisničkom imenu"
 		    aria-label="Search" style="height: 40px; font-size: 20px;">
 		  <button class="btn"><i class="fas fa-search fa-lg" aria-hidden="true" style="color: blue;"></i></button>
@@ -115,7 +115,8 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button class="btn btn-dark-green edit_delete" type="submit" >Prihvati</button>
+	       <button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmDelete">Prihvati</button>
+	       <button class="btn btn-red edit_delete" type="submit" >Odbij</button>
 	    </td>
      	</tr>
  	</table>	
@@ -163,12 +164,14 @@
 		 	 </table>
 	    </td>
 	    <td>
+	       <button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmDelete">Završi</button>
 	       <button class="btn btn-red edit_delete" type="submit" >Odbij</button>
 	    </td>
      	</tr>
  	</table>
 	</div>
   </div>
+  
   
   <!-- jQuery -->
   <script type="text/javascript" src="mdb/js/jquery.min.js"></script>

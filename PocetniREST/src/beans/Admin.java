@@ -6,8 +6,8 @@ public class Admin extends User{
 		super(); 
 	}
 
-	public Admin(String username, String password, String name, String surname, Gender gender) {
-		super(username, password, name, surname, gender, TypeOfUser.ADMIN);
+	public Admin(String username, String password, String name, String surname, Gender gender,boolean isBlocked) {
+		super(username, password, name, surname, gender, TypeOfUser.ADMIN,isBlocked);
 	}
 
 	public Admin(Admin admin) {
