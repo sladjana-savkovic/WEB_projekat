@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Modifikacija sadržaja</title>
+  <title>Praznični dani</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
@@ -28,40 +28,36 @@
 	  <form id="add_amen">
 	    <div class="row">
 	      <div class="col">
-	        <label for="name_amen" id="amen">Dodaj sadržaj:</label>
+	        <label for="name_amen" id="amen">Dodaj praznik:</label>
 	      </div>
 	      <div class="col">
-	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="name_amen" name="name_amen" placeholder="Unesite naziv sadržaja">
+	        <input style="width: 250px; margin:0px;" type="date" class="form-control" id="name_amen" name="name_amen" placeholder="Unesite naziv sadržaja">
 	      </div>
 		    <div class="col">
 		      <input type="submit" class="btn btn-primary mb-2 btn-dark-green" value="Dodaj" id="btn_amen">
 		    </div>
 	    </div>
 	  </form>
-	
     </div>
 
-	<div id="table" class="table-editable">
 	<table class="guests" style="background: white;">
 		<tr style="background: gray;">
-			<th style="width:70%;">Naziv sadržaja</th>
-			<th>Brisanje sadržaja</th>
+			<th style="width:70%;">Praznici</th>
+			<th>Uklanjanje praznika</th>
 		</tr>
 		<tr>
-			<td contenteditable="true">TV</td>
+			<td contenteditable="true">25.04.2020.</td>
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 		<tr>
-			<td contenteditable="true">Klima</td>
+			<td contenteditable="true">07.01.2020.</td>
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 		<tr>
-			<td contenteditable="true">WiFi</td>
+			<td contenteditable="true">31.12.2020.</td>
 			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
 		</tr>
 	</table>
-	</div>
-	
 
  <script src="jquery-3.3.1.min.js"></script>
 <!-- jQuery -->

@@ -36,3 +36,7 @@ input[type=submit]#btn_amen{
 	 height: 38px; 
 	 margin: 0px;
 }
+
+.pt-3-half {
+padding-top: 1.4rem;
+}
