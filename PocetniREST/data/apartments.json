@@ -1,0 +1,59 @@
+[ {
+  "id" : 1,
+  "name" : "Sunce",
+  "type" : "WHOLE_APARTMENT",
+  "numberOfRooms" : 2,
+  "numberOfGuests" : 4,
+  "location" : {
+    "latitude" : 100.0,
+    "longitude" : 200.0,
+    "address" : {
+      "country" : "Srbija",
+      "city" : "Beograd",
+      "zipCode" : 22000,
+      "street" : "Pašićeva",
+      "number" : 50
+    }
+  },
+  "rentingDates" : [ "2020-05-01", "2020-05-02", "2020-05-03", "2020-05-04", "2020-05-06", "2020-05-10", "2020-05-11", "2020-05-12", "2020-05-13" ],
+  "availableDates" : [ "2020-05-01", "2020-05-04", "2020-05-06" ],
+  "hostUsername" : "gaga998",
+  "comments" : [ 400 ],
+  "pictures" : [ ],
+  "pricePerNight" : 1500.0,
+  "checkInTime" : "23:47:06.794",
+  "checkOutTime" : "23:47:06.801",
+  "amenities" : [ ],
+  "reservations" : [ ],
+  "active" : true,
+  "deleted" : false
+}, {
+  "id" : 2,
+  "name" : "Mjesec",
+  "type" : "ROOM",
+  "numberOfRooms" : 2,
+  "numberOfGuests" : 4,
+  "location" : {
+    "latitude" : 100.0,
+    "longitude" : 200.0,
+    "address" : {
+      "country" : "Srbija",
+      "city" : "Beograd",
+      "zipCode" : 22000,
+      "street" : "Pašićeva",
+      "number" : 50
+    }
+  },
+  "rentingDates" : [ ],
+  "availableDates" : [ ],
+  "hostUsername" : "gaga998",
+  "comments" : [ ],
+  "pictures" : [ ],
+  "pricePerNight" : 1500.0,
+  "checkInTime" : "23:47:07.090",
+  "checkOutTime" : "23:47:07.090",
+  "amenities" : [ ],
+  "reservations" : [ ],
+  "active" : true,
+  "deleted" : false
+} ]

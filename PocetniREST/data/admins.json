@@ -1,0 +1,17 @@
+[ {
+  "username" : "marko88",
+  "password" : "lozinka",
+  "name" : "Marko",
+  "surname" : "Marković",
+  "gender" : "MALE",
+  "typeOfUser" : "ADMIN",
+  "blocked" : false
+}, {
+  "username" : "zarko65",
+  "password" : "sifra789",
+  "name" : "Žarko",
+  "surname" : "Žarkić",
+  "gender" : "MALE",
+  "typeOfUser" : "ADMIN",
+  "blocked" : false
+} ]

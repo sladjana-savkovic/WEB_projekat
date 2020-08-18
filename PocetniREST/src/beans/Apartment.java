@@ -1,7 +1,5 @@
 package beans;
 
-import java.time.LocalDate;
-import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Apartment {
@@ -11,14 +9,14 @@ public class Apartment {
 	private int numberOfRooms;
 	private int numberOfGuests;
 	private Location location;
-	private ArrayList<LocalDate> rentingDates;
-	private ArrayList<LocalDate> availableDates;
+	private ArrayList<String> rentingDates;
+	private ArrayList<String> availableDates;
 	private String hostUsername;
-	private ArrayList<Comment> comments;
+	private ArrayList<Integer> comments;
 	private ArrayList<String> pictures;
 	private double pricePerNight;
-	private LocalTime checkInTime;
-	private LocalTime checkOutTime;
+	private String checkInTime;
+	private String checkOutTime;
 	private boolean isActive;
 	private ArrayList<Integer> amenities;
 	private ArrayList<Integer> reservations;
@@ -26,19 +24,19 @@ public class Apartment {
 	
 	public Apartment() {}
 	
-	public Apartment(int id,String name, TypeOfApartment type, int numberOfRooms, int numberOfGuests, Location location, String hostUsername,
-			double pricePerNight, LocalTime checkInTime,
-			LocalTime checkOutTime, boolean isActive, boolean isDeleted) {
+	public Apartment(int id, String name, TypeOfApartment type, int numberOfRooms, int numberOfGuests,
+			Location location, String hostUsername, double pricePerNight,
+			String checkInTime, String checkOutTime, boolean isActive, boolean isDeleted) {
 		this.id = id;
 		this.name = name;
 		this.type = type;
 		this.numberOfRooms = numberOfRooms;
 		this.numberOfGuests = numberOfGuests;
 		this.location = location;
-		this.rentingDates = new ArrayList<LocalDate>();
-		this.availableDates = new ArrayList<LocalDate>();
+		this.rentingDates = new ArrayList<String>();
+		this.availableDates = new ArrayList<String>();
 		this.hostUsername = hostUsername;
-		this.comments = new ArrayList<Comment>();
+		this.comments = new ArrayList<Integer>();
 		this.pictures = new ArrayList<String>();
 		this.pricePerNight = pricePerNight;
 		this.checkInTime = checkInTime;
@@ -50,7 +48,6 @@ public class Apartment {
 	}
 
 
-
 	public Apartment(Apartment apartment) {
 		this.id = apartment.id;
 		this.name = apartment.name;
@@ -58,10 +55,10 @@ public class Apartment {
 		this.numberOfRooms = apartment.numberOfRooms;
 		this.numberOfGuests = apartment.numberOfGuests;
 		this.location = apartment.location;
-		this.rentingDates = new ArrayList<LocalDate>();
-		this.availableDates = new ArrayList<LocalDate>();
+		this.rentingDates = new ArrayList<String>();
+		this.availableDates = new ArrayList<String>();
 		this.hostUsername = apartment.hostUsername;
-		this.comments = new ArrayList<Comment>();
+		this.comments = new ArrayList<Integer>();
 		this.pictures = new ArrayList<String>();
 		this.pricePerNight = apartment.pricePerNight;
 		this.checkInTime = apartment.checkInTime;
@@ -120,19 +117,19 @@ public class Apartment {
 		this.location = location;
 	}
 
-	public ArrayList<LocalDate> getRentingDates() {
+	public ArrayList<String> getRentingDates() {
 		return rentingDates;
 	}
 
-	public void setRentingDates(ArrayList<LocalDate> rentingDates) {
+	public void setRentingDates(ArrayList<String> rentingDates) {
 		this.rentingDates = rentingDates;
 	}
 
-	public ArrayList<LocalDate> getAvailableDates() {
+	public ArrayList<String> getAvailableDates() {
 		return availableDates;
 	}
 
-	public void setAvailableDates(ArrayList<LocalDate> availableDates) {
+	public void setAvailableDates(ArrayList<String> availableDates) {
 		this.availableDates = availableDates;
 	}
 
@@ -152,19 +149,19 @@ public class Apartment {
 		this.pricePerNight = pricePerNight;
 	}
 
-	public LocalTime getCheckInTime() {
+	public String getCheckInTime() {
 		return checkInTime;
 	}
 
-	public void setCheckInTime(LocalTime checkInTime) {
+	public void setCheckInTime(String checkInTime) {
 		this.checkInTime = checkInTime;
 	}
 
-	public LocalTime getCheckOutTime() {
+	public String getCheckOutTime() {
 		return checkOutTime;
 	}
 
-	public void setCheckOutTime(LocalTime checkOutTime) {
+	public void setCheckOutTime(String checkOutTime) {
 		this.checkOutTime = checkOutTime;
 	}
 
@@ -192,11 +189,11 @@ public class Apartment {
 		this.reservations = reservations;
 	}
 
-	public ArrayList<Comment> getComments() {
+	public ArrayList<Integer> getComments() {
 		return comments;
 	}
 
-	public void setComments(ArrayList<Comment> comments) {
+	public void setComments(ArrayList<Integer> comments) {
 		this.comments = comments;
 	}
 

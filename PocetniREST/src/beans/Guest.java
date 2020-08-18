@@ -13,8 +13,8 @@ public class Guest extends User{
 		reservations = new ArrayList<Integer>();
 	}
 	
-	public Guest(String username, String password, String name, String surname, Gender gender,boolean isBlocked) {
-		super(username, password, name, surname, gender, TypeOfUser.GUEST,isBlocked);
+	public Guest(String username, String password, String name, String surname, Gender gender) {
+		super(username, password, name, surname, gender, TypeOfUser.GUEST,false);
 		rentedApartments = new ArrayList<Integer>();
 		reservations = new ArrayList<Integer>();
 	}
