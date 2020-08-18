@@ -1,0 +1,28 @@
+[ {
+  "id" : 0,
+  "apartmentId" : 0,
+  "startDate" : "2018-11-01",
+  "numberOfNights" : 3,
+  "totalPrice" : 4000.0,
+  "message" : "Pozdrav, vidimo se",
+  "guestUsername" : "ana967",
+  "status" : "FINISHED"
+}, {
+  "id" : 1,
+  "apartmentId" : 1,
+  "startDate" : "2019-12-01",
+  "numberOfNights" : 2,
+  "totalPrice" : 3000.0,
+  "message" : "",
+  "guestUsername" : "milica967",
+  "status" : "FINISHED"
+}, {
+  "id" : 2,
+  "apartmentId" : 0,
+  "startDate" : "2020-01-01",
+  "numberOfNights" : 2,
+  "totalPrice" : 5000.0,
+  "message" : "Pozdrav, vidimo se",
+  "guestUsername" : "mara967",
+  "status" : "CREATED"
+} ]

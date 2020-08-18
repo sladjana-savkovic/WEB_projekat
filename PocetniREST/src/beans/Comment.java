@@ -5,18 +5,18 @@ public class Comment {
 	private String guestUsername;
 	private int apartmentId;
 	private String description;
-	private int rating;
-	private boolean isApproved;
+	private RatingOfApartment rating;
+	private CommentStatus status;
 	
 	public Comment() {}
 
-	public Comment(int id, String guestUsername, int apartmentId, String description, int rating,boolean isApproved) {
+	public Comment(int id, String guestUsername, int apartmentId, String description, RatingOfApartment rating, CommentStatus status) {
 		this.id = id;
 		this.guestUsername = guestUsername;
 		this.apartmentId = apartmentId;
 		this.description = description;
 		this.rating = rating;
-		this.isApproved = isApproved;
+		this.status = status;
 	}
 	
 	public Comment(Comment comment) {
@@ -25,7 +25,7 @@ public class Comment {
 		this.apartmentId = comment.apartmentId;
 		this.description = comment.description;
 		this.rating = comment.rating;
-		this.isApproved = comment.isApproved;
+		this.status = comment.status;
 	}
 
 	public int getId() {
@@ -60,20 +60,20 @@ public class Comment {
 		this.description = description;
 	}
 
-	public int getRating() {
+	public RatingOfApartment getRating() {
 		return rating;
 	}
 
-	public void setRating(int rating) {
+	public void setRating(RatingOfApartment rating) {
 		this.rating = rating;
 	}
-
-	public boolean isApproved() {
-		return isApproved;
+	
+	public CommentStatus getStatus() {
+		return status;
 	}
 
-	public void setApproved(boolean isApproved) {
-		this.isApproved = isApproved;
+	public void setStatus(CommentStatus status) {
+		this.status = status;
 	}
 	
 }

@@ -2,10 +2,16 @@ package beans;
 
 import java.time.LocalDate;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import dao.LocalDateDeserializer;
+import dao.LocalDateSerializer;
+
 public class Reservation {
 	private int id;
-	private int apartmentId;
-	private LocalDate startDate;
+	private int apartmentId;	
+	private String startDate;
 	private int numberOfNights;
 	private double totalPrice;
 	private String message;
@@ -14,7 +20,7 @@ public class Reservation {
 	
 	public Reservation() {}
 
-	public Reservation(int id, int apartmentId, LocalDate startDate, int numberOfNights, double totalPrice,
+	public Reservation(int id, int apartmentId, String startDate, int numberOfNights, double totalPrice,
 			String message, String guestUsername, ReservationStatus status) {
 		this.id = id;
 		this.apartmentId = apartmentId;
@@ -53,11 +59,11 @@ public class Reservation {
 		this.apartmentId = apartmentId;
 	}
 
-	public LocalDate getStartDate() {
+	public String getStartDate() {
 		return startDate;
 	}
 
-	public void setStartDate(LocalDate startDate) {
+	public void setStartDate(String startDate) {
 		this.startDate = startDate;
 	}
 
