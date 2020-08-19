@@ -5,12 +5,12 @@ public class Comment {
 	private String guestUsername;
 	private int apartmentId;
 	private String description;
-	private RatingOfApartment rating;
+	private int rating;
 	private CommentStatus status;
 	
 	public Comment() {}
 
-	public Comment(int id, String guestUsername, int apartmentId, String description, RatingOfApartment rating, CommentStatus status) {
+	public Comment(int id, String guestUsername, int apartmentId, String description, int rating, CommentStatus status) {
 		this.id = id;
 		this.guestUsername = guestUsername;
 		this.apartmentId = apartmentId;
@@ -60,11 +60,11 @@ public class Comment {
 		this.description = description;
 	}
 
-	public RatingOfApartment getRating() {
+	public int getRating() {
 		return rating;
 	}
 
-	public void setRating(RatingOfApartment rating) {
+	public void setRating(int rating) {
 		this.rating = rating;
 	}
 	
