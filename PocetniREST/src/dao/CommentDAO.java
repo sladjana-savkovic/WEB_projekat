@@ -9,7 +9,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Comment;
 import beans.CommentStatus;
-import beans.RatingOfApartment;
 import beans.Reservation;
 import beans.ReservationStatus;
 
@@ -17,17 +16,19 @@ public class CommentDAO {
 	private String path;
 	private File file;
 	
-	/*
-	public static void main(String[] args) {
 	
-		Comment c1 = new Comment(0, "ana967", 0, "Zadovoljna sam!", RatingOfApartment.EXCELLENT, CommentStatus.CREATED);
-		Comment c2 = new Comment(1, "tara88", 1, "Prosječan apartman", RatingOfApartment.GOOD, CommentStatus.CREATED);
+	/*public static void main(String[] args) {
+	
+		Comment c1 = new Comment(0, "ana967", 0, "Zadovoljna sam!", 5, CommentStatus.CREATED);
+		Comment c2 = new Comment(1, "tara88", 1, "Prosječan apartman", 3, CommentStatus.CREATED);
+		Comment c3 = new Comment(2, "milica967", 1, "Jako loše!!!", 1, CommentStatus.CREATED);
 		
 		ArrayList<Comment> comments = new ArrayList<>();
 		comments.add(c1);
 		comments.add(c2);
 		
-		//CommentDAO cDAO = new CommentDAO();
+		CommentDAO cDAO = new CommentDAO();
+		cDAO.addCommentForApartment(c3);
 		//cDAO.writeInFile(comments);
 		//cDAO.addCommentForApartment(c1);
 	}*/
@@ -58,15 +59,13 @@ public class CommentDAO {
 	}
 	
 	public ArrayList<Comment> getAllComments(){
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		return commentsFromFile;
 	}
 	
 	public ArrayList<Comment> getAllCommentsByApartment(int idApartment){
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		ArrayList<Comment> comments = new ArrayList<>();
 		
 		for(Comment c : commentsFromFile) {
@@ -78,8 +77,7 @@ public class CommentDAO {
 	}
 	
 	public ArrayList<Comment> getApprovedCommentsByApartment(int idApartment){
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		ArrayList<Comment> comments = new ArrayList<>();
 		
 		for(Comment c : commentsFromFile) {
@@ -91,8 +89,7 @@ public class CommentDAO {
 	}
 	
 	public int getLastId() {
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		if(commentsFromFile.size() == 0) {
 			return 0;
 		}
@@ -101,8 +98,7 @@ public class CommentDAO {
 	}
 	
 	public ArrayList<Comment> getCreatedCommentsByApartment(int idApartment){
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		ArrayList<Comment> comments = new ArrayList<>();
 		
 		for(Comment c : commentsFromFile) {
@@ -114,33 +110,30 @@ public class CommentDAO {
 	}
 	
 	public void approveComment(Comment comment) {
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		for(Comment c : commentsFromFile) {
 			if(c.getId() == comment.getId()) {
 				c.setStatus(CommentStatus.APPROVED);
 			}
 		}
-		commentDAO.writeInFile(commentsFromFile);
+		writeInFile(commentsFromFile);
 	}
 	
 	public void disapproveComment(Comment comment) {
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		for(Comment c : commentsFromFile) {
 			if(c.getId() == comment.getId()) {
 				c.setStatus(CommentStatus.DISAPPROVED);
 			}
 		}
-		commentDAO.writeInFile(commentsFromFile);
+		writeInFile(commentsFromFile);
 	}
 	
 	
 	public void addCommentForApartment(Comment comment) {
-		CommentDAO commentDAO = new CommentDAO();
-		ArrayList<Comment> commentsFromFile = commentDAO.readFromFile();
+		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		ReservationDAO reservationDAO = new ReservationDAO();
 		ArrayList<Reservation> reservations = reservationDAO.getReservationsByGuest(comment.getGuestUsername());
@@ -151,7 +144,7 @@ public class CommentDAO {
 				break;
 			}
 		}
-		commentDAO.writeInFile(commentsFromFile);
+		writeInFile(commentsFromFile);
 		
 	}
 	

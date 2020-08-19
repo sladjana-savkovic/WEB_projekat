@@ -1,22 +1,22 @@
 [ {
   "id" : 0,
-  "guestUsername" : "mara98",
+  "guestUsername" : "ana967",
   "apartmentId" : 0,
-  "description" : "Apartman je odličan!",
-  "rating" : "EXCELLENT",
-  "status" : "DISAPPROVED"
+  "description" : "Zadovoljna sam!",
+  "rating" : 5,
+  "status" : "CREATED"
 }, {
   "id" : 1,
   "guestUsername" : "tara88",
   "apartmentId" : 1,
   "description" : "Prosječan apartman",
-  "rating" : "GOOD",
+  "rating" : 3,
   "status" : "CREATED"
 }, {
   "id" : 2,
-  "guestUsername" : "ana967",
-  "apartmentId" : 0,
-  "description" : "Zadovoljna sam!",
-  "rating" : "EXCELLENT",
+  "guestUsername" : "milica967",
+  "apartmentId" : 1,
+  "description" : "Jako loše!!!",
+  "rating" : 1,
   "status" : "CREATED"
 } ]

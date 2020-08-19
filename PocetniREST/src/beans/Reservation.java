@@ -5,9 +5,6 @@ import java.time.LocalDate;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import dao.LocalDateDeserializer;
-import dao.LocalDateSerializer;
-
 public class Reservation {
 	private int id;
 	private int apartmentId;	

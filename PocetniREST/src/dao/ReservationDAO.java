@@ -55,9 +55,8 @@ public class ReservationDAO {
         }
 	}
 	
-	public int getLastId() {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public int getLastId() {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		if(reservationsFromFile.size() == 0) {
 			return 0;
 		}
@@ -65,9 +64,8 @@ public class ReservationDAO {
 		return reservationsFromFile.get(reservationsFromFile.size()-1).getId();
 	}
 	
-	public Reservation getReservationById(int id) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public Reservation getReservationById(int id) {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		
 		for(int i=0; i<reservationsFromFile.size(); i++) {
 			if(reservationsFromFile.get(i).getId() == id) {
@@ -77,9 +75,8 @@ public class ReservationDAO {
 		return null;
 	}
 	
-	public ArrayList<Reservation> getReservationsByGuest(String guestUsername){
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public ArrayList<Reservation> getReservationsByGuest(String guestUsername){		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		ArrayList<Reservation> reservationsByGuest = new ArrayList<>();
 		
 		for(int i=0; i<reservationsFromFile.size(); i++) {
@@ -90,20 +87,17 @@ public class ReservationDAO {
 		return reservationsByGuest;	
 	}
 	
-	public ArrayList<Reservation> getAllReservations(){
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public ArrayList<Reservation> getAllReservations(){		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		return reservationsFromFile;
 	}
 	
 	
 	public ArrayList<Reservation> getReservationByHostsApartments(String hostName){
-		ReservationDAO reservationDAO = new ReservationDAO();
-		//ovde treba da pozovem funkciju iz ApartmentDao.java koja vraca sve apartmane jednog domacina
-		//funckija mi vrati listu svih apartmana, a prima domacinovo korisnicko ime
-		ArrayList<Apartment> apartmentsByHost = new ArrayList<>();
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		ArrayList<Apartment> apartmentsByHost = apartmentDAO.getApartmentsByHost(hostName);
 		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		ArrayList<Reservation> reservationsByHost = new ArrayList<>();
 		for(int i=0; i<apartmentsByHost.size(); i++) {
 			for(int j=0; j<reservationsFromFile.size(); j++) {
@@ -116,18 +110,16 @@ public class ReservationDAO {
 		
 	}
 	
-	public void addNewReservation(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public void addNewReservation(Reservation reservation) {	
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		
 		reservationsFromFile.add(reservation);
 	
-		reservationDAO.writeInFile(reservationsFromFile);	
+		writeInFile(reservationsFromFile);	
 	}
 	
-	public void cancelReservationByGuest(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public void cancelReservationByGuest(Reservation reservation) {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		
 		for(Reservation r : reservationsFromFile) {
 			if(r.getId() == reservation.getId()) {
@@ -138,12 +130,11 @@ public class ReservationDAO {
 			}
 		}
 		
-		reservationDAO.writeInFile(reservationsFromFile);		
+		writeInFile(reservationsFromFile);		
 	}
 	
-	public void acceptReservationByHost(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public void acceptReservationByHost(Reservation reservation) {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		
 		for(Reservation r : reservationsFromFile) {
 			if(r.getId() == reservation.getId()) {
@@ -153,12 +144,11 @@ public class ReservationDAO {
 				}
 			}
 		}
-		reservationDAO.writeInFile(reservationsFromFile);	
+		writeInFile(reservationsFromFile);	
 	}
 	
-	public void refuseReservationByHost(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public void refuseReservationByHost(Reservation reservation) {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		
 		for(Reservation r : reservationsFromFile) {
 			if(r.getId() == reservation.getId()) {
@@ -168,12 +158,11 @@ public class ReservationDAO {
 				}
 			}
 		}
-		reservationDAO.writeInFile(reservationsFromFile);	
+		writeInFile(reservationsFromFile);	
 	}
 
-	public void finishReservationByHost(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();		
-		ArrayList<Reservation> reservationsFromFile = reservationDAO.readFromFile();
+	public void finishReservationByHost(Reservation reservation) {		
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
 			
 		for(Reservation r : reservationsFromFile) {
 			if(r.getId() == reservation.getId()) {
@@ -183,7 +172,7 @@ public class ReservationDAO {
 				}
 			}
 		}
-		reservationDAO.writeInFile(reservationsFromFile);
+		writeInFile(reservationsFromFile);
 	}
 	
 		
