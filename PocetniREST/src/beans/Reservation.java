@@ -1,11 +1,6 @@
 package beans;
 
-import java.time.LocalDate;
-
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-
-public class Reservation {
+public class Reservation implements Comparable<Reservation>{
 	private int id;
 	private int apartmentId;	
 	private String startDate;
@@ -102,6 +97,12 @@ public class Reservation {
 
 	public void setStatus(ReservationStatus status) {
 		this.status = status;
+	}
+
+	@Override
+	public int compareTo(Reservation r) {
+		// TODO Auto-generated method stub
+		return (int) (getTotalPrice() - r.getTotalPrice());
 	}
 	
 }

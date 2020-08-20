@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -16,19 +17,21 @@ public class ReservationDAO {
 	private String path;
 	private File file;
 	
-	/*
-	public static void main(String[] args) {
 	
-		
-		
+	/*public static void main(String[] args) {
+	
 		Reservation r2 = new Reservation(1, 1, "2019-12-01", 2, 3000,
 				"", "milica967", ReservationStatus.ACCEPTED);
 		
 		ReservationDAO reservationDAO = new ReservationDAO();
-			reservationDAO.finishReservationByHost(r2);
+			ArrayList<Reservation> res = reservationDAO.readFromFile();
+			ArrayList<Reservation> res11 = reservationDAO.filterReservationsByStatus(rsrarus);
+	
+			System.out.println(res11.get(0).getId());
+			System.out.println(res11.get(1).getId());
 		
-	}
-	*/
+	}*/
+	
 	
 	public ReservationDAO() {
 		path = "data/reservations.json";
@@ -99,10 +102,10 @@ public class ReservationDAO {
 		
 		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		ArrayList<Reservation> reservationsByHost = new ArrayList<>();
-		for(int i=0; i<apartmentsByHost.size(); i++) {
-			for(int j=0; j<reservationsFromFile.size(); j++) {
-				if(apartmentsByHost.get(i).getId() == reservationsFromFile.get(j).getApartmentId()) {
-					reservationsByHost.add(reservationsFromFile.get(j));
+		for(Apartment a : apartmentsByHost) {
+			for(Reservation r : reservationsFromFile) {
+				if(a.getId() == r.getApartmentId()) {
+					reservationsByHost.add(r);
 				}
 			}
 		}
@@ -175,5 +178,45 @@ public class ReservationDAO {
 		writeInFile(reservationsFromFile);
 	}
 	
+	public ArrayList<Reservation> filterReservationsByStatus(ArrayList<ReservationStatus> status){
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
+		ArrayList<Reservation> filteredReservations = new ArrayList<>();
 		
+		for(Reservation r : reservationsFromFile) {		
+			if(status.contains(r.getStatus())) {
+				filteredReservations.add(r);
+			}	
+		}
+		
+		return filteredReservations;
+	}
+	
+	
+	public ArrayList<Reservation> searchReservationsByGuestUsername(String hostName, String searchText){
+		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
+		ArrayList<Reservation> searchedReservations = new ArrayList<>();
+		
+		if(searchText.equals("")) {
+			return hostsReservations;
+		}
+		
+		for(Reservation r : hostsReservations) {
+			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {
+				searchedReservations.add(r);
+			}
+		}
+		
+		return searchedReservations;	
+	}
+	
+	public ArrayList<Reservation> sortReservationsAscending(){
+		ArrayList<Reservation> sortedReservations = readFromFile();
+		Collections.sort(sortedReservations);
+		return sortedReservations;
+	}
+	public ArrayList<Reservation> sortReservationsDescending(){
+		ArrayList<Reservation> sortedReservations = readFromFile();
+		Collections.reverse(sortedReservations);
+		return sortedReservations;
+	}
 }
