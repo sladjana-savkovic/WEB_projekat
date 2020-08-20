@@ -5,12 +5,14 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Collections;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Address;
+import beans.Amenities;
 import beans.Apartment;
 import beans.Comment;
 import beans.Location;
@@ -59,6 +61,69 @@ public class ApartmentDAO {
 			}
 		}
 		return filtratedApartmens;
+	}
+	
+	private ArrayList<Apartment> getActiveApartments(){
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(a.isActive()) 
+				filteredApartments.add(a);
+		}
+		return filteredApartments;
+	}
+	
+	private ArrayList<Apartment> getInactiveApartments(){
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(!a.isActive()) 
+				filteredApartments.add(a);
+		}
+		return filteredApartments;
+	}
+	
+	private ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(types.contains(a.getType())) {
+				filteredApartments.add(a);
+			}
+			for(int id:a.getAmenities()) {
+				if(amenities.contains(id) && !filteredApartments.contains(a)) {
+					filteredApartments.add(a);
+				}
+			}
+		}
+		
+		return filteredApartments;
+	}
+	
+	private ArrayList<Apartment> filterApartmentsByTypeAmenitiesAndStatus(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities,
+			ArrayList<Boolean> status){
+		
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(types.contains(a.getType())) {
+				filteredApartments.add(a);
+			}
+			for(int id:a.getAmenities()) {
+				if(amenities.contains(id) && !filteredApartments.contains(a)) {
+					filteredApartments.add(a);
+				}
+			}
+			if(status.contains(a.isActive()) && !filteredApartments.contains(a)) {
+				filteredApartments.add(a);
+			}
+		}
+		
+		return filteredApartments;
 	}
 	
 	public void addApartment(Apartment apartment) {
@@ -121,6 +186,89 @@ public class ApartmentDAO {
 			}
 		}
 		writeInFile(apartments);
+	}
+	
+	public void deleteAmenitiesFromAllApartments(int amenitiesId) {
+		ArrayList<Apartment> apartments = readFromFile();
+		for(Apartment a:apartments) {
+			ArrayList<Integer> amenities = a.getAmenities();
+			if(amenities.contains(amenitiesId)) {
+				amenities.remove(amenitiesId);
+			}
+		}
+		writeInFile(apartments);
+	}
+	
+	public ArrayList<Apartment> searchApartments(String location, LocalDate startDate, LocalDate endDate, int minPrice, int maxPrice,
+								int minRooms, int maxRooms, int persons,ArrayList<Apartment> apartments) {
+		
+		ArrayList<Apartment> filtratedApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(!location.equals("") && (a.getLocation().getAddress().getCity().toLowerCase().equals(location.toLowerCase()) || 
+			   a.getLocation().getAddress().getCountry().toLowerCase().equals(location.toLowerCase()))) {
+					filtratedApartments.add(a);
+					System.out.println("Dodalo lokaciju");
+			}
+					
+			if (startDate != null && a.getAvailableDates().contains(startDate.toString()) && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if (startDate != null && !a.getAvailableDates().contains(startDate.toString())  && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko start date");
+				continue;
+			}
+				
+			if (endDate !=null && a.getAvailableDates().contains(endDate.toString()) && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(endDate != null && !a.getAvailableDates().contains(endDate.toString()) && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko end date");
+				continue;
+			}
+				
+			if (minPrice != 0 && a.getPricePerNight() >= minPrice && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(a.getPricePerNight() < minPrice && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko min price");
+				continue;
+			}
+				
+			if (maxPrice != 0 && a.getPricePerNight() <= maxPrice && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(a.getPricePerNight() > maxPrice && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko max price");
+				continue;
+			}
+				
+			if (minRooms != 0 && a.getNumberOfRooms() >= minRooms && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(a.getNumberOfRooms() < minRooms && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko min rooms");
+				continue;
+			}
+			
+			if (maxRooms != 0 && a.getNumberOfRooms() <= maxRooms && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(a.getNumberOfRooms() > maxRooms && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko max rooms");
+				continue;
+			}
+			
+		    if (persons != 0 && a.getNumberOfGuests() == persons && !filtratedApartments.contains(a))
+				filtratedApartments.add(a);
+			else if(a.getNumberOfGuests() != persons && filtratedApartments.contains(a)) {
+				filtratedApartments.remove(a);
+				System.out.println("Ukoloniko persons");
+				continue;
+			}			
+		}
+		
+		return filtratedApartments;
 	}
 	
 	public void initializeAvailableAndRentingDates(int apartmentId, ArrayList<String> dates) {
@@ -203,6 +351,19 @@ public class ApartmentDAO {
 		return differences;
 	}
 	
+	private ArrayList<Apartment> sortApartmentsAscending(){
+		ArrayList<Apartment> sortedApartments = readFromFile();
+		Collections.sort(sortedApartments);
+		return sortedApartments;
+	}
+	
+	private ArrayList<Apartment> sortApartmentsDescending(){
+		ArrayList<Apartment> sortedApartments = readFromFile();
+		Collections.reverse(sortedApartments);
+		return sortedApartments;
+	}
+	
+	
 	private ArrayList<Apartment> readFromFile() {
 		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
 		ObjectMapper mapper = new ObjectMapper();	
@@ -229,7 +390,7 @@ public class ApartmentDAO {
 		apartments.add(new Apartment(1,"Sunce",TypeOfApartment.WHOLE_APARTMENT,2,4,
 				new Location(100,200,new Address("Srbija","Beograd",22000,"Pašićeva",50)),
 				"gaga998",1500,
-				LocalTime.now().toString(),LocalTime.now().toString(),true,false));
+				LocalTime.of(10, 0).toString(),LocalTime.of(14, 0).toString(),true,false));
 		
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		
@@ -243,13 +404,13 @@ public class ApartmentDAO {
 		
 		apartmentDAO.addApartment(new Apartment(2,"Mjesec",TypeOfApartment.ROOM,2,4,
 				new Location(100,200,new Address("Srbija","Beograd",22000,"Pašićeva",50)),
-				"gaga998",1500,
-				LocalTime.now().toString(),LocalTime.now().toString(),true,false));
+				"gaga998",2000,
+				LocalTime.of(10, 0).toString(),LocalTime.of(14, 0).toString(),false,false));
 		
 		apartmentFromFile = apartmentDAO.getApartmentsByHost("sladja997");
 		System.out.println(apartmentFromFile.size());
 		
-		apartmentDAO.addCommentToApartment(new Comment(400,"gaga998",1,"opis",5,true));
+		//apartmentDAO.addCommentToApartment(new Comment(400,"gaga998",1,"opis",5,true));
 		
 		ArrayList<String> initializing = new ArrayList<String>();
 		initializing.add(LocalDate.of(2020, 05, 01).toString());
@@ -284,6 +445,45 @@ public class ApartmentDAO {
 	    
 	    apartmentDAO.reduceAvailableDates(1, LocalDate.of(2020, 05, 10), 4);
 	    
+	    ArrayList<Apartment> filter = apartmentDAO.searchApartments("Beograd", LocalDate.of(2020,05,01), LocalDate.of(2020,05,04), 1000, 1500, 1, 5, 4,
+	    		apartmentDAO.getAllApartments());
+	    
+	    for(Apartment f:filter) {
+	    	System.out.println(f.getId() + " " + f.getName());
+	    }
+	    
+	    System.out.println("-------------------------------------------------------------");
+	    
+	    ArrayList<Apartment> rastuce = apartmentDAO.sortApartmentsAscending();
+	    for(Apartment a:rastuce) {
+	    	System.out.println(a.getId() + " " + a.getPricePerNight());
+	    }
+	    
+	    System.out.println("-------------------------------------------------------------");
+	    
+	    ArrayList<Apartment> opadajuce = apartmentDAO.sortApartmentsDescending();
+	    for(Apartment a:opadajuce) {
+	    	System.out.println(a.getId() + " " + a.getPricePerNight());
+	    }
+	    
+	    System.out.println("-------------------------------------------------------------");
+	    
+	    System.out.println(apartmentDAO.getActiveApartments().get(0).getName());
+	    System.out.println(apartmentDAO.getInactiveApartments().get(0).getName());
+	    
+	    System.out.println("-------------------------------------------------------------");
+	    ArrayList<TypeOfApartment> types = new ArrayList<TypeOfApartment>();
+	    types.add(TypeOfApartment.ROOM);
+	    types.add(TypeOfApartment.WHOLE_APARTMENT);
+	    ArrayList<Integer> amenities = new ArrayList<Integer>();
+	    amenities.add(400);
+	    
+	    ArrayList<Apartment> filteri = apartmentDAO.filterApartmentsByTypeAndAmenities(types, amenities);
+	    
+	    System.out.println(filteri.size());
+	    
+	    System.out.println("-------------------------------------------------------------");
+	   
 		
 	}*/
 

@@ -2,7 +2,7 @@ package beans;
 
 import java.util.ArrayList;
 
-public class Apartment {
+public class Apartment implements Comparable<Apartment>{
 	private int id;
 	private String name;
 	private TypeOfApartment type;
@@ -211,6 +211,11 @@ public class Apartment {
 
 	public void setDeleted(boolean isDeleted) {
 		this.isDeleted = isDeleted;
+	}
+
+	@Override
+	public int compareTo(Apartment a) {
+		return (int) (getPricePerNight() - a.getPricePerNight());
 	}
 	
 }
