@@ -17,7 +17,13 @@ public class GuestDAO {
 	private File file;
 	
 	public GuestDAO() {
-		path = "data/guests.json";
+		/*File data_dir = new File(System.getProperty("catalina.base") + File.separator + "data");
+		if(!data_dir.exists()) {
+			data_dir.mkdir();
+		}
+		path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "guests.json";*/
+		
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "guests.json";
 		file = new File(path);
 	}
 	
@@ -135,6 +141,8 @@ public class GuestDAO {
         guestDao.addRentedApartmentToGuest("mara", 3);
         
         guestDao.editGuest(new Guest("mara","maramica","Marica","Marić",Gender.FEMALE));
+        
+        System.out.println(guestDao.getGuest("pero123").getName() + " ima gost");
         
 	}*/
 

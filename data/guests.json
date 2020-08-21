@@ -21,11 +21,31 @@
 }, {
   "username" : "mara",
   "password" : "maramica",
-  "name" : "Marica",
+  "name" : "Maraica",
   "surname" : "Marić",
   "gender" : "FEMALE",
   "typeOfUser" : "GUEST",
   "rentedApartments" : [ 1, 3 ],
   "reservations" : [ 2 ],
   "blocked" : true
+}, {
+  "username" : "marko",
+  "password" : "marko",
+  "name" : "Marko",
+  "surname" : "Kraljevic",
+  "gender" : "MALE",
+  "typeOfUser" : "GUEST",
+  "rentedApartments" : [ ],
+  "reservations" : [ ],
+  "blocked" : false
+}, {
+  "username" : "darka",
+  "password" : "1234",
+  "name" : "Dara",
+  "surname" : "Daric",
+  "gender" : "FEMALE",
+  "typeOfUser" : "GUEST",
+  "rentedApartments" : [ ],
+  "reservations" : [ ],
+  "blocked" : false
 } ]

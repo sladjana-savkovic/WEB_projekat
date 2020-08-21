@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html>
 <head>
   <meta charset="UTF-8">
@@ -16,9 +15,13 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   
   <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="toastr.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="style_host_page.css">
   <link rel="stylesheet" href="style_admin_page.css">
+  <script src="jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/toastr.min.js"></script>
+  <script  type="text/javascript" src="js/edit_profile.js"></script>
 </head>
 <body id="guests-review">
 
@@ -45,7 +48,7 @@
 	        <label for="name_amen" id="amen">Izmijeni sadržaj:</label>
 	      </div>
 	      <div class="col">
-	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="name_amen" name="name_amen" placeholder="Odaberite sadržaj iz tabele">
+	        <input style="width: 250px; margin:0px;" type="text" class="form-control" id="edit_amen" name="edit_amen" placeholder="Odaberite sadržaj iz tabele">
 	      </div>
 		    <div class="col">
 		      <input type="submit" class="btn btn-primary mb-2 btn-orange" value="Izmijeni" id="btn_amen">

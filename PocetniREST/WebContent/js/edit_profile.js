@@ -1,11 +1,33 @@
 $(document).ready(function() {
 	
-	$('form#registration').submit(function(event) {
+	let username = "mara";
+	
+	$('a#edit_profile').click(function(event){	
+		
+		$.ajax({
+		type:"GET", 
+		url: "rest/guests/" + username,
+		contentType: "application/json",
+		success:function(guest){
+			$('#name').val(guest.name);
+			$('#surname').val(guest.surname);
+			if(guest.gender == "MALE"){
+				$('#male').attr('checked', 'checked');
+			}else{
+				$('#female').attr('checked', 'checked');
+			}
+			$('#psw').val(guest.password);
+			$('#psw-repeat').val(guest.password);
+		}
+	});
+		
+	});
+
+	$('form#edit').submit(function(event) {
 		event.preventDefault();
 		
 		let name = $('#name').val();
 		let surname = $('#surname').val();
-		let username = $('#username').val();
 		let password = $('#psw').val();
 		let password_repeat = $('#psw-repeat').val();
 		let gender = 0;
@@ -24,13 +46,6 @@ $(document).ready(function() {
 			$('#error_name').attr("hidden",true);
 			$('#error_surname').text('Unos prezimena je obavezan');
 			$("#error_surname").attr("hidden",false);
-			return;
-		}
-		
-		if(!username){ 			
-			$('#error_surname').attr("hidden",true);
-			$('#error_username').text('Unos korisničkog imena je obavezan');
-			$("#error_username").attr("hidden",false);
 			return;
 		}
 		
@@ -54,12 +69,10 @@ $(document).ready(function() {
 			$("#error_psw-repeat").attr("hidden",false);
 			return;
 		}
-		
-		$('#error_psw-repeat').hide();
-
+	
 		$.ajax({
 			type: "POST",
-			url: "rest/registration",
+			url: "rest/edit_profile",
 			data: JSON.stringify({ 
 				username: username, 
 				password: password, 
@@ -71,23 +84,15 @@ $(document).ready(function() {
 			success:function(data){
 				$('#error_name').attr("hidden",true);
 				$('#error_surname').attr("hidden",true);
-				$('#error_username').attr("hidden",true);
 				$('#error_psw').attr("hidden",true);
 				$('#error_psw-repeat').attr("hidden",true);
-				
-				toastr["success"]("Uspješno ste se registrovali");
 				$("#close_btn").click();
-				//window.location.href = 'index.html';
+				toastr["success"]("Uspješno ste izmijenili svoje informacije.");
 			},
 			error: function(response){
-				toastr["error"]("Korisničko ime već postoji!");
+				toastr["error"]("Došlo je do greške!");
 			}
-		});
+		});	
 	});
 	
-	$('a#sign_in').click(function(event) {
-		$("#close_btn").click();
-	});
-
-
 });
