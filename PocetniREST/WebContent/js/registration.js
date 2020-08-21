@@ -55,7 +55,7 @@ $(document).ready(function() {
 			return;
 		}
 		
-		$('#error_psw-repeat').hide();
+		$('#error_psw-repeat').attr("hidden",true);
 
 		$.ajax({
 			type: "POST",
@@ -66,7 +66,8 @@ $(document).ready(function() {
 				name: name,
 				surname:surname,
 				gender:gender,
-				typeOfUser:1}),
+				typeOfUser:1,
+				blocked:false}),
 			contentType: "application/json",
 			success:function(data){
 				$('#error_name').attr("hidden",true);

@@ -16,7 +16,7 @@ public class HostDAO {
 	private File file;
 	
 	public HostDAO() {
-		path = "data/hosts.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "hosts.json";
 		file = new File(path);
 	}
 	

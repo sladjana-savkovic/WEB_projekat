@@ -22,6 +22,7 @@
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
   <script  type="text/javascript" src="js/edit_profile.js"></script>
+  <script  type="text/javascript" src="js/admin_amenities.js"></script>
 </head>
 <body id="guests-review">
 
@@ -59,27 +60,16 @@
     </div>
 
 	<div id="table" class="table-editable">
-	<table class="guests" style="background: white;">
+	<table id="amenities" class="guests" style="background: white;">
+		<thead>
 		<tr style="background: gray;">
 			<th style="width:75%;">Naziv sadržaja</th>
 			<th>Izmjena sadržaja</th>
 			<th>Brisanje sadržaja</th>
 		</tr>
-		<tr>
-			<td>TV</td>
-			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
-		<tr>
-			<td>Klima</td>
-			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>	
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
-		<tr>
-			<td>WiFi</td>
-			<td><button class="btn edit_amen"><i class="fas fa-pencil-alt"></i></button></td>		
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
 	</div>
 	

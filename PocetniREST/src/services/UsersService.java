@@ -1,5 +1,7 @@
 package services;
 
+import java.util.ArrayList;
+
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -13,7 +15,9 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
 
 import beans.Guest;
+import beans.Host;
 import dao.GuestDAO;
+import dao.HostDAO;
 
 @Path ("")
 public class UsersService {
@@ -28,10 +32,18 @@ public class UsersService {
 		GuestDAO guestDAO = (GuestDAO) ctx.getAttribute("guestDAO");
 		if (guestDAO == null) {
 			guestDAO = new GuestDAO();
-			ctx.setAttribute("guests", guestDAO);
+			ctx.setAttribute("guestDAO", guestDAO);
 		}
 
 		return guestDAO;
+	}
+	private HostDAO getHostDAO() {
+		HostDAO hostDAO = (HostDAO) ctx.getAttribute("hostDAO");
+		if(hostDAO == null) {
+			hostDAO = new HostDAO();
+			ctx.setAttribute("hostDAO", hostDAO);
+		}
+		return hostDAO;
 	}
 	
 	@POST
@@ -39,12 +51,23 @@ public class UsersService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response registration(Guest guest) {
 		GuestDAO guestDAO = getGuestDAO();
-		
 		if (guestDAO.getGuest(guest.getUsername()) != null) 
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("Korisničko ime je zauzeto. Odaberite drugo korisničko ime").build();
 		
 		guestDAO.addGuest(guest);
+		return Response.ok().build();
+	}
+	
+	@POST
+	@Path("/host_add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response addHost(Host host) {
+		HostDAO hostDAO = getHostDAO();
+		if(hostDAO.getHost(host.getUsername()) != null)
+			return Response.status(Response.Status.BAD_REQUEST)
+					.entity("Korisničko ime je zauzeto. Odaberite drugo korisničko ime").build();
+		hostDAO.addHost(host);
 		return Response.ok().build();
 	}
 	
@@ -64,5 +87,32 @@ public class UsersService {
 		return guestDAO.getGuest(username);
 	}
 	
+	@GET
+	@Path("/guests")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Guest> getAllGuests(){
+		GuestDAO guestDAO = getGuestDAO();
+		return guestDAO.getAllGuests();
+	}
 	
+	@GET 
+	@Path("/hosts")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Host> getAllHosts(){
+		HostDAO hostDAO = getHostDAO();
+		return hostDAO.getAllHosts();
+	}
+	
+	@POST
+	@Path("/users_block")
+	public Response blockUser(String username) {	
+		GuestDAO guestDAO = getGuestDAO();
+		HostDAO hostDAO = getHostDAO();
+		if(guestDAO.getGuest(username) != null) {
+			guestDAO.blockGuest(username);
+		}else {
+			hostDAO.blockHost(username);
+		}
+		return Response.status(200).build();
+	}
 }
