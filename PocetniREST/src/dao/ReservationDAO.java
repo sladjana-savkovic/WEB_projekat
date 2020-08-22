@@ -34,7 +34,7 @@ public class ReservationDAO {
 	
 	
 	public ReservationDAO() {
-		path = "data/reservations.json";
+		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "reservations.json";
 		file = new File(path);
 	}
 	
@@ -201,7 +201,7 @@ public class ReservationDAO {
 		}
 		
 		for(Reservation r : hostsReservations) {
-			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {
+			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {				
 				searchedReservations.add(r);
 			}
 		}

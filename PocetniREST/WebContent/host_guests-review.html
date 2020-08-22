@@ -22,22 +22,23 @@
   <link rel="stylesheet" href="style_admin_page.css">
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
+  <script  type="text/javascript" src="js/host_guest-review.js"></script>
 </head>
 <body id="guests-review">
   <script src="host_navbar.js"></script>
 
 	<div id="border" style="background: white; width: 50%; margin:auto; margin-top: 30px;">
   <h3 style="text-align: center;">Pretražite goste</h3>
-  <form class="form-inline" style="margin-left: 50px;">
+  <form id="search_guests" class="form-inline" style="margin-left: 50px;">
   	<div>
       <label class="help">Korisničko ime</label>
- 	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime"/>
+ 	  <input id="name_for_search" type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime"/>
   	</div>
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
-  		<select class="mdb-select md-form colorful-select dropdown-primary" id="user_type">
-		  <option value="male" selected>Muški</option>
-		  <option value="female">Ženski</option>
+  		<select id="gender_for_search" class="mdb-select md-form colorful-select dropdown-primary combo">
+		  <option value="male" id="male_search" selected>Muški</option>
+		  <option value="female" id="female_search">Ženski</option>
 		</select>
     </div>
   	<div>
@@ -46,25 +47,30 @@
   </form>
   </div>
 
-	<table class="guests" style="background: white;">
+	<table class="guests" style="background: white;" id="guests_of_host">
+		<thead>
 		<tr style="border:1px solid gray; background: gray;">
 			<th>Ime</th>
 			<th>Prezime</th>
-			<th>Pol</th>
-			<th>Korisničko ime</th>
+			<th>Pol</th>			
+			<th>Korisničko ime</th>		
 		</tr>
-		<tr>
-			<td>Marko</td>
-			<td>Marković</td>
-			<td>Muški</td>
-			<td>marko</td>
+		</thead>
+		<tbody>
+		</tbody>
+	</table>
+	
+	<table class="guests" style="background: white;" id="searched_guests_of_host" hidden="true">
+		<thead>
+		<tr style="border:1px solid gray; background: gray;">
+			<th>Ime</th>
+			<th>Prezime</th>
+			<th>Pol</th>			
+			<th>Korisničko ime</th>		
 		</tr>
-		<tr>
-			<td>Sava</td>
-			<td>Savić</td>
-			<td>Muški</td>
-			<td>savaa</td>
-		</tr>
+		</thead>
+		<tbody>
+		</tbody>
 	</table>
 
  <script src="jquery-3.3.1.min.js"></script>

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import beans.Apartment;
 import beans.Gender;
 import beans.Guest;
 
@@ -23,7 +24,7 @@ public class GuestDAO {
 		}
 		path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "guests.json";*/
 		
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "guests.json";
+		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "guests.json";
 		file = new File(path);
 	}
 	
@@ -37,6 +38,25 @@ public class GuestDAO {
 		return null;
 	}
 	
+	public ArrayList<Guest> getGuestsByHost(String username){
+		ArrayList<Guest> guests = readFromFile();
+		ArrayList<Guest> guestsOfHost = new ArrayList<>();
+		
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		ArrayList<Apartment> apartments = apartmentDAO.getApartmentsByHost(username);
+		
+		for(Guest g : guests) {
+			for(int i : g.getRentedApartments()) {
+				if(apartmentDAO.getApartment(i).getHostUsername().equals(username)) {
+					guestsOfHost.add(g);
+					break;
+				}
+			}
+		}
+		return guestsOfHost;
+	}
+	
+	
 	public ArrayList<Guest> getGuestsByUsernameAndGender(String guestUsername,Gender gender){
 		ArrayList<Guest> guests = readFromFile();
 		ArrayList<Guest> filtratedGuests = new ArrayList<Guest>();
@@ -49,6 +69,20 @@ public class GuestDAO {
 		}
 		return filtratedGuests;
 	}
+	//TODO ove dvije iste metode spojiti u jednu 
+	public ArrayList<Guest> getHostsGuestsByUsernameAndGender(String hostUsername, String guestUsername,Gender gender){
+		ArrayList<Guest> guests = getGuestsByHost(hostUsername);
+		ArrayList<Guest> filtratedGuests = new ArrayList<Guest>();
+		for(Guest g:guests) {
+			if(guestUsername.equals(" ") && g.getGender() == gender) {
+				filtratedGuests.add(g);
+			}
+			else if(!guestUsername.equals(" ") & g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender) 
+				filtratedGuests.add(g);
+		}
+		return filtratedGuests;
+	}
+	
 	
 	public ArrayList<Guest> getAllGuests(){
 		ArrayList<Guest> guests = readFromFile();

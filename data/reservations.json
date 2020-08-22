@@ -5,7 +5,7 @@
   "numberOfNights" : 3,
   "totalPrice" : 4000.0,
   "message" : "Pozdrav, vidimo se",
-  "guestUsername" : "ana967",
+  "guestUsername" : "mara",
   "status" : "FINISHED"
 }, {
   "id" : 1,
@@ -14,15 +14,15 @@
   "numberOfNights" : 2,
   "totalPrice" : 3000.0,
   "message" : "",
-  "guestUsername" : "milica967",
-  "status" : "FINISHED"
+  "guestUsername" : "pero123",
+  "status" : "ACCEPTED"
 }, {
   "id" : 2,
-  "apartmentId" : 0,
+  "apartmentId" : 1,
   "startDate" : "2020-01-01",
   "numberOfNights" : 2,
   "totalPrice" : 5000.0,
   "message" : "Pozdrav, vidimo se",
-  "guestUsername" : "mara967",
+  "guestUsername" : "mika789",
   "status" : "CREATED"
 } ]

@@ -101,6 +101,19 @@ public class UsersService {
 	}
 	
 	@GET
+	@Path("/hosts_guests/search/{username}/{gender}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Guest> searchHostsGuests(@PathParam("username") String username,@PathParam("gender") String gender){
+		GuestDAO guestDAO = getGuestDAO();
+		Gender g = Gender.MALE;
+		if(gender.equals("female")) {
+			g = Gender.FEMALE;
+		}
+		//umjesto gaga998 ide username ulogovang gosta
+		return guestDAO.getHostsGuestsByUsernameAndGender("gaga998",username, g);
+	}
+	
+	@GET
 	@Path("/hosts/search/{username}/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Host> searchHosts(@PathParam("username") String username,@PathParam("gender") String gender){
@@ -118,6 +131,15 @@ public class UsersService {
 	public ArrayList<Guest> getAllGuests(){
 		GuestDAO guestDAO = getGuestDAO();
 		return guestDAO.getAllGuests();
+	}
+	
+	@GET
+	@Path("/hosts_guests")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Guest> getHostsGuests(){
+		GuestDAO guestDAO = getGuestDAO();
+		//username ulogovanog gosta
+		return guestDAO.getGuestsByHost("gaga998");
 	}
 	
 	@GET 
