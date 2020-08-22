@@ -25,28 +25,28 @@
   <script  type="text/javascript" src="js/edit_profile.js"></script>
   <script  type="text/javascript" src="js/admin_users-review.js"></script>
 </head>
-<body id="guests-review">
+  <body id="guests-review">
   <script src="admin_navbar.js"></script>
 
 	<div id="border" style="background: white; width: 65%; margin:auto; margin-top: 30px;">
   <h3 style="text-align: center;">Pretražite korisnike</h3>
-  <form class="form-inline" style="margin-left: 50px;">
+  <form class="form-inline" style="margin-left: 50px;" id="search_users">
   	<div>
       <label class="help">Korisničko ime</label>
- 	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime"/>
+ 	  <input type="text" class="form-control" style="width: 200px" placeholder="Unesite korisničko ime" id="username_search"/>
   	</div>
   	<div style="margin-left: 20px;">
   		<label class="help">Uloga</label>
-  		<select class="mdb-select md-form colorful-select dropdown-primary" id="user_type">
-		  <option value="guest" selected>Gost</option>
-		  <option value="host">Domaćin</option>
+  		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="user_type">
+		  <option value="guest" selected id="guest_search">Gost</option>
+		  <option value="host" id="host_search">Domaćin</option>
 		</select>
     </div>
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
-  		<select class="mdb-select md-form colorful-select dropdown-primary" id="user_type">
-		  <option value="male" selected>Muški</option>
-		  <option value="female">Ženski</option>
+  		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="gender_type">
+		  <option value="male" id="male_search" selected>Muški</option>
+		  <option value="female" id="female_search">Ženski</option>
 		</select>
     </div>
   	<div>

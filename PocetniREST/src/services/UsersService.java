@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
 
+import beans.Gender;
 import beans.Guest;
 import beans.Host;
 import dao.GuestDAO;
@@ -88,6 +89,30 @@ public class UsersService {
 	}
 	
 	@GET
+	@Path("/guests/search/{username}/{gender}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Guest> searchGuests(@PathParam("username") String username,@PathParam("gender") String gender){
+		GuestDAO guestDAO = getGuestDAO();
+		Gender g = Gender.MALE;
+		if(gender.equals("female")) {
+			g = Gender.FEMALE;
+		}
+		return guestDAO.getGuestsByUsernameAndGender(username, g);
+	}
+	
+	@GET
+	@Path("/hosts/search/{username}/{gender}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Host> searchHosts(@PathParam("username") String username,@PathParam("gender") String gender){
+		HostDAO hostDAO = getHostDAO();
+		Gender g = Gender.MALE;
+		if(gender.equals("female")){
+			g = Gender.FEMALE;
+		}
+		return hostDAO.getHostsByUsernameAndGender(username, g);
+	}
+	
+	@GET
 	@Path("/guests")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Guest> getAllGuests(){
@@ -115,4 +140,5 @@ public class UsersService {
 		}
 		return Response.status(200).build();
 	}
+
 }

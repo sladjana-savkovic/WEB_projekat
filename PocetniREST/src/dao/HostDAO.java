@@ -34,6 +34,19 @@ public class HostDAO {
 		return hosts;
 	}
 	
+	public ArrayList<Host> getHostsByUsernameAndGender(String hostUsername, Gender gender){
+		ArrayList<Host> hosts = readFromFile();
+		ArrayList<Host> filtratedHosts = new ArrayList<Host>();
+		for(Host h:hosts) {
+			if(hostUsername.equals(" ") && h.getGender() == gender) {
+				filtratedHosts.add(h);
+			}
+			else if(!hostUsername.equals(" ") && h.getUsername().toLowerCase().contains(hostUsername.toLowerCase()) && h.getGender() == gender)
+				filtratedHosts.add(h);
+		}
+		return filtratedHosts;
+	}
+	
 	public void editHost(Host host) {
 		ArrayList<Host> hosts = readFromFile();
 		for(Host h:hosts) {

@@ -33,7 +33,7 @@ public class AmenitiesDAO {
 	}*/
 	
 	public AmenitiesDAO() {
-		path = "data/amenities.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "amenities.json";
 		file = new File(path);
 	}
 	
@@ -62,7 +62,6 @@ public class AmenitiesDAO {
 		if(amenitiesFromFile.size() == 0) {
 			return 0;
 		}
-		
 		return amenitiesFromFile.get(amenitiesFromFile.size()-1).getId();
 	}
 	
@@ -78,7 +77,12 @@ public class AmenitiesDAO {
 	
 	public ArrayList<Amenities> getAllAmenities(){
 		ArrayList<Amenities> amenitiesFromFile = readFromFile();
-		return amenitiesFromFile;
+		ArrayList<Amenities> retVal = new ArrayList<Amenities>();
+		for(Amenities a:amenitiesFromFile) {
+			if(!a.isDeleted())
+				retVal.add(a);
+		}
+		return retVal;
 	}
 	
 	public void addNewAmenities(Amenities amenities) {
@@ -89,11 +93,11 @@ public class AmenitiesDAO {
 		writeInFile(amenitiesFromFile);
 	}
 	
-	public void editNameOfAmenities(Amenities amenities, String newName) {
+	public void editNameOfAmenities(Amenities amenities) {
 		ArrayList<Amenities> amenitiesFromFile = readFromFile();
 		for(Amenities a: amenitiesFromFile) {
 			if(a.getId() == amenities.getId()) {
-				a.setName(newName);
+				a.setName(amenities.getName());
 				break;
 			}
 		}

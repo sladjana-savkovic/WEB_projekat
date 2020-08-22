@@ -37,6 +37,19 @@ public class GuestDAO {
 		return null;
 	}
 	
+	public ArrayList<Guest> getGuestsByUsernameAndGender(String guestUsername,Gender gender){
+		ArrayList<Guest> guests = readFromFile();
+		ArrayList<Guest> filtratedGuests = new ArrayList<Guest>();
+		for(Guest g:guests) {
+			if(guestUsername.equals(" ") && g.getGender() == gender) {
+				filtratedGuests.add(g);
+			}
+			else if(!guestUsername.equals(" ") & g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender) 
+				filtratedGuests.add(g);
+		}
+		return filtratedGuests;
+	}
+	
 	public ArrayList<Guest> getAllGuests(){
 		ArrayList<Guest> guests = readFromFile();
 		return guests;

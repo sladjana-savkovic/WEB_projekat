@@ -106,7 +106,9 @@ $(document).ready(function() {
 				
 				toastr["success"]("Uspješno ste dodali domaćina");
 				$("#close_btn").click();
-				window.location.href = 'admin_users-review.html';
+				
+				setTimeout(function(){
+					location.reload(); }, 500); 
 			},
 			error: function(response){
 				toastr["error"]("Korisničko ime već postoji!");
@@ -114,6 +116,50 @@ $(document).ready(function() {
 		});
 	});
 	
+	$('form#search_users').submit(function(event) {
+		event.preventDefault();
+		
+		let username = $('#username_search').val();
+		let user_type = $('#user_type option:selected').val();
+		let gender_type = $('#gender_type option:selected').val();
+		
+		if(!username){
+			username = " ";
+		}
+		
+		if(user_type == "host"){
+			$.ajax({
+				type:"GET", 
+				url: "rest/hosts/search/" + username + "/" + gender_type,
+				contentType: "application/json",
+				success:function(hosts){
+					$('#users tbody').empty();
+					for (let h of hosts) {
+						adduserTr(h);
+					}
+				},
+				error:function(){
+					console.log('error search hosts');
+				}
+			});
+		}
+		else if(user_type == "guest"){
+			$.ajax({
+				type:"GET", 
+				url: "rest/guests/search/" + username + "/" + gender_type,
+				contentType: "application/json",
+				success:function(guests){
+					$('#users tbody').empty();
+					for (let g of guests) {
+						adduserTr(g);
+					}
+				},
+				error:function(){
+					console.log('error search guests');
+				}
+			});
+		}
+	});
 });
 
 function adduserTr(user) {
@@ -151,7 +197,7 @@ function blockUser(username){
 		type:"POST",
 		data: username,
 		success: function(){
-			setTimeout(function(){// 
+			setTimeout(function(){
 		           location.reload(); 
 		      }, 50); 
 		},

@@ -11,7 +11,7 @@ button#add_host{
 	margin-top: 30px; 
 	color: white;
 }
-select#user_type{
+select.combo{
 	width: 200px; 
 	height: 38px; 
 	padding: 0px;
