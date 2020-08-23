@@ -97,13 +97,11 @@ h2#title-active{
 
 .yes{
 	color: green; 
-	left: 610px;
 }
 .no{
 	 color: red; 
-	 left:280px;
 }
-div#comments{
+div.comments{
 	background-color: white; 
 	position: absolute; 
 	top: 200px; 

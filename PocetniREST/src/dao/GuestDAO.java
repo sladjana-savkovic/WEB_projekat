@@ -24,7 +24,7 @@ public class GuestDAO {
 		}
 		path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "guests.json";*/
 		
-		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "guests.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "guests.json";
 		file = new File(path);
 	}
 	
@@ -36,6 +36,14 @@ public class GuestDAO {
 				return guest;
 		}
 		return null;
+	}
+	
+	public boolean checkPassword(String guestUsername,String password) {
+		Guest guest = getGuest(guestUsername);
+		if(guest == null || !guest.getPassword().equals(password))
+			return false;
+		
+		return true;
 	}
 	
 	public ArrayList<Guest> getGuestsByHost(String username){

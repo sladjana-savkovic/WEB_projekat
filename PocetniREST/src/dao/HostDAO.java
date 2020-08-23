@@ -29,6 +29,14 @@ public class HostDAO {
 		return null;
 	}
 	
+	public boolean checkPassword(String hostUsername,String password) {
+		Host host = getHost(hostUsername);
+		if(host == null || !host.getPassword().equals(password))
+			return false;
+		
+		return true;
+	}
+	
 	public ArrayList<Host> getAllHosts(){
 		ArrayList<Host> hosts = readFromFile();
 		return hosts;

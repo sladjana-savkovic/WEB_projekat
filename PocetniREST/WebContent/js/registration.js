@@ -78,7 +78,7 @@ $(document).ready(function() {
 				
 				toastr["success"]("Uspješno ste se registrovali");
 				$("#close_btn").click();
-				//window.location.href = 'index.html';
+				window.location.href = 'guest_new-reservation.html';
 			},
 			error: function(response){
 				toastr["error"]("Korisničko ime već postoji!");
@@ -89,6 +89,5 @@ $(document).ready(function() {
 	$('a#sign_in').click(function(event) {
 		$("#close_btn").click();
 	});
-
 
 });

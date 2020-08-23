@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -14,11 +15,14 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
 
+import beans.Admin;
 import beans.Gender;
 import beans.Guest;
 import beans.Host;
+import dao.AdminDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
+import dto.LoginUserDTO;
 
 @Path ("")
 public class UsersService {
@@ -45,6 +49,15 @@ public class UsersService {
 			ctx.setAttribute("hostDAO", hostDAO);
 		}
 		return hostDAO;
+	}
+	
+	private AdminDAO getAdminDAO() {
+		AdminDAO adminDAO = (AdminDAO) ctx.getAttribute("adminDAO");
+		if(adminDAO == null) {
+			adminDAO = new AdminDAO();
+			ctx.setAttribute("adminDAO", adminDAO);
+		}
+		return adminDAO;
 	}
 	
 	@POST
@@ -161,6 +174,66 @@ public class UsersService {
 			hostDAO.blockHost(username);
 		}
 		return Response.status(200).build();
+	}
+	
+	@POST
+	@Path("/signin")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_HTML)
+	public Response signIn(LoginUserDTO user) {
+		String username = user.getUsername();
+		String password = user.getPassword();
+		
+		GuestDAO guestDAO = getGuestDAO();
+		HostDAO hostDAO = getHostDAO();
+		AdminDAO adminDAO = getAdminDAO();
+		
+		if(guestDAO.getGuest(username) != null) {
+			if(!guestDAO.checkPassword(username, password)) {
+					return Response.status(Response.Status.BAD_REQUEST)
+									.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
+			}else {
+				Guest guest = guestDAO.getGuest(username);
+				request.getSession().setAttribute("loggedUser", guest);
+				return Response.ok().entity("guest_new-reservation.html").build();
+			}
+		}
+		
+		else if(hostDAO.getHost(username) != null) {
+			if(!hostDAO.checkPassword(username, password)) {
+				return Response.status(Response.Status.BAD_REQUEST)
+								.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
+			}else {
+				Host host = hostDAO.getHost(username);
+				request.getSession().setAttribute("loggedUser", host);
+				return Response.ok().entity("host_guests-review.html").build();	
+			}
+		}
+		
+		else if(adminDAO.getAdmin(username) != null) {
+			if(!adminDAO.checkPassword(username, password)) {
+				return Response.status(Response.Status.BAD_REQUEST)
+								.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
+			}else {
+				Admin admin = adminDAO.getAdmin(username);
+				request.getSession().setAttribute("loggedUser", admin);
+				return Response.ok().entity("admin_apartments.html").build();	
+			}
+		}
+		
+		return Response.status(Response.Status.BAD_REQUEST)
+				.entity("Korisničko ime ne postoji. Pokušajte ponovo.").build();
+	}
+	
+	@GET
+	@Path("/signout")
+	@Produces(MediaType.TEXT_HTML)
+	public Response signOut() {
+		HttpSession session = request.getSession();
+		if(session != null && session.getAttribute("loggedUser") != null) {
+			session.invalidate();
+		}
+		return Response.ok().build();
 	}
 
 }

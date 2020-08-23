@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	checkLoggedUser();
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/amenities",
@@ -136,5 +138,20 @@ function editAmenities(id){
 			}
 		});
 		
+	});
+}
+
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/admin",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('#admin_amenities').hide();
+			setTimeout(function(){ 
+				window.history.back();
+			}, 500);
+			toastr["error"](jqXHR.responseText);
+		}
 	});
 }

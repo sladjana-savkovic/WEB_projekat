@@ -8,7 +8,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Admin;
-import beans.Gender;
 
 
 public class AdminDAO {
@@ -17,7 +16,7 @@ public class AdminDAO {
 	private File file;
 	
 	public AdminDAO() {
-		path = "data/admins.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "admins.json";
 		file = new File(path);
 	}
 	
@@ -28,6 +27,14 @@ public class AdminDAO {
 				return admin;
 		}
 		return null;
+	}
+	
+	public boolean checkPassword(String adminUsername,String password) {
+		Admin admin = getAdmin(adminUsername);
+		if(admin == null || !admin.getPassword().equals(password))
+			return false;
+		
+		return true;
 	}
 	
 	public void editAdmin(Admin admin) {

@@ -1,6 +1,6 @@
 document.write(`
 		
-  <!--Modal: modalConfirmDelete-->
+  <!--Modal: modalSignOut-->
 	<div class="modal fade" id="modalSignOut" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
 	  aria-hidden="true">
 	  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
@@ -18,14 +18,14 @@ document.write(`
 	
 	      <!--Footer-->
 	      <div class="modal-footer flex-center">
-	        <a href="index.html" class="btn  btn-outline-danger">Da</a>
+	        <a href="javascript:signOut();" class="btn  btn-outline-danger">Da</a>
 	        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal">Ne</a>
 	      </div>
 	    </div>
 	    <!--/.Content-->
 	  </div>
 	</div>
-<!--Modal: modalConfirmDelete-->
+<!--Modal: modalSignOut-->
 
   <div class="modal fade" id="modalEditProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
   aria-hidden="true">

@@ -34,7 +34,7 @@ public class CommentDAO {
 	}*/
 	
 	public CommentDAO() {
-		path = "data/comments.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "comments.json";
 		file = new File(path);
 	}
 	
@@ -109,23 +109,25 @@ public class CommentDAO {
 		return comments;
 	}
 	
-	public void approveComment(Comment comment) {
+	public void approveComment(int commentId) {
 		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		for(Comment c : commentsFromFile) {
-			if(c.getId() == comment.getId()) {
+			if(c.getId() == commentId) {
 				c.setStatus(CommentStatus.APPROVED);
+				break;
 			}
 		}
 		writeInFile(commentsFromFile);
 	}
 	
-	public void disapproveComment(Comment comment) {
+	public void disapproveComment(int commentId) {
 		ArrayList<Comment> commentsFromFile = readFromFile();
 		
 		for(Comment c : commentsFromFile) {
-			if(c.getId() == comment.getId()) {
+			if(c.getId() == commentId) {
 				c.setStatus(CommentStatus.DISAPPROVED);
+				break;
 			}
 		}
 		writeInFile(commentsFromFile);
@@ -145,7 +147,16 @@ public class CommentDAO {
 			}
 		}
 		writeInFile(commentsFromFile);
-		
+	}
+	
+	public ArrayList<Comment> getAllCreatedComments(){
+		ArrayList<Comment> commentsFromFile = readFromFile();
+		ArrayList<Comment> createdComments = new ArrayList<Comment>();
+		for(Comment c:commentsFromFile) {
+			if(c.getStatus() == CommentStatus.CREATED)
+				createdComments.add(c);
+		}
+		return createdComments;
 	}
 	
 }
