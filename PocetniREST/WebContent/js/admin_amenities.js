@@ -147,11 +147,10 @@ function checkLoggedUser(){
 		type: "GET",
 		url: "rest/verification/admin",
 		error:  function(jqXHR, textStatus, errorThrown)  {
-			$('#admin_amenities').hide();
-			setTimeout(function(){ 
+			$('#admin_amenities').hide(function() {
+				alert(jqXHR.responseText);
 				window.history.back();
-			}, 500);
-			toastr["error"](jqXHR.responseText);
+			});
 		}
 	});
 }

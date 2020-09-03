@@ -1,25 +1,52 @@
 $(document).ready(function() {
 	
-	let username = "mara";
+	var name="";
+	var surname="";
+	var gender="FEMALE";
+	var username="";
+	var password="";
+	
+	$.ajax({
+		type:"GET", 
+		url: "rest/get_loggedUser",
+		contentType: "application/json",
+		success:function(user){
+			name = user.name;
+			surname = user.surname;
+			if(user.gender == "MALE"){
+				gender = "MALE";
+			}
+			password = user.password;
+			username = user.username;
+			$('#user_navbar').text(username);
+		},
+		error:function(){
+			toastr["error"]("Došlo je do greške prilikom učitavanja korisnika!");
+		}
+	});
+	
 	
 	$('a#edit_profile').click(function(event){	
 		
 		$.ajax({
-		type:"GET", 
-		url: "rest/guests/" + username,
-		contentType: "application/json",
-		success:function(guest){
-			$('#name').val(guest.name);
-			$('#surname').val(guest.surname);
-			if(guest.gender == "MALE"){
-				$('#male').attr('checked', 'checked');
-			}else{
-				$('#female').attr('checked', 'checked');
+			type:"GET", 
+			url: "rest/get_loggedUser",
+			contentType: "application/json",
+			success:function(user){
+				$('#name').val(user.name);
+				$('#surname').val(user.surname);
+				if(user.gender == "MALE"){
+					$('#male').attr('checked', 'checked');
+				}else{
+					$('#female').attr('checked', 'checked');
+				}
+				$('#psw').val(user.password);
+				$('#psw-repeat').val(user.password);
+			},
+			error:function(){
+				toastr["error"]("Došlo je do greške prilikom učitavanja korisnika!");
 			}
-			$('#psw').val(guest.password);
-			$('#psw-repeat').val(guest.password);
-		}
-	});
+		});
 		
 	});
 

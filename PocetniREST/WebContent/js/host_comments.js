@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	checkLoggedUser();
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/comments",
@@ -83,3 +85,17 @@ function disapproveComment(id){
 		}
 	});
 }
+
+function checkLoggedUser(){
+		
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/host",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('body#comments').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
+	});
+};

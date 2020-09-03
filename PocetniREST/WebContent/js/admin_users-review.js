@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	checkLoggedUser();
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/hosts",
@@ -7,7 +9,7 @@ $(document).ready(function() {
 		success:function(hosts){
 			for (let h of hosts) {
 				adduserTr(h);
-			}
+			};
 		},
 		error:function(){
 			console.log('error getting hosts');
@@ -188,7 +190,7 @@ function adduserTr(user) {
 	}
 	
 	$('#users tbody').append(tr);
-}
+};
 
 function blockUser(username){
 	
@@ -203,6 +205,20 @@ function blockUser(username){
 		},
 		error:function(){
 			console.log('error')
+		}
+	})
+};
+
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/admin",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('#users-review').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
 		}
 	})
 }

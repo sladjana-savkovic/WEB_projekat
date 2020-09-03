@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	checkLoggedUser();
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/hosts_guests",
@@ -60,3 +62,16 @@ function adduserTr(user) {
 	$('#guests_of_host tbody').append(tr);
 }
 
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/host",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('body#guests-review').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
+	});
+};

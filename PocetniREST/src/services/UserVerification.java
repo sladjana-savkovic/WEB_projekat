@@ -1,7 +1,5 @@
 package services;
 
-import java.util.ArrayList;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
@@ -29,7 +27,7 @@ public class UserVerification {
 	@Context
 	HttpServletRequest request;
 	
-	@GET
+	/*@GET
 	@Path("/verification/is_logged")
 	@Produces(MediaType.TEXT_HTML)
 	public Response isLoggedIn() {
@@ -39,7 +37,7 @@ public class UserVerification {
 					.entity("Prijavite se da biste pristupili ovoj stranici.").build();
 		}
 		return Response.ok().build();
-	}
+	}*/
 	
 	@GET
 	@Path("/verification/admin")

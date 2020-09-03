@@ -235,5 +235,16 @@ public class UsersService {
 		}
 		return Response.ok().build();
 	}
+	
+	@GET
+	@Path("/get_loggedUser")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Response getLoggedUser() {
+		HttpSession session = request.getSession();
+		if(session.getAttribute("loggedUser") == null) {
+			return Response.status(Response.Status.BAD_REQUEST).build();
+		}
+		return Response.ok().entity(session.getAttribute("loggedUser")).build();
+	}
 
 }

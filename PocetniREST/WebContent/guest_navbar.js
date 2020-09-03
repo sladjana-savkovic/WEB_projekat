@@ -96,7 +96,7 @@ document.write(`
         </a>
         <div class="dropdown-menu dropdown-menu-right dropdown-default"
           aria-labelledby="navbarDropdownMenuLink-333">
-          <p style="margin-left:10px; font-size:15px;"><i>Korisnik: <b>marko88</b></i><p>
+          <p style="margin-left:10px; font-size:15px;"><i>Korisnik: <b id="user_navbar"></b></i><p>
           <a class="dropdown-item" id="edit_profile" href="" data-toggle="modal" data-target="#modalEditProfile">Izmijeni profil</a>
           <a class="dropdown-item" id="sign_out" href="" data-toggle="modal" data-target="#modalSignOut">Odjavi se</a>
         </div>

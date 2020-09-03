@@ -7,4 +7,5 @@ function signOut() {
 			location.href = "index.html";
 		}
 	});
+	
 }
