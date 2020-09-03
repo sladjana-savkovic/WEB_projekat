@@ -30,6 +30,12 @@ $(document).ready(function() {
 		}
 	});
 	
+	$('#cancel_btn').click(function() {
+		$('#cancel_btn').attr("hidden",true);
+		setTimeout(function(){
+			location.reload(); }); 
+	});
+	
 	$('form#host_registration').submit(function(event) {
 		event.preventDefault();
 		
@@ -126,7 +132,17 @@ $(document).ready(function() {
 		let gender_type = $('#gender_type option:selected').val();
 		
 		if(!username){
-			username = " ";
+			username = "null";
+		}
+		if(user_type == ""){
+			user_type = "null";
+		}
+		if(gender_type == ""){
+			gender_type = "null";
+		}
+		
+		if(username == "null" && gender_type == "null" && user_type == "null"){
+			return;
 		}
 		
 		if(user_type == "host"){
@@ -136,6 +152,7 @@ $(document).ready(function() {
 				contentType: "application/json",
 				success:function(hosts){
 					$('#users tbody').empty();
+					$('#cancel_btn').attr("hidden",false);
 					for (let h of hosts) {
 						adduserTr(h);
 					}
@@ -152,12 +169,30 @@ $(document).ready(function() {
 				contentType: "application/json",
 				success:function(guests){
 					$('#users tbody').empty();
+					$('#cancel_btn').attr("hidden",false);
 					for (let g of guests) {
 						adduserTr(g);
 					}
 				},
 				error:function(){
 					console.log('error search guests');
+				}
+			});
+		}
+		else{
+			$.ajax({
+				type:"GET", 
+				url: "rest/guests_hosts/search/" + username + "/" + gender_type,
+				contentType: "application/json",
+				success:function(users){
+					$('#users tbody').empty();
+					$('#cancel_btn').attr("hidden",false);
+					for (let u of users) {
+						adduserTr(u);
+					}
+				},
+				error:function(){
+					console.log('error search users');
 				}
 			});
 		}

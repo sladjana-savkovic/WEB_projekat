@@ -1,5 +1,19 @@
 $(document).ready(function() {
 	
+	/*if (window.history && window.history.pushState) {
+
+		window.history.pushState('forward', null);
+		
+		alert(document.referrer);
+		
+		if(window.location.href == "http://localhost:8800/PocetniREST/index.html"){
+			$(window).on('popstate', function() {
+			      alert('Back button was pressed.');
+			    });
+		}
+
+	  }*/
+	
 	var name="";
 	var surname="";
 	var gender="FEMALE";

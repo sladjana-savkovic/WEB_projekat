@@ -24,24 +24,38 @@ $(document).ready(function() {
 		let gender_type = $('#gender_for_search option:selected').val();
 		
 		if(!username){
-			username = " ";
+			username = "null";
+		}
+		if(gender_type == ""){
+			gender_type = "null";
 		}
 		
+		if(username == "null" && gender_type == "null"){
+			return;
+		}
+		else{
 			$.ajax({
 				type:"GET", 
 				url: "rest/hosts_guests/search/" + username + "/" + gender_type,
 				contentType: "application/json",
 				success:function(hosts_guests){
 					$('#guests_of_host tbody').empty();
+					$('#cancel_btn').attr("hidden",false);
 					for (let g of hosts_guests) {
 						adduserTr(g);
-					}
+					}				
 				},
 				error:function(){
 					console.log('error search guests');
 				}
 			});
-		
+		}
+	});
+	
+	$('#cancel_btn').click(function() {
+		$('#cancel_btn').attr("hidden",true);
+		setTimeout(function(){
+			location.reload(); }); 
 	});
 	
 });

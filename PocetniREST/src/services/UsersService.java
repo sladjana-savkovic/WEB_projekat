@@ -19,6 +19,7 @@ import beans.Admin;
 import beans.Gender;
 import beans.Guest;
 import beans.Host;
+import beans.User;
 import dao.AdminDAO;
 import dao.GuestDAO;
 import dao.HostDAO;
@@ -102,40 +103,94 @@ public class UsersService {
 	}
 	
 	@GET
-	@Path("/guests/search/{username}/{gender}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Guest> searchGuests(@PathParam("username") String username,@PathParam("gender") String gender){
-		GuestDAO guestDAO = getGuestDAO();
-		Gender g = Gender.MALE;
-		if(gender.equals("female")) {
-			g = Gender.FEMALE;
-		}
-		return guestDAO.getGuestsByUsernameAndGender(username, g);
-	}
-	
-	@GET
 	@Path("/hosts_guests/search/{username}/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Guest> searchHostsGuests(@PathParam("username") String username,@PathParam("gender") String gender){
 		GuestDAO guestDAO = getGuestDAO();
+		String u = username;
 		Gender g = Gender.MALE;
-		if(gender.equals("female")) {
-			g = Gender.FEMALE;
+		
+		if(u.equals("null")) {
+			u = null;
 		}
-		//umjesto gaga998 ide username ulogovang gosta
-		return guestDAO.getHostsGuestsByUsernameAndGender("gaga998",username, g);
+		if(gender.equals("female")){
+			g = Gender.FEMALE;
+		}else if(gender.equals("null")) {
+			g = null;
+		}
+		
+		//umjesto gaga998 ide username ulogovang domacina
+		return guestDAO.getHostsGuestsByUsernameAndGender("gaga998",u, g);
+	}
+	
+	@GET
+	@Path("/guests/search/{username}/{gender}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Guest> searchGuests(@PathParam("username") String username,@PathParam("gender") String gender){
+		GuestDAO guestDAO = getGuestDAO();
+		String u = username;
+		Gender g = Gender.MALE;
+		
+		if(u.equals("null")) {
+			u = null;
+		}
+		if(gender.equals("female")){
+			g = Gender.FEMALE;
+		}else if(gender.equals("null")) {
+			g = null;
+		}
+		
+		return guestDAO.getGuestsByUsernameAndGender(u, g);
+	
 	}
 	
 	@GET
 	@Path("/hosts/search/{username}/{gender}")
+	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Host> searchHosts(@PathParam("username") String username,@PathParam("gender") String gender){
 		HostDAO hostDAO = getHostDAO();
+		String u = username;
 		Gender g = Gender.MALE;
+		
+		if(u.equals("null")) {
+			u = null;
+		}
 		if(gender.equals("female")){
 			g = Gender.FEMALE;
+		}else if(gender.equals("null")) {
+			g = null;
 		}
-		return hostDAO.getHostsByUsernameAndGender(username, g);
+		
+		return hostDAO.getHostsByUsernameAndGender(u, g);
+	}
+	
+	@GET
+	@Path("/guests_hosts/search/{username}/{gender}")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> searchGuestsAndHosts(@PathParam("username") String username,@PathParam("gender") String gender){
+		HostDAO hostDAO = getHostDAO();
+		GuestDAO guestDAO = getGuestDAO();
+		String u = username;
+		Gender g = Gender.MALE;
+		
+		if(u.equals("null")) {
+			u = null;
+		}
+		if(gender.equals("female")){
+			g = Gender.FEMALE;
+		}else if(gender.equals("null")) {
+			g = null;
+		}
+		
+		ArrayList<User> retVal = new ArrayList<User>();
+		retVal.addAll(hostDAO.getHostsByUsernameAndGender(u, g));
+		retVal.addAll(guestDAO.getGuestsByUsernameAndGender(u, g));
+		
+		
+		return retVal;
 	}
 	
 	@GET
@@ -151,7 +206,7 @@ public class UsersService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Guest> getHostsGuests(){
 		GuestDAO guestDAO = getGuestDAO();
-		//username ulogovanog gosta
+		//username ulogovanog domacina
 		return guestDAO.getGuestsByHost("gaga998");
 	}
 	

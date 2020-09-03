@@ -7,7 +7,6 @@ import java.util.ArrayList;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import beans.Apartment;
 import beans.Gender;
 import beans.Guest;
 
@@ -51,7 +50,6 @@ public class GuestDAO {
 		ArrayList<Guest> guestsOfHost = new ArrayList<>();
 		
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
-		ArrayList<Apartment> apartments = apartmentDAO.getApartmentsByHost(username);
 		
 		for(Guest g : guests) {
 			for(int i : g.getRentedApartments()) {
@@ -69,11 +67,20 @@ public class GuestDAO {
 		ArrayList<Guest> guests = readFromFile();
 		ArrayList<Guest> filtratedGuests = new ArrayList<Guest>();
 		for(Guest g:guests) {
-			if(guestUsername.equals(" ") && g.getGender() == gender) {
+			if(guestUsername == null && gender == null) {
+				return getAllGuests();
+			}
+			
+			if(guestUsername == null && g.getGender() == gender) {
 				filtratedGuests.add(g);
 			}
-			else if(!guestUsername.equals(" ") & g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender) 
+			else if(gender == null && g.getUsername().toLowerCase().contains(guestUsername.toLowerCase())) {
 				filtratedGuests.add(g);
+			}
+			else if(guestUsername != null && gender != null &&
+					g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender){
+				filtratedGuests.add(g);
+			}
 		}
 		return filtratedGuests;
 	}
@@ -82,10 +89,19 @@ public class GuestDAO {
 		ArrayList<Guest> guests = getGuestsByHost(hostUsername);
 		ArrayList<Guest> filtratedGuests = new ArrayList<Guest>();
 		for(Guest g:guests) {
-			if(guestUsername.equals(" ") && g.getGender() == gender) {
+			if(guestUsername == null && gender == null) {
+				return getGuestsByHost(hostUsername);
+			}
+			
+			if(guestUsername == null && g.getGender() == gender) {
 				filtratedGuests.add(g);
 			}
-			else if(!guestUsername.equals(" ") & g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender) 
+			else if(gender == null && g.getUsername().toLowerCase().contains(guestUsername.toLowerCase())) {
+				filtratedGuests.add(g);
+			}
+			
+			else if(guestUsername != null && gender != null &&
+					g.getUsername().toLowerCase().contains(guestUsername.toLowerCase()) && g.getGender() == gender) 
 				filtratedGuests.add(g);
 		}
 		return filtratedGuests;

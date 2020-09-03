@@ -39,12 +39,14 @@
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
   		<select id="gender_for_search" class="mdb-select md-form colorful-select dropdown-primary combo">
-		  <option value="male" id="male_search" selected>Muški</option>
+  		  <option value="" disabled selected >Odaberite</option>
+		  <option value="male" id="male_search">Muški</option>
 		  <option value="female" id="female_search">Ženski</option>
 		</select>
     </div>
   	<div>
       <button type="submit" class="btn btn-primary mb-2" id="search_btn">Pretraži</button>
+      <button class="block btn del_amen" id="cancel_btn" style="margin-top: 27px;" hidden="true"><i class="fas fa-ban" style="color: red;"></i></button>
     </div>	
   </form>
   </div>

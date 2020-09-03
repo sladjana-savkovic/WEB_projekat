@@ -93,8 +93,7 @@ document.write(`
           aria-haspopup="true" aria-expanded="false">Moji apartmani
         </a>
         <div class="dropdown-menu dropdown-default" aria-labelledby="navbarDropdownMenuLink-333">
-          <a class="dropdown-item" href="host_active-apart.html">Vidi aktivne</a>
-          <a class="dropdown-item" href="host_inactive-apart.html">Vidi neakivne</a>
+          <a class="dropdown-item" href="host_active-apart.html">Pregled apartmana</a>
           <a class="dropdown-item" href="host_add-apart.html">Dodaj novi</a>
         </div>
     </li>

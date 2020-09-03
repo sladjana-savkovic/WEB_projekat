@@ -19,6 +19,8 @@
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="toastr.min.css">
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_host_page.css">
+  <link rel="stylesheet" href="style_admin_page.css">
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
 </head>
@@ -26,7 +28,7 @@
    <script src="host_navbar.js"></script>
   
   <div id="border" style="margin-top: 30px;">
-  <h3 style="text-align: center;">Pretražite aktivne apartmane</h3>
+  <h3 style="text-align: center;">Pretražite apartmane</h3>
   <form class="form-inline">
   	<div>
       <label class="help">Država/Grad</label>
@@ -63,11 +65,22 @@
     	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
    </div>
   
-  <div class="container container_colored" id="filters" style="margin-top: 180px;">
-  <div id="border_filter" class="column">
+  <div class="container container_colored" id="filters" style="margin-top: 180px; height: 590px;">
+  <div id="border_filter" class="column" style="height: 590px;">
   <h5 style="text-align: center; font-weight: bolder; margin-bottom: 20px;" >Filteri</h5>
   
-  <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
+    <h5 style="text-align: left; margin-left: 10px">Status apartmana:</h5>
+  	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="activeFilter">
+    <label class="form-check-label" for="apartmentFilter">Aktivan</label>
+	</div>
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="inactiveFilter">
+    <label class="form-check-label" for="roomFilter">Neaktivan</label>
+	</div>
+	<hr/>
+  
+    <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
   	<div class="form-check">
     <input type="checkbox" class="form-check-input" id="apartmentFilter">
     <label class="form-check-label" for="apartmentFilter">Apartman</label>

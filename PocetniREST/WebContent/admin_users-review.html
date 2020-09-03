@@ -39,19 +39,22 @@
   	<div style="margin-left: 20px;">
   		<label class="help">Uloga</label>
   		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="user_type">
-		  <option value="guest" selected id="guest_search">Gost</option>
+  		  <option value="" disabled selected >Odaberite</option>
+		  <option value="guest" id="guest_search">Gost</option>
 		  <option value="host" id="host_search">Domaćin</option>
 		</select>
     </div>
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
   		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="gender_type">
-		  <option value="male" id="male_search" selected>Muški</option>
+  		  <option value="" disabled selected >Odaberite</option>
+		  <option value="male" id="male_search">Muški</option>
 		  <option value="female" id="female_search">Ženski</option>
 		</select>
     </div>
   	<div>
       <button type="submit" class="btn btn-primary mb-2" id="search_btn">Pretraži</button>
+      <button class="block btn del_amen" id="cancel_btn" style="margin-top: 27px;" hidden="true"><i class="fas fa-ban" style="color: red;"></i></button>
     </div>	
   </form>
   </div>
