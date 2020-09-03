@@ -28,25 +28,15 @@ $(document).ready(function() {
 	
 	$('a#edit_profile').click(function(event){	
 		
-		$.ajax({
-			type:"GET", 
-			url: "rest/get_loggedUser",
-			contentType: "application/json",
-			success:function(user){
-				$('#name').val(user.name);
-				$('#surname').val(user.surname);
-				if(user.gender == "MALE"){
-					$('#male').attr('checked', 'checked');
-				}else{
-					$('#female').attr('checked', 'checked');
-				}
-				$('#psw').val(user.password);
-				$('#psw-repeat').val(user.password);
-			},
-			error:function(){
-				toastr["error"]("Došlo je do greške prilikom učitavanja korisnika!");
-			}
-		});
+		$('#name').val(name);
+		$('#surname').val(surname);
+		if(gender == "MALE"){
+			$('#male').attr('checked', 'checked');
+		}else{
+			$('#female').attr('checked', 'checked');
+		}
+		$('#psw').val(password);
+		$('#psw-repeat').val(password);
 		
 	});
 
