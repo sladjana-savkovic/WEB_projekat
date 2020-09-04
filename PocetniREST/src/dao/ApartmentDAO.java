@@ -47,6 +47,17 @@ public class ApartmentDAO {
 		return apartments;
 	}
 	
+	public ArrayList<Apartment> getUndeletedApartments(){
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<Apartment> undeletedApartments = new ArrayList<Apartment>();
+		
+		for(Apartment a:apartments) {
+			if(!a.isDeleted())
+				undeletedApartments.add(a);
+		}
+		return undeletedApartments;
+	}
+	
 	public ArrayList<Apartment> getApartmentsByHost(String hostUsername){
 		ArrayList<Apartment> allApartments = readFromFile();
 		ArrayList<Apartment> filtratedApartmens = new ArrayList<Apartment>();
@@ -59,7 +70,7 @@ public class ApartmentDAO {
 		return filtratedApartmens;
 	}
 	
-	private ArrayList<Apartment> getActiveApartments(){
+	public ArrayList<Apartment> getActiveApartments(){
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
@@ -70,7 +81,7 @@ public class ApartmentDAO {
 		return filteredApartments;
 	}
 	
-	private ArrayList<Apartment> getInactiveApartments(){
+	public ArrayList<Apartment> getInactiveApartments(){
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
@@ -81,7 +92,7 @@ public class ApartmentDAO {
 		return filteredApartments;
 	}
 	
-	private ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
+	public ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
@@ -99,24 +110,66 @@ public class ApartmentDAO {
 		return filteredApartments;
 	}
 	
-	private ArrayList<Apartment> filterApartmentsByTypeAmenitiesAndStatus(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities,
-			ArrayList<Boolean> status){
+	public ArrayList<Apartment> filterApartmentsByTypeAmenitiesAndStatus(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities,
+			ArrayList<String> status){
 		
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
-			if(types.contains(a.getType())) {
+			
+			if((types.size() != 0 && types.contains(a.getType())) || types.size() == 0){
+				if((status.size() != 0 && a.isActive() && status.contains("active")) 
+						|| (status.size() != 0 && !a.isActive() && status.contains("inactive")) 
+						|| status.size() == 0) {
+					if(amenities.size() != 0) {
+						for(int id:a.getAmenities()) {
+							if(amenities.contains(id) && !filteredApartments.contains(a)) {
+								filteredApartments.add(a);
+								break;
+							}
+						}
+					}
+					else if(amenities.size() == 0 && !filteredApartments.contains(a)) {
+						filteredApartments.add(a);
+					}
+				}
+			}
+			
+			/*if(amenities.size() != 0) {
+				for(int id:a.getAmenities()) {
+					if(amenities.contains(id) && !filteredApartments.contains(a)) {
+						filteredApartments.add(a);
+						break;
+					}
+				}
+			}
+			
+			if(types.size() != 0 && types.contains(a.getType()) 
+			   && ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) 
+			   && !filteredApartments.contains(a)) {
 				filteredApartments.add(a);
 			}
-			for(int id:a.getAmenities()) {
+			else if(types.size() == 0 && ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) && !filteredApartments.contains(a)) {
+				filteredApartments.add(a);
+			}
+			else if(types.size() != 0 && filteredApartments.contains(a)) {
+				filteredApartments.remove(a);
+			}*/
+		
+			
+			/*if(types.contains(a.getType()) 
+					&& (status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) {
+				filteredApartments.add(a);
+			}*/
+			/*for(int id:a.getAmenities()) {
 				if(amenities.contains(id) && !filteredApartments.contains(a)) {
 					filteredApartments.add(a);
 				}
 			}
-			if(status.contains(a.isActive()) && !filteredApartments.contains(a)) {
+			if( ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive()))  && !filteredApartments.contains(a)) {
 				filteredApartments.add(a);
-			}
+			}*/
 		}
 		
 		return filteredApartments;
@@ -347,13 +400,13 @@ public class ApartmentDAO {
 		return differences;
 	}
 	
-	private ArrayList<Apartment> sortApartmentsAscending(){
+	public ArrayList<Apartment> sortApartmentsAscending(){
 		ArrayList<Apartment> sortedApartments = readFromFile();
 		Collections.sort(sortedApartments);
 		return sortedApartments;
 	}
 	
-	private ArrayList<Apartment> sortApartmentsDescending(){
+	public ArrayList<Apartment> sortApartmentsDescending(){
 		ArrayList<Apartment> sortedApartments = readFromFile();
 		Collections.reverse(sortedApartments);
 		return sortedApartments;

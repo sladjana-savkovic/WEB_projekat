@@ -199,6 +199,7 @@ div#sort{
 	left: 50px; 
 	width: 18%; 
 	top: 200px;
+	margin-top: 180px;
 }
 div#filters{
 	width: 18%; 
@@ -206,10 +207,8 @@ div#filters{
 	left:50px; 
 	border: 1px solid black; 
 	top: 420px; 
-	height: 460px;
-}
-div#border_filter{
-	height: 460px;
+	margin-top: 180px;
+	height: auto;
 }
 div#apartments{
 	background-color: white; 
@@ -244,7 +243,7 @@ button#first_highest,button#first_lowest,button#filter{
 button.edit_delete{
 	color: white; 
 	margin-left:50px;
-	top:70px;
+	top:120px;
 	width: 150px;
 }
 button.reservation{

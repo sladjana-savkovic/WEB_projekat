@@ -103,6 +103,14 @@ public class UsersService {
 	}
 	
 	@GET
+	@Path("/hosts/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Host getHost(@PathParam("username") String username) {
+		HostDAO hostDAO = getHostDAO();
+		return hostDAO.getHost(username);
+	}
+	
+	@GET
 	@Path("/hosts_guests/search/{username}/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Guest> searchHostsGuests(@PathParam("username") String username,@PathParam("gender") String gender){
