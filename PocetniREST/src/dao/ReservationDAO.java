@@ -178,8 +178,21 @@ public class ReservationDAO {
 		}
 		writeInFile(reservationsFromFile);
 	}
-	
-	public ArrayList<Reservation> filterReservationsByStatus(ArrayList<ReservationStatus> status){
+	//za domacina
+	public ArrayList<Reservation> filterHostsReservationsByStatus(ArrayList<ReservationStatus> status, String hostName){
+		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
+		ArrayList<Reservation> filteredReservations = new ArrayList<Reservation>();
+		
+		for(Reservation r : hostsReservations) {		
+			if(status.contains(r.getStatus())) {
+				filteredReservations.add(r);
+			}	
+		}
+		
+		return filteredReservations;
+	}
+	//za admina
+	public ArrayList<Reservation> filterAllReservationsByStatus(ArrayList<ReservationStatus> status){
 		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		ArrayList<Reservation> filteredReservations = new ArrayList<Reservation>();
 		
@@ -193,7 +206,7 @@ public class ReservationDAO {
 	}
 	
 	
-	public ArrayList<Reservation> searchReservationsByGuestUsername(String hostName, String searchText){
+	public ArrayList<Reservation> searchHostsReservationsByGuestUsername(String hostName, String searchText){
 		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
 		ArrayList<Reservation> searchedReservations = new ArrayList<Reservation>();
 		
@@ -210,15 +223,57 @@ public class ReservationDAO {
 		return searchedReservations;	
 		
 	}
+	//za admina
+	public ArrayList<Reservation> searchAllReservationsByGuestUsername(String searchText){
+		ArrayList<Reservation> reservationsFromFile = readFromFile();
+		ArrayList<Reservation> searchedReservations = new ArrayList<Reservation>();
+		
+		if(searchText == null) {
+			return reservationsFromFile;
+		}
+		
+		for(Reservation r : reservationsFromFile) {
+			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {				
+				searchedReservations.add(r);
+			}
+		}
+			
+		return searchedReservations;	
+		
+	}
+	//za domacina
+	public ArrayList<Reservation> sortHostsReservationsAscending(String hostName){
+		ArrayList<Reservation> sortedReservations = getReservationByHostsApartments(hostName);
+		Collections.sort(sortedReservations);
+		return sortedReservations;
+	}
+	public ArrayList<Reservation> sortHostsReservationsDescending(String hostName){
+		ArrayList<Reservation> sortedReservations = getReservationByHostsApartments(hostName);
+		Collections.sort(sortedReservations, Collections.reverseOrder());
+		return sortedReservations;
+	}
 	
-	public ArrayList<Reservation> sortReservationsAscending(){
+	//za admina
+	public ArrayList<Reservation> sortAllReservationsAscending(){
 		ArrayList<Reservation> sortedReservations = readFromFile();
 		Collections.sort(sortedReservations);
 		return sortedReservations;
 	}
-	public ArrayList<Reservation> sortReservationsDescending(){
+	public ArrayList<Reservation> sortAllReservationsDescending(){
 		ArrayList<Reservation> sortedReservations = readFromFile();
-		Collections.reverse(sortedReservations);
+		Collections.sort(sortedReservations, Collections.reverseOrder());
+		return sortedReservations;
+	}
+	
+	//za gosta
+	public ArrayList<Reservation> sortGuestsReservationsAscending(String guestName){
+		ArrayList<Reservation> sortedReservations = getReservationsByGuest(guestName);
+		Collections.sort(sortedReservations);
+		return sortedReservations;
+	}
+	public ArrayList<Reservation> sortGuestsReservationsDescending(String guestName){
+		ArrayList<Reservation> sortedReservations = getReservationsByGuest(guestName);
+		Collections.sort(sortedReservations, Collections.reverseOrder());
 		return sortedReservations;
 	}
 }

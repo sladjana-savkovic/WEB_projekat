@@ -17,12 +17,15 @@ import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
 import beans.Amenities;
+import beans.Apartment;
 import beans.Gender;
 import beans.Guest;
 import beans.Reservation;
+import beans.ReservationStatus;
 import dao.AmenitiesDAO;
+import dao.ApartmentDAO;
 import dao.GuestDAO;
-import dao.ReservationDAO;;
+import dao.ReservationDAO;
 
 @Path("")
 public class ReservationService {
@@ -44,24 +47,72 @@ public class ReservationService {
 			u = null;
 		}
 	
-		return reservationDAO.searchReservationsByGuestUsername("gaga998", u);
+		return reservationDAO.searchHostsReservationsByGuestUsername("gaga998", u);
 	}
 	
 	@GET
 	@Path("/guests_reservations")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> getReservationsByGuest(){
-		//fali ime gosta
+		//treba ime ulogovanog gosta
 		ReservationDAO reservationDAO = new ReservationDAO();
 		return reservationDAO.getReservationsByGuest("pero123");
+	}
+	
+	@GET
+	@Path("/guests_reservations/sort_ascending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortGuestReservationsAscending(){
+		ReservationDAO reservationDAO = new ReservationDAO();
+		//treba ime ulogovanog gosta
+		return reservationDAO.sortGuestsReservationsAscending("pero123");
+	}
+	
+	@GET
+	@Path("/guests_reservations/sort_descending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortGuestReservationsDescending(){
+		ReservationDAO reservationDAO = new ReservationDAO();
+		//treba ime ulogovanog gosta
+		return reservationDAO.sortGuestsReservationsDescending("pero123");
 	}
 	
 	@GET
 	@Path("/hosts_reservations")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> getReservationsByHost(){
-		//fali ime fomacina
+		//treba ime ulogovanog domacina
 		ReservationDAO reservationDAO = new ReservationDAO();
 		return reservationDAO.getReservationByHostsApartments("gaga998");
+	}
+	
+	@POST
+	@Path("/hosts_reservations/filter")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> filterReservations(ArrayList<ReservationStatus> status){
+		ReservationDAO reservationDAO = new ReservationDAO();
+		//treba ime ulogovanog domacina
+		return reservationDAO.filterHostsReservationsByStatus(status, "gaga998");
+	}
+	
+	
+
+	@GET
+	@Path("/hosts_reservations/sort_ascending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortHostReservationsAscending(){
+		ReservationDAO reservationDAO = new ReservationDAO();
+		//treba ime ulogovanog domacina
+		return reservationDAO.sortHostsReservationsAscending("gaga998");
+	}
+	
+	@GET
+	@Path("/hosts_reservations/sort_descending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortHostReservationsDescending(){
+		ReservationDAO reservationDAO = new ReservationDAO();
+		//treba ime ulogovanog domacina
+		return reservationDAO.sortHostsReservationsDescending("gaga998");
 	}
 }

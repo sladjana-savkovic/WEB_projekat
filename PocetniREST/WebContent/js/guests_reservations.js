@@ -13,6 +13,46 @@ $(document).ready(function() {
 			console.log('error getting reservations');
 		}
 	});
+	
+	$('#first_lowest').click(function() {
+		
+		$.ajax({
+			type:"GET", 
+			url: "rest/guests_reservations/sort_ascending",
+			contentType: "application/json",
+			success:function(reservations){
+				$('div#div_reservation').empty();
+				for (let r of reservations) {
+					addReservation(r);
+				}
+				
+			},
+			error:function(){
+				console.log('error getting ascending sort reservations');
+			}
+		});
+		
+		});	
+		
+		$('#first_highest').click(function() {
+			
+			$.ajax({
+				type:"GET", 
+				url: "rest/guests_reservations/sort_descending",
+				contentType: "application/json",
+				success:function(reservations){
+					$('div#div_reservation').empty();
+					for (let r of reservations) {
+						addReservation(r);
+					}
+					
+				},
+				error:function(){
+					console.log('error getting ascending sort reservations');
+				}
+			});
+			
+			});	
 });
 
 function addReservation(r) {
@@ -63,7 +103,7 @@ function addReservation(r) {
 		$('div#div_reservation').append(reservation);
 		},
 		error:function(){
-			console.log('error getting apartment');
+			console.log('error getting reservation');
 		}
 	});
 		
