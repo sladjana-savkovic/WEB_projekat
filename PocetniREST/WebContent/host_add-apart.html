@@ -15,26 +15,29 @@
   <link rel="stylesheet" href="mdb/css/mdb.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   
+  <link rel="shortcut icon" href="#">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="toastr.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="style_host_page.css">
-  
+ 
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
+  <script  type="text/javascript" src="js/host_apartments.js"></script>
 </head>
 <body id="add-apart">
 
   <script src="host_navbar.js"></script>
+	<script src="images.js"></script>	
 	
   <div class="container container_colored">
-  <form action="action_page.php">
+  <form id="add_apart">
     <div class="row">
       <div class="col-25">
         <label for="lname" class="form">Naziv apartmana</label>
       </div>
       <div class="col-75">
-        <input type="text" id="name" name="name" placeholder="Unesite naziv apartmana">
+        <input type="text" id="name_apart" name="name" placeholder="Unesite naziv apartmana">
       </div>
     </div>
     <div class="row">
@@ -172,9 +175,11 @@
       <div class="col-25">
         <label for="lname" class="form">Slike apartmana</label>
       </div>
-      <div class="col-75">
-        <input type="file"  accept="image/*" name="image" id="file" multiple>
-      </div>
+      <form id="post-form" class="post-form" method="post">
+		<label for="files"></label>
+		<input id="files" type="file" name="image" id="file" multiple/>
+		<output id="result" />
+	  </form>
     </div>
     <div class="row">
       <input type="submit" value="Dodaj apartman" id="add" >

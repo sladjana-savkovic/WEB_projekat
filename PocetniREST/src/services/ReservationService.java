@@ -16,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.Response.Status;
 
+import beans.Amenities;
 import beans.Gender;
 import beans.Guest;
 import beans.Reservation;
@@ -36,9 +37,31 @@ public class ReservationService {
 	@GET
 	@Path("/hosts_reservations/search/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> searchReservations1(String username){
+	public ArrayList<Reservation> searchReservations(@PathParam("username") String username){
 		ReservationDAO reservationDAO = new ReservationDAO();
-		
-		return reservationDAO.searchReservationsByGuestUsername("gaga998", username);
+		String u = username;
+		if(u.equals("null")) {
+			u = null;
+		}
+	
+		return reservationDAO.searchReservationsByGuestUsername("gaga998", u);
+	}
+	
+	@GET
+	@Path("/guests_reservations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> getReservationsByGuest(){
+		//fali ime gosta
+		ReservationDAO reservationDAO = new ReservationDAO();
+		return reservationDAO.getReservationsByGuest("pero123");
+	}
+	
+	@GET
+	@Path("/hosts_reservations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> getReservationsByHost(){
+		//fali ime fomacina
+		ReservationDAO reservationDAO = new ReservationDAO();
+		return reservationDAO.getReservationByHostsApartments("gaga998");
 	}
 }

@@ -78,6 +78,7 @@ public class ReservationDAO {
 		return null;
 	}
 	
+	
 	public ArrayList<Reservation> getReservationsByGuest(String guestUsername){		
 		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		ArrayList<Reservation> reservationsByGuest = new ArrayList<>();
@@ -180,7 +181,7 @@ public class ReservationDAO {
 	
 	public ArrayList<Reservation> filterReservationsByStatus(ArrayList<ReservationStatus> status){
 		ArrayList<Reservation> reservationsFromFile = readFromFile();
-		ArrayList<Reservation> filteredReservations = new ArrayList<>();
+		ArrayList<Reservation> filteredReservations = new ArrayList<Reservation>();
 		
 		for(Reservation r : reservationsFromFile) {		
 			if(status.contains(r.getStatus())) {
@@ -194,9 +195,9 @@ public class ReservationDAO {
 	
 	public ArrayList<Reservation> searchReservationsByGuestUsername(String hostName, String searchText){
 		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
-		ArrayList<Reservation> searchedReservations = new ArrayList<>();
+		ArrayList<Reservation> searchedReservations = new ArrayList<Reservation>();
 		
-		if(searchText.equals("")) {
+		if(searchText == null) {
 			return hostsReservations;
 		}
 		
@@ -205,8 +206,9 @@ public class ReservationDAO {
 				searchedReservations.add(r);
 			}
 		}
-		
+			
 		return searchedReservations;	
+		
 	}
 	
 	public ArrayList<Reservation> sortReservationsAscending(){
