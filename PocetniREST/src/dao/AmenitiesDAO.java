@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,7 +35,8 @@ public class AmenitiesDAO {
 	}*/
 	
 	public AmenitiesDAO() {
-		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "amenities.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
+		
 		file = new File(path);
 	}
 	

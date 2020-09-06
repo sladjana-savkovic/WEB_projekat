@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,7 +35,7 @@ public class ReservationDAO {
 	
 	
 	public ReservationDAO() {
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "reservations.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "reservations.json";
 		file = new File(path);
 	}
 	
@@ -178,25 +179,11 @@ public class ReservationDAO {
 		}
 		writeInFile(reservationsFromFile);
 	}
-	//za domacina
-	public ArrayList<Reservation> filterHostsReservationsByStatus(ArrayList<ReservationStatus> status, String hostName){
-		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
+
+	public ArrayList<Reservation> filterReservationsByStatus(ArrayList<ReservationStatus> status, ArrayList<Reservation> reservations){
 		ArrayList<Reservation> filteredReservations = new ArrayList<Reservation>();
 		
-		for(Reservation r : hostsReservations) {		
-			if(status.contains(r.getStatus())) {
-				filteredReservations.add(r);
-			}	
-		}
-		
-		return filteredReservations;
-	}
-	//za admina
-	public ArrayList<Reservation> filterAllReservationsByStatus(ArrayList<ReservationStatus> status){
-		ArrayList<Reservation> reservationsFromFile = readFromFile();
-		ArrayList<Reservation> filteredReservations = new ArrayList<Reservation>();
-		
-		for(Reservation r : reservationsFromFile) {		
+		for(Reservation r : reservations) {		
 			if(status.contains(r.getStatus())) {
 				filteredReservations.add(r);
 			}	
@@ -205,16 +192,15 @@ public class ReservationDAO {
 		return filteredReservations;
 	}
 	
-	
-	public ArrayList<Reservation> searchHostsReservationsByGuestUsername(String hostName, String searchText){
-		ArrayList<Reservation> hostsReservations = getReservationByHostsApartments(hostName);
+
+	public ArrayList<Reservation> searchReservationsByGuestUsername(String searchText, ArrayList<Reservation> reservations){
 		ArrayList<Reservation> searchedReservations = new ArrayList<Reservation>();
 		
 		if(searchText == null) {
-			return hostsReservations;
+			return reservations;
 		}
 		
-		for(Reservation r : hostsReservations) {
+		for(Reservation r : reservations) {
 			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {				
 				searchedReservations.add(r);
 			}
@@ -223,57 +209,16 @@ public class ReservationDAO {
 		return searchedReservations;	
 		
 	}
-	//za admina
-	public ArrayList<Reservation> searchAllReservationsByGuestUsername(String searchText){
-		ArrayList<Reservation> reservationsFromFile = readFromFile();
-		ArrayList<Reservation> searchedReservations = new ArrayList<Reservation>();
-		
-		if(searchText == null) {
-			return reservationsFromFile;
-		}
-		
-		for(Reservation r : reservationsFromFile) {
-			if(r.getGuestUsername().toLowerCase().contains(searchText.toLowerCase())) {				
-				searchedReservations.add(r);
-			}
-		}
-			
-		return searchedReservations;	
-		
-	}
-	//za domacina
-	public ArrayList<Reservation> sortHostsReservationsAscending(String hostName){
-		ArrayList<Reservation> sortedReservations = getReservationByHostsApartments(hostName);
+	
+	public ArrayList<Reservation> sortReservationsAscending(ArrayList<Reservation> sortedReservations){
 		Collections.sort(sortedReservations);
 		return sortedReservations;
 	}
-	public ArrayList<Reservation> sortHostsReservationsDescending(String hostName){
-		ArrayList<Reservation> sortedReservations = getReservationByHostsApartments(hostName);
+	public ArrayList<Reservation> sortReservationsDescending(ArrayList<Reservation> sortedReservations){
 		Collections.sort(sortedReservations, Collections.reverseOrder());
 		return sortedReservations;
 	}
 	
-	//za admina
-	public ArrayList<Reservation> sortAllReservationsAscending(){
-		ArrayList<Reservation> sortedReservations = readFromFile();
-		Collections.sort(sortedReservations);
-		return sortedReservations;
-	}
-	public ArrayList<Reservation> sortAllReservationsDescending(){
-		ArrayList<Reservation> sortedReservations = readFromFile();
-		Collections.sort(sortedReservations, Collections.reverseOrder());
-		return sortedReservations;
-	}
 	
-	//za gosta
-	public ArrayList<Reservation> sortGuestsReservationsAscending(String guestName){
-		ArrayList<Reservation> sortedReservations = getReservationsByGuest(guestName);
-		Collections.sort(sortedReservations);
-		return sortedReservations;
-	}
-	public ArrayList<Reservation> sortGuestsReservationsDescending(String guestName){
-		ArrayList<Reservation> sortedReservations = getReservationsByGuest(guestName);
-		Collections.sort(sortedReservations, Collections.reverseOrder());
-		return sortedReservations;
-	}
+
 }
