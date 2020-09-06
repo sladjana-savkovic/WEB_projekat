@@ -79,7 +79,7 @@ function addReservation(r) {
 			}
 			let btn_type='';
 			if(status == "KREIRANA" || status == "PRIHVAĆENA"){
-			btn_type = '<button data-toggle="modal" data-target="#modalConfirmDelete" class="btn btn-danger reservation" type="submit" >Odustanite</button>';
+			btn_type = '<button class="btn btn-danger reservation" data-toggle="modal" data-target="#modalConfirmCancel" id="' + r.id +'" onclick="cancelReservation(this.id)">Odustanite</button>';
 			}
 			if(status == "ZAVŠENA"){
 			btn_type ='<button data-toggle="modal" data-target="#modalFeedbackForm" class="btn btn-brown reservation" type="submit" id="submit_btns">Komentarišite</button>';
@@ -97,7 +97,7 @@ function addReservation(r) {
 			     	+ '<tr><th>Ukupna cijena:</th><td>'+ r.totalPrice +'</td></tr>'
 			     	+ '<tr><th>Staus rezervacije:</th><td>' + status + '</td></tr>'
 			     	+ '<tr><th>Poruka:</th><td>' + r.message + '</td></tr>'
-			 	    + '</table></td><td>'
+			 	    + '</table></td><td style="vertical-align: bottom;">'
 		            + btn_type + '</td></tr></table></div>');
 		
 		$('div#div_reservation').append(reservation);
@@ -107,4 +107,29 @@ function addReservation(r) {
 		}
 	});
 		
-}
+};
+
+function cancelReservation(id){
+	
+	$('a#yes_cancel').click(function(event){
+		
+		event.preventDefault();
+		
+		$.ajax({
+			type: "POST",
+			url: "rest/cancel_reservation",
+			contentType: "application/json",
+			data: id,
+			success: function(){
+				$('a#no_cancel').click();
+				toastr["success"]("Uspješno ste otkazali rezervaciju!");
+				setTimeout(function(){
+					location.reload(); }, 500); 
+			},
+			error:  function()  {
+				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
+			}
+		});
+		
+	});
+};

@@ -18,6 +18,7 @@ import javax.ws.rs.core.Response;
 
 import beans.Amenities;
 import dao.AmenitiesDAO;
+import dao.ApartmentDAO;
 
 @Path ("")
 public class AmenitiesService {
@@ -81,4 +82,14 @@ public class AmenitiesService {
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
 		return amenitiesDAO.getAmenitiesById(id).getName();
 	}
+	
+	@GET
+	@Path("/apartments_amenities")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Amenities> getApartmentsAmenities(){
+		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
+		//treba id odabranog apartmana
+		return amenitiesDAO.getApartmentAmenities(1);
+	}
+	
 }

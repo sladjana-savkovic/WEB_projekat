@@ -57,4 +57,13 @@ public class CommentService {
 		CommentDAO commentDAO = getCommentDAO();
 		commentDAO.disapproveComment(id);
 	}
+	
+	@GET
+	@Path("/apartments_comments")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Comment> getCommentsForApartment(){
+		CommentDAO commentDAO = getCommentDAO();
+		//treba id odabranog apartmana
+		return commentDAO.getAllCommentsByApartment(1);
+	}
 }

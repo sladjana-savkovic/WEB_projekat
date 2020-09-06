@@ -8,6 +8,7 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Amenities;
+import beans.Apartment;
 
 
 public class AmenitiesDAO {
@@ -33,7 +34,7 @@ public class AmenitiesDAO {
 	}*/
 	
 	public AmenitiesDAO() {
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "amenities.json";
+		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "amenities.json";
 		file = new File(path);
 	}
 	
@@ -81,6 +82,25 @@ public class AmenitiesDAO {
 		for(Amenities a:amenitiesFromFile) {
 			if(!a.isDeleted())
 				retVal.add(a);
+		}
+		return retVal;
+	}
+	
+	public ArrayList<Amenities> getApartmentAmenities(int idApartment){
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		Apartment apartment = apartmentDAO.getApartment(idApartment);
+		ArrayList<Integer> amenitiesId = apartment.getAmenities();
+		
+		ArrayList<Amenities> amenitiesFromFile = readFromFile();
+		ArrayList<Amenities> retVal = new ArrayList<Amenities>();
+		
+		for(Amenities a:amenitiesFromFile) {
+			for(int i=0; i<amenitiesId.size(); i++) {
+				if(a.getId() == amenitiesId.get(i)) {
+					retVal.add(a);
+				}
+			}
+				
 		}
 		return retVal;
 	}

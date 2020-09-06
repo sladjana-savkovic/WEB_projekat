@@ -18,6 +18,7 @@
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="style.css">
   <script src="jquery-3.3.1.min.js"></script>
+  <script  type="text/javascript" src="js/view_apartment.js"></script>
 </head>
 <body>
   <script src="signin.js"></script>
@@ -73,75 +74,8 @@
   </form>
   </div>
   
-    <div class="container container_colored" id="sort" style="margin-top: 180px;">		
-    	<h4  style="font-weight:bolder; text-align: center;">Komentari</h4>
-    	
-    	<div class="testimonial">
-      
-        <h5 class="font-weight-bold dark-grey-text mt-4">Ana Toč</h5>
-        <h6 class="font-weight-bold blue-text my-3">Hrvatska</h6>
-        <p class="font-weight-normal dark-grey-text">
-          <i class="fas fa-quote-left pr-2"></i>Sobe su jako lepe, krevet je preudoban i terasa je super. Jako mi se svidelo pametno ogledalo u kupatlu i vidi se da je dosta ulozeno u samo opremanje soba. Osoblje je jako ljubazno.</p>
-        
-        <div class="orange-text">
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="far fa-star"> </i>
-          <i class="far fa-star"> </i>
-        </div>
-      </div>
-      
-      <div class="testimonial">
-   
-        <h5 class="font-weight-bold dark-grey-text mt-4">Jovan Marić</h5>
-        <h6 class="font-weight-bold blue-text my-3">Srbija</h6>
-        <p class="font-weight-normal dark-grey-text">
-          <i class="fas fa-quote-left pr-2"></i>Ljubazno osoblje, lep i veliki spa centar. Dorucak je takodje raznovrstan. Uzivali smo za vreme boravka.</p>
-        
-        <div class="orange-text">
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-        </div>
-      </div>
-      
-      
-      <div class="testimonial">
-       <h5 class="font-weight-bold dark-grey-text mt-4">Marija Simonov</h5>
-        <h6 class="font-weight-bold blue-text my-3">Njemačka</h6>
-        <p class="font-weight-normal dark-grey-text">
-          <i class="fas fa-quote-left pr-2"></i>Sve je bilo odlicno, bilo nam je lepo za vreme boravka.</p>
-        
-        <div class="orange-text">
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="far fa-star"> </i>
-        </div>
-      </div>
-      
-      
-      <div class="testimonial">
-       <h5 class="font-weight-bold dark-grey-text mt-4">Katarina Tot</h5>
-        <h6 class="font-weight-bold blue-text my-3">Srbija</h6>
-        <p class="font-weight-normal dark-grey-text">
-          <i class="fas fa-quote-left pr-2"></i>Odlican apartman. Jako sam zadovoljna gostoprimstvom. Domacini veoma ljubazni i skoro neprimjetni.</p>
-        
-        <div class="orange-text">
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="fas fa-star"> </i>
-          <i class="far fa-star"> </i>
-        </div>
-      </div>
-      
-     
-       
+    <div class="container container_colored" id="div_comments" style="margin-top: 180px; border: 1px solid black; position: absolute; left: 50px; width: 18%; top: 200px; margin-top: 180px;">		
+    	<h4  style="font-weight:bolder; text-align: center;">Komentari</h4>     
    </div>
 
 	<h2 id="title" style="margin-left: 50%; margin-top: 40px;">Apartmani Sunce</h2>
@@ -184,101 +118,17 @@
 	  
   
   
-		<div class="container" id="about_apartments" style="margin-top: 20px; margin-left: 600px; ">
-  <div class="border_apartments" style="width: 680px; ">
- 		<table class="table_apartments">
- 			<tr>
- 				
-	 	   <td>
-		 	   <table style="height: 220px; margin-left: 40px; width: 350px;">
-		 	   <tr>
-		 	   		<td colspan="2"><h5>Podaci o objektu</h5></td>
-		 	   </tr>
-		 		<tr>
-			 		<th>Tip smještaja:</th>
-			     	<td>Apartman</td>
-		     	</tr>
-		     	<tr>
-			 		<th>Adresa:</th>
-			     	<td>Sutjeska 3, Novi Sad 21 000</td>
-		     	</tr>
-		     	<tr>
-			 		<th>Cijena po noći:</th>
-			     	<td>2000RSD</td>
-		     	</tr>
-		     	<tr>
-		    <th>Broj gostiju:</th>
-		    <td>4</td>
-		  </tr>
-		  	<tr>
-		    <th>Broj soba:</th>
-		    <td>2</td>
-		  </tr>
-		  <tr>
-		    <th>Vrijeme prijave:</th>
-		    <td>10:00 - 14:00h</td>
-		  </tr>
-		  <tr>
-		    <th>Vrijeme odjave:</th>
-		    <td>09:00 - 12:00h</td>
-		  </tr>
-		     	<tr>
-			 		<th>Domaćin:</th>
-			     	<td>Sima Simić</td>
-			  
-		     	</tr>
-		     		
-		 	 </table>
-	    </td>
-	    
-	     <td>
-	    <div>
-  	 <button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>
-  	</div>
-	    </td>
-	    
-     	</tr>
- 	</table>	
-  </div>
+<div class="container" id="div_about_apartment" style="margin-top: 20px; margin-left: 600px; background-color: white; padding-top: 40px;left: 450px; top: 200px; width:800px;"> 
+</div>
   
   
 
-<h3 class="row justify-content-left" id="title" style="margin-top: 350px; margin-left: 20px; ">Sadržaji jedinice: </h3>
+<h3 class="row justify-content-center" id="title" style="margin-top: 350px; margin-left: 20px; ">Sadržaji jedinice: </h3>
 	<br>
 	
-	<div id="list_entity">
-	<ul class="list-group list-group-flush">
-  <ul class="list-group">
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="fas fa-wifi mr-5"></i>besplatan WiFi
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="far fa-snowflake mr-5"></i>klima-uredjaj
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="fas fa-tv mr-5"></i>tv
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"><i class="fas fa-parking mr-5"></i>parking
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="fas fa-bath mr-5"></i>kada
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="far fa-snowflake mr-5"></i>klima-uredjaj
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="fas fa-tv mr-5"></i>tv
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"><i class="fas fa-parking mr-5"></i>parking
-  </li>
-  <li class="list-group-item">
-    <div class="md-v-line"></div><i class="fas fa-bath mr-5"></i>kada
-  </li>
-</ul>
-</ul>
-</div>
+	<div class="row justify-content-center" id="div_amenities" style="width: 40%; margin-left: 33%; color: gray;">
+	
+	</div>
 
 
   <!-- jQuery -->

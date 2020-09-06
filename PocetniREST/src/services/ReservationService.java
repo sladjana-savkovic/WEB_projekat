@@ -47,7 +47,7 @@ public class ReservationService {
 			u = null;
 		}
 	
-		return reservationDAO.searchHostsReservationsByGuestUsername("gaga998", u);
+		return reservationDAO.searchReservationsByGuestUsername(u, reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
 	
 	@GET
@@ -65,7 +65,7 @@ public class ReservationService {
 	public ArrayList<Reservation> sortGuestReservationsAscending(){
 		ReservationDAO reservationDAO = new ReservationDAO();
 		//treba ime ulogovanog gosta
-		return reservationDAO.sortGuestsReservationsAscending("pero123");
+		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationsByGuest("pero123"));
 	}
 	
 	@GET
@@ -74,7 +74,7 @@ public class ReservationService {
 	public ArrayList<Reservation> sortGuestReservationsDescending(){
 		ReservationDAO reservationDAO = new ReservationDAO();
 		//treba ime ulogovanog gosta
-		return reservationDAO.sortGuestsReservationsDescending("pero123");
+		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationsByGuest("pero123"));
 	}
 	
 	@GET
@@ -93,7 +93,7 @@ public class ReservationService {
 	public ArrayList<Reservation> filterReservations(ArrayList<ReservationStatus> status){
 		ReservationDAO reservationDAO = new ReservationDAO();
 		//treba ime ulogovanog domacina
-		return reservationDAO.filterHostsReservationsByStatus(status, "gaga998");
+		return reservationDAO.filterReservationsByStatus(status, reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
 	
 	
@@ -104,7 +104,7 @@ public class ReservationService {
 	public ArrayList<Reservation> sortHostReservationsAscending(){
 		ReservationDAO reservationDAO = new ReservationDAO();
 		//treba ime ulogovanog domacina
-		return reservationDAO.sortHostsReservationsAscending("gaga998");
+		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
 	
 	@GET
@@ -113,6 +113,38 @@ public class ReservationService {
 	public ArrayList<Reservation> sortHostReservationsDescending(){
 		ReservationDAO reservationDAO = new ReservationDAO();
 		//treba ime ulogovanog domacina
-		return reservationDAO.sortHostsReservationsDescending("gaga998");
+		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationByHostsApartments("gaga998"));
+	}
+	
+	@POST
+	@Path("/accept_reservation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void acceptReservation(int id) {
+		ReservationDAO reservationDAO = new ReservationDAO();
+		reservationDAO.acceptReservationByHost(reservationDAO.getReservationById(id));
+	}
+	
+	@POST
+	@Path("/finish_reservation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void finishReservation(int id) {
+		ReservationDAO reservationDAO = new ReservationDAO();
+		reservationDAO.finishReservationByHost(reservationDAO.getReservationById(id));
+	}
+	
+	@POST
+	@Path("/refuse_reservation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void refuseReservation(int id) {
+		ReservationDAO reservationDAO = new ReservationDAO();
+		reservationDAO.refuseReservationByHost(reservationDAO.getReservationById(id));
+	}
+	
+	@POST
+	@Path("/cancel_reservation")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void cancelReservation(int id) {
+		ReservationDAO reservationDAO = new ReservationDAO();
+		reservationDAO.cancelReservationByGuest(reservationDAO.getReservationById(id));
 	}
 }
