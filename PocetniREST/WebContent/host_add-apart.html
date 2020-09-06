@@ -49,12 +49,10 @@
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script> 
-    <script type="text/javascript" src="js/map.js"></script>
 </head>
 <body id="add-apart">
 
   <script src="host_navbar.js"></script>
-	<script src="images.js"></script>	
 	
   <div class="container container_colored">
   <form id="add_apart">
@@ -63,7 +61,8 @@
         <label for="lname" class="form">Naziv apartmana</label>
       </div>
       <div class="col-75">
-        <input type="text" id="name_apart" name="name" placeholder="Unesite naziv apartmana">
+        <input type="text" id="name_apart" name="name_apart" placeholder="Unesite naziv apartmana">
+        <p style="color:red; float:right;" id="ap_error_name" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -72,12 +71,12 @@
       </div>
       <div class="col-75" style="margin-top: 15px;">
 		<div class="custom-control custom-radio custom-control-inline">
-		  <input type="radio" class="custom-control-input" id="apartment" name="type_apar" checked="checked">
-		  <label class="custom-control-label" for="apartment">Cijeli apartman</label>
+		  <input type="radio" class="custom-control-input" id="whole_apart" name="type" checked="checked">
+		  <label class="custom-control-label" for="whole_apart">Cijeli apartman</label>
 		</div>
 		
 		<div class="custom-control custom-radio custom-control-inline">
-		  <input type="radio" class="custom-control-input" id="room" name="type_apar">
+		  <input type="radio" class="custom-control-input" id="room" name="type">
 		  <label class="custom-control-label" for="room">Soba</label>
 		</div>
       </div>
@@ -88,6 +87,7 @@
       </div>
       <div class="col-75">
         <input type="number" id="nmb_rooms" name="nmb_rooms" placeholder="Unesite broj soba" min="1">
+        <p style="color:red; float:right;" id="ap_error_rooms" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -96,6 +96,7 @@
       </div>
       <div class="col-75">
         <input type="number" id="nmb_guests" name="nmb_guests" placeholder="Unesite broj gostiju" min="1">
+        <p style="color:red; float:right;" id="ap_error_guests" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -104,6 +105,7 @@
       </div>
       <div class="col-75" style="margin-bottom: 8px;">
         <div id="map" style="height: 210px;"></div>
+        <p style="color:red; float:right;" id="ap_error_map" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -113,12 +115,13 @@
       <div class="col-75">
       <div class="row">
 	      <div class="col-md-6">
-	        <input type=text id="multiPicker" name="multiPicker" width="100px" class="is-datepick textbox-n" placeholder="Početni datum" 
-	      		   onfocus="(this.type='date')" onblur="(this.type='text')">
+	        <input type="text" name="start_date" width="100px" class="is-datepick textbox-n" placeholder="Početni datum" 
+	      		   onfocus="(this.type='date')" onblur="(this.type='text')" id="start_date">
 			</div>
 			<div class="col-md-6">
-	        <input type=text id="multiPicker" name="multiPicker" width="100px" class="is-datepick textbox-n" placeholder="Krajnji datum" 
-	      		   onfocus="(this.type='date')" onblur="(this.type='text')">
+	        <input type="text" name="end_date" width="100px" class="is-datepick textbox-n" placeholder="Krajnji datum" 
+	      		   onfocus="(this.type='date')" onblur="(this.type='text')" id="end_date">
+	      		   <p style="color:red; float:right;" id="ap_error_dates" hidden="true"></p>
 	        </div>
 	      </div>
       </div>
@@ -129,6 +132,7 @@
       </div>
       <div class="col-75">
         <input type="number" id="price" name="price" placeholder="Unesite cijenu" min="1">
+        <p style="color:red; float:right;" id="ap_error_price" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -137,6 +141,7 @@
       </div>
       <div class="col-75">
         <input type="time" id="checkin" name="checkin" placeholder="Odaberite vrijeme" value="14:00">
+        <p style="color:red; float:right;" id="ap_error_checkin" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -145,25 +150,14 @@
       </div>
       <div class="col-75">
         <input type="time" id="checkout" name="checkout" placeholder="Odaberite vrijeme" value="10:00">
+        <p style="color:red; float:right;" id="ap_error_checkout" hidden="true"></p>
       </div>
     </div>
     <div class="row">
       <div class="col-25">
         <label for="lname" class="form">Sadržaji apartmana</label>
       </div>
-      <div class="col-75">
-        <div class="custom-control custom-checkbox">
-		    <input type="checkbox" class="custom-control-input" id="tv">
-		    <label class="custom-control-label" for="tv">TV</label>
-	   </div>
-	   <div class="custom-control custom-checkbox">
-		    <input type="checkbox" class="custom-control-input" id="wifi">
-		    <label class="custom-control-label" for="wifi">WiFi</label>
-	   </div>
-	   <div class="custom-control custom-checkbox">
-		    <input type="checkbox" class="custom-control-input" id="air">
-		    <label class="custom-control-label" for="air">Klima</label>
-	   </div>
+      <div class="col-75" id="div_amenities">
       </div>
     </div>
     <div class="row">
@@ -186,7 +180,7 @@
       <div class="col-25">
         <label for="lname" class="form">Slike apartmana</label>
       </div>
-      <div class="col-75" style="margin-top: -20px;">
+      <div class="col-75" style="margin-top: -20px;"> 
 	      <div id="post-form" class="post-form">
 			<label for="files"></label>
 			<input id="files" type="file" name="image" id="file" title="" multiple/>
@@ -195,8 +189,8 @@
 		  </div>
 	  </div>
     </div>
-    <div class="row" style="margin-top: 50px;">
-      <input type="submit" value="Dodaj apartman" id="add" >
+    <div class="row" style="margin-top: 30px; margin-left: 500px;">
+      <input type="submit" value="Dodaj apartman">
     </div>
   </form>
 </div>

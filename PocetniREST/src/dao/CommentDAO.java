@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -34,7 +35,7 @@ public class CommentDAO {
 	}*/
 	
 	public CommentDAO() {
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "comments.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "comments.json";
 		file = new File(path);
 	}
 	

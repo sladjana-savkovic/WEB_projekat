@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -23,7 +24,7 @@ public class GuestDAO {
 		}
 		path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "guests.json";*/
 		
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "guests.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "guests.json";
 		file = new File(path);
 	}
 	

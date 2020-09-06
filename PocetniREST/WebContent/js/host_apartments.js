@@ -26,9 +26,9 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success:function(amenities){
 			for (let a of amenities) {
-				let a_div = $('<div class="form-check">'
-							+ '<input type="checkbox" class="form-check-input" id="' + a.id + '">'
-							+ '<label class="form-check-label" for="climaFilter">' + a.name + '</label></div>');
+				let a_div = $('<div class="custom-control custom-checkbox">'
+							+ '<input type="checkbox" class="custom-control-input" id="' + a.id + '">'
+							+ '<label class="custom-control-label" for="tv">' + a.name + '</label></div>');
 				$('div#filter_amenities').append(a_div);
 			}
 			

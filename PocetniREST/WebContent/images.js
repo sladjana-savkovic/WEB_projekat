@@ -19,7 +19,9 @@ $(document).ready(function() {
 	 $('#files').val('');
 	
 	  if (window.File && window.FileList && window.FileReader) {
+		  
 	    $("#files").on("change", function(e) {
+	      
 	      var files = e.target.files,
 	        filesLength = files.length;
 	      
@@ -40,4 +42,9 @@ $(document).ready(function() {
 	  } else {
 	    alert("Your browser doesn't support to File API")
 	  }
+	  
+	  $("input#files").click(function() {
+		  $('#files').val('');
+		  $('#div_row').empty();
+	  });
 });

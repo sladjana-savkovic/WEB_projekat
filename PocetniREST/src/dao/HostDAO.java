@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -16,7 +17,7 @@ public class HostDAO {
 	private File file;
 	
 	public HostDAO() {
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "hosts.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "hosts.json";
 		file = new File(path);
 	}
 	
