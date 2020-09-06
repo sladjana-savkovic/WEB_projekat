@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  <title>Moji apartmani</title>
+  <link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="mdb/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="mdb/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+   
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="toastr.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_host_page.css">
+  <link rel="stylesheet" href="style_admin_page.css">
+  <script src="jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/toastr.min.js"></script>
+  <script  type="text/javascript" src="js/edit_profile.js"></script>
+  <script  type="text/javascript" src="js/host_apartments.js"></script>
+  <script  type="text/javascript" src="js/sign_out.js"></script>
+  <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script> 
+    <script type="text/javascript" src="js/map.js"></script>
+</head>
+<body id="admin_apartments">
+   <script src="host_navbar.js"></script>
+  
+  <div id="border" style="margin-top: 30px; background-color: #f2f2f2;">
+  <form>
+  <table>
+  	<tr>
+  		<td rowspan="4">
+  			<div id="map" style="height: 217px; width: 700px;"></div>
+  		</td>
+  		
+  		<td width="25%;">
+	  		<input class="textbox-n form-control" type="text" placeholder="Početni datum" onfocus="(this.type='date')" 
+	  			onblur="(this.type='text')" style="width: 180px; height: 35px; 
+	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
+	    </td>
+	    
+	    <td width="25%">
+	  		<input class="textbox-n form-control" type="text" placeholder="Krajnji datum" onfocus="(this.type='date')" 
+	  			onblur="(this.type='text')" style="width: 180px; 
+	  			height: 35px; margin-left: 10px; margin-top: 10px;"/>
+	    </td>
+	 </tr>
+	 <tr>
+	    <td width="25%">
+	  		<input type="number" placeholder="Cijena (min)" class="form-control" min="0" 
+	  			style="width: 180px;height: 35px; 
+	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
+	  	</td>
+	  	
+	  	<td width="25%">
+	  		<input type="number" placeholder="Cijena (max)" class="form-control" 
+	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
+	  	</td>  	
+  	</tr>
+  	
+  	<tr>
+  		<td width="25%">
+	  		<input type="number" placeholder="Broj soba (min)" class="form-control" min="1" 
+	  			style="width: 180px;height: 35px; 
+	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
+	  	</td>
+	  	
+	  	<td width="25%">
+	  		<input type="number" placeholder="Broj soba (max)" class="form-control" 
+	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
+	  	</td>
+	</tr>
+	<tr>
+	  	
+	  	<td width="25%">
+	  		<input type="number" placeholder="Broj osoba" class="form-control" min="1" 
+	  			style="width: 180px; height: 35px; 
+	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
+	  	</td>
+	  	
+	  	<td><button class="btn btn-primary mb-2" id="search_btn"
+	  			style="margin-left: 240px; margin-top: 10px;">Pretraži</button></td>
+	 </tr>
+   </table>	
+  </form>
+  </div>
+  
+  <div class="container container_colored" id="sort">		
+    	<h5  style="font-weight:bolder; text-align: center;">Sortiraj po cijeni</h5>
+    	<button class="btn btn-default" type="submit" id="first_lowest"><i class="fas fa-sort-up"></i>Prvo najniža</button>
+    	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
+   </div>
+  
+  <div class="container container_colored" id="filters">
+  <div id="border_filter" style="height: auto;">
+  <h5 style="text-align: center; font-weight: bolder; margin-bottom: 20px;" >Filteri</h5>
+  
+  <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
+  	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="apartmentFilter" checked="checked">
+    <label class="form-check-label" for="apartmentFilter">Apartman</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="roomFilter">
+    <label class="form-check-label" for="roomFilter">Soba</label>
+	</div>
+	<hr/>
+	
+    <h5 style="text-align: left; margin-left: 10px">Sadržaj jedinice:</h5>
+    <div id="filter_amenities">
+	</div>
+	<hr/>
+	
+	<h5 style="text-align: left; margin-left: 10px">Status apartmana:</h5>
+  	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="active_apart">
+    <label class="form-check-label" for="active">Aktivan</label>
+	</div>
+	
+	<div class="form-check">
+    <input type="checkbox" class="form-check-input" id="inactive_apart">
+    <label class="form-check-label" for="inactive_apart">Neaktivan</label>
+	</div>
+	
+	<div>
+      <button type="submit" style="margin-top: 20px;" class="btn btn-default" id="filter"><i class="fas fa-filter"></i>Filtriraj</button>
+    </div>  
+  </div>
+  </div>
+  
+  <div class="container" id="apartments" style="margin-top: 150px;">
+  </div>
+  
+  <!--Modal: modalConfirmDelete-->
+  <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true">
+  <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
+    <!--Content-->
+    <div class="modal-content text-center">
+      <!--Header-->
+      <div class="modal-header d-flex justify-content-center">
+        <p class="heading">Da li ste sigurni da želite obrisati apartman?</p>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+
+        <i class="fas fa-times fa-4x animated rotateIn"></i>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer flex-center">
+        <a href="" class="btn  btn-outline-danger" id="yes_delete">Da</a>
+        <a type="button" class="btn  btn-danger waves-effect" data-dismiss="modal" id="no_delete">Ne</a>
+      </div>
+    </div>
+    <!--/.Content-->
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->
+  
+  <!-- jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+  
+  
+ 
+</body>
+</html>

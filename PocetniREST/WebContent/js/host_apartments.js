@@ -2,11 +2,7 @@ $(document).ready(function() {
 	
 	//checkLoggedUser();
 	
-	$('input[type="checkbox"]').each(function(){
-	  	$(this).prop('checked', false);
-	});
-	
-	//getting all apartmets
+	//getting apartments by host
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments",
@@ -15,6 +11,7 @@ $(document).ready(function() {
 			for (let a of apartments) {
 				addApartmentTable(a);
 			}
+
 		},
 		error:function(){
 			console.log('error getting apartments');

@@ -34,7 +34,7 @@ public class ReservationDAO {
 	
 	
 	public ReservationDAO() {
-		path = "C:\\Users\\Jelena\\Desktop\\rest\\data" + File.separator + "reservations.json";
+		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "reservations.json";
 		file = new File(path);
 	}
 	

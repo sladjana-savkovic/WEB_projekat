@@ -34,12 +34,9 @@ h4#title{
 	margin-right: 20px;
 	margin-left: 20px;
 	border-style:solid;
-	border-color: darkgray;
+	border-color: black;
 	border-width: 1px;
-	height: 180px;
-}
-.form-inline{
-	margin-top: 30px;
+	height: 220px;
 }
 
 #search_btn{
@@ -199,7 +196,7 @@ div#sort{
 	left: 50px; 
 	width: 18%; 
 	top: 200px;
-	margin-top: 180px;
+	margin-top: 240px;
 }
 div#filters{
 	width: 18%; 
@@ -207,14 +204,14 @@ div#filters{
 	left:50px; 
 	border: 1px solid black; 
 	top: 420px; 
-	margin-top: 180px;
+	margin-top: 240px;
 	height: auto;
 }
 div#apartments{
 	background-color: white; 
 	position: absolute; 
 	left: 450px; 
-	top: 200px; 
+	top: 260px; 
 	width:800px;
 }
 table.table_apartments{
@@ -252,3 +249,7 @@ button.reservation{
 	top:100px;
 	width: 150px;
 }
+#map {
+        height: 200px;  /* The height is 400 pixels */
+        width: 100%;  /* The width is the width of the web page */
+       }

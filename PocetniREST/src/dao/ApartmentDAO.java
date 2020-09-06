@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class ApartmentDAO {
 	private File file;
 	
 	public ApartmentDAO() {
-		path = "C:\\Users\\pc\\Desktop\\WEB projekat\\data" + File.separator + "apartments.json";
+		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "apartments.json";
 		file = new File(path);
 	}
 	
@@ -43,11 +44,6 @@ public class ApartmentDAO {
 	}
 	
 	public ArrayList<Apartment> getAllApartments(){
-		ArrayList<Apartment> apartments = readFromFile();
-		return apartments;
-	}
-	
-	public ArrayList<Apartment> getUndeletedApartments(){
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> undeletedApartments = new ArrayList<Apartment>();
 		
@@ -92,7 +88,7 @@ public class ApartmentDAO {
 		return filteredApartments;
 	}
 	
-	public ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
+	/*public ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
@@ -108,12 +104,11 @@ public class ApartmentDAO {
 		}
 		
 		return filteredApartments;
-	}
+	}*/
 	
 	public ArrayList<Apartment> filterApartmentsByTypeAmenitiesAndStatus(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities,
-			ArrayList<String> status){
+			ArrayList<String> status, ArrayList<Apartment> apartments){
 		
-		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
@@ -135,41 +130,6 @@ public class ApartmentDAO {
 					}
 				}
 			}
-			
-			/*if(amenities.size() != 0) {
-				for(int id:a.getAmenities()) {
-					if(amenities.contains(id) && !filteredApartments.contains(a)) {
-						filteredApartments.add(a);
-						break;
-					}
-				}
-			}
-			
-			if(types.size() != 0 && types.contains(a.getType()) 
-			   && ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) 
-			   && !filteredApartments.contains(a)) {
-				filteredApartments.add(a);
-			}
-			else if(types.size() == 0 && ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) && !filteredApartments.contains(a)) {
-				filteredApartments.add(a);
-			}
-			else if(types.size() != 0 && filteredApartments.contains(a)) {
-				filteredApartments.remove(a);
-			}*/
-		
-			
-			/*if(types.contains(a.getType()) 
-					&& (status.get(0) && a.isActive()) || (status.get(1) && !a.isActive())) {
-				filteredApartments.add(a);
-			}*/
-			/*for(int id:a.getAmenities()) {
-				if(amenities.contains(id) && !filteredApartments.contains(a)) {
-					filteredApartments.add(a);
-				}
-			}
-			if( ((status.get(0) && a.isActive()) || (status.get(1) && !a.isActive()))  && !filteredApartments.contains(a)) {
-				filteredApartments.add(a);
-			}*/
 		}
 		
 		return filteredApartments;
@@ -257,14 +217,12 @@ public class ApartmentDAO {
 			if(!location.equals("") && (a.getLocation().getAddress().getCity().toLowerCase().equals(location.toLowerCase()) || 
 			   a.getLocation().getAddress().getCountry().toLowerCase().equals(location.toLowerCase()))) {
 					filtratedApartments.add(a);
-					System.out.println("Dodalo lokaciju");
 			}
 					
 			if (startDate != null && a.getAvailableDates().contains(startDate.toString()) && !filtratedApartments.contains(a))
 				filtratedApartments.add(a);
 			else if (startDate != null && !a.getAvailableDates().contains(startDate.toString())  && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko start date");
 				continue;
 			}
 				
@@ -272,7 +230,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(endDate != null && !a.getAvailableDates().contains(endDate.toString()) && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko end date");
 				continue;
 			}
 				
@@ -280,7 +237,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(a.getPricePerNight() < minPrice && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko min price");
 				continue;
 			}
 				
@@ -288,7 +244,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(a.getPricePerNight() > maxPrice && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko max price");
 				continue;
 			}
 				
@@ -296,7 +251,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(a.getNumberOfRooms() < minRooms && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko min rooms");
 				continue;
 			}
 			
@@ -304,7 +258,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(a.getNumberOfRooms() > maxRooms && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko max rooms");
 				continue;
 			}
 			
@@ -312,7 +265,6 @@ public class ApartmentDAO {
 				filtratedApartments.add(a);
 			else if(a.getNumberOfGuests() != persons && filtratedApartments.contains(a)) {
 				filtratedApartments.remove(a);
-				System.out.println("Ukoloniko persons");
 				continue;
 			}			
 		}
@@ -400,16 +352,14 @@ public class ApartmentDAO {
 		return differences;
 	}
 	
-	public ArrayList<Apartment> sortApartmentsAscending(){
-		ArrayList<Apartment> sortedApartments = readFromFile();
-		Collections.sort(sortedApartments);
-		return sortedApartments;
+	public ArrayList<Apartment> sortApartmentsAscending(ArrayList<Apartment> apartments){
+		Collections.sort(apartments);
+		return apartments;
 	}
 	
-	public ArrayList<Apartment> sortApartmentsDescending(){
-		ArrayList<Apartment> sortedApartments = readFromFile();
-		Collections.reverse(sortedApartments);
-		return sortedApartments;
+	public ArrayList<Apartment> sortApartmentsDescending(ArrayList<Apartment> apartments){
+		Collections.sort(apartments,Collections.reverseOrder());
+		return apartments;
 	}
 	
 	

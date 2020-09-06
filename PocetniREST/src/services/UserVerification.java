@@ -29,14 +29,13 @@ public class UserVerification {
 	
 	/*@GET
 	@Path("/verification/is_logged")
-	@Produces(MediaType.TEXT_HTML)
-	public Response isLoggedIn() {
+	@Produces(MediaType.APPLICATION_JSON)
+	public User getLoggedUser() {
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
 		if (loggedUser == null) {
-			return Response.status(Response.Status.FORBIDDEN)
-					.entity("Prijavite se da biste pristupili ovoj stranici.").build();
+			return null;
 		}
-		return Response.ok().build();
+		return loggedUser;
 	}*/
 	
 	@GET

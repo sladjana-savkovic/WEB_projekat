@@ -1,5 +1,6 @@
 package services;
 
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -14,6 +15,8 @@ import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
 import beans.Apartment;
+import beans.TypeOfUser;
+import beans.User;
 import dao.ApartmentDAO;
 import dto.FilterApartmentsDTO;
 
@@ -50,7 +53,18 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> getAllApartments(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
-		return apartmentDAO.getUndeletedApartments();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		//unlogged user or guest
+		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return apartmentDAO.getActiveApartments();
+		}
+		//admin
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			return apartmentDAO.getAllApartments();
+		}
+		//host
+		return apartmentDAO.getApartmentsByHost(loggedUser.getUsername());
 	}
 	
 	@GET
@@ -58,7 +72,11 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> sortApartmentsAscending(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
-		return apartmentDAO.sortApartmentsAscending();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			return apartmentDAO.sortApartmentsAscending(apartmentDAO.getAllApartments());
+		}
+		return apartmentDAO.sortApartmentsAscending(apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 	
 	@GET
@@ -66,7 +84,11 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> sortApartmentsDescending(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
-		return apartmentDAO.sortApartmentsDescending();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			return apartmentDAO.sortApartmentsDescending(apartmentDAO.getAllApartments());
+		}
+		return apartmentDAO.sortApartmentsDescending(apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 	
 	@DELETE
@@ -82,10 +104,16 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> filterApartments(FilterApartmentsDTO filter){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
+					filter.getStatus(),apartmentDAO.getAllApartments());
+		}
 		/*System.out.println("------------------------------------------------");
 		System.out.println(filter.getTypes());
 		System.out.println(filter.getAmenities());
 		System.out.println(filter.getStatus());*/
-		return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), filter.getStatus());
+		return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
+				filter.getStatus(),apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 }
