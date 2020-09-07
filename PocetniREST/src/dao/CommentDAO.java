@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,7 +13,6 @@ import beans.Reservation;
 import beans.ReservationStatus;
 
 public class CommentDAO {
-	private String path;
 	private File file;
 	
 	
@@ -29,14 +27,21 @@ public class CommentDAO {
 		comments.add(c2);
 		
 		CommentDAO cDAO = new CommentDAO();
-		cDAO.addCommentForApartment(c3);
+		//cDAO.addCommentForApartment(c3);
 		//cDAO.writeInFile(comments);
 		//cDAO.addCommentForApartment(c1);
 	}*/
 	
 	public CommentDAO() {
-		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "comments.json";
-		file = new File(path);
+		file = new File("WebContent/data/comments.json");
+		 try {
+		   if (file.createNewFile()){
+		    ArrayList<Comment> comments = new ArrayList<Comment>();
+		    writeInFile(comments);
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 	}
 	
 	private ArrayList<Comment> readFromFile() {

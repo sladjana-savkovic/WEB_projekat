@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,12 +12,18 @@ import beans.Admin;
 
 public class AdminDAO {
 	
-	private String path;
 	private File file;
 	
 	public AdminDAO() {
-		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "admins.json";
-		file = new File(path);
+		file = new File("WebContent/data/admins.json");
+		 try {
+		   if (file.createNewFile()){
+		    ArrayList<Admin> admins = new ArrayList<Admin>();
+		    writeInFile(admins);
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 	}
 	
 	public Admin getAdmin(String adminUsername) {
@@ -74,8 +79,8 @@ public class AdminDAO {
 		
 		ArrayList<Admin> admins = new ArrayList<Admin>();
         
-		admins.add(new Admin("marko88","sifra123","Marko","Marković",Gender.MALE));
-		admins.add(new Admin("zarko65","sifra789","Žarko","Žarkić",Gender.MALE));
+		admins.add(new Admin("marko88","sifra123","Marko","Marković",Gender.MALE,TypeOfUser.ADMIN, false));
+		admins.add(new Admin("zarko65","sifra789","Žarko","Žarkić",Gender.MALE,TypeOfUser.ADMIN,false));
         
         AdminDAO adminDao = new AdminDAO();
         
@@ -87,7 +92,7 @@ public class AdminDAO {
         
         adm.setPassword("lozinka");
         
-        adminDao.editAdmin(adm);     
+        adminDao.editAdmin(adm);   
 
 	}*/
 

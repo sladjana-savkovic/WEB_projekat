@@ -4,7 +4,7 @@
   "apartmentId" : 0,
   "description" : "Zadovoljna sam!",
   "rating" : 5,
-  "status" : "CREATED"
+  "status" : "APPROVED"
 }, {
   "id" : 1,
   "guestUsername" : "tara88",

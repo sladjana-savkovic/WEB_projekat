@@ -15,7 +15,7 @@
   "totalPrice" : 3000.0,
   "message" : "Pozdrav, vidimo se",
   "guestUsername" : "pero123",
-  "status" : "ACCEPTED"
+  "status" : "REFUSED"
 }, {
   "id" : 2,
   "apartmentId" : 2,

@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,18 +13,18 @@ import beans.Guest;
 
 public class GuestDAO {
 	
-	private String path;
 	private File file;
 	
 	public GuestDAO() {
-		/*File data_dir = new File(System.getProperty("catalina.base") + File.separator + "data");
-		if(!data_dir.exists()) {
-			data_dir.mkdir();
-		}
-		path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "guests.json";*/
-		
-		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "guests.json";
-		file = new File(path);
+		 file = new File("WebContent/data/guests.json");
+		 try {
+		   if (file.createNewFile()){
+		    ArrayList<Guest> guests = new ArrayList<Guest>();
+		    writeInFile(guests);
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 	}
 	
 	

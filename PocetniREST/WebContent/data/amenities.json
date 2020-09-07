@@ -1,0 +1,33 @@
+[ {
+  "id" : 0,
+  "name" : "Klima",
+  "deleted" : true
+}, {
+  "id" : 1,
+  "name" : "TV NET",
+  "deleted" : true
+}, {
+  "id" : 2,
+  "name" : "Kada",
+  "deleted" : true
+}, {
+  "id" : 3,
+  "name" : "Veš mašina",
+  "deleted" : true
+}, {
+  "id" : 4,
+  "name" : "Kada",
+  "deleted" : false
+}, {
+  "id" : 5,
+  "name" : "WiFi",
+  "deleted" : false
+}, {
+  "id" : 6,
+  "name" : "Kablovska TV",
+  "deleted" : false
+}, {
+  "id" : 7,
+  "name" : "WiFi net +",
+  "deleted" : false
+} ]

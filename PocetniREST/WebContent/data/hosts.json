@@ -1,0 +1,46 @@
+[ {
+  "username" : "zaregoci",
+  "password" : "123",
+  "name" : "Zare",
+  "surname" : "Zaric",
+  "gender" : "MALE",
+  "typeOfUser" : "HOST",
+  "apartmentsForRent" : [ ],
+  "blocked" : true
+}, {
+  "username" : "mare",
+  "password" : "111",
+  "name" : "Mare",
+  "surname" : "Maric",
+  "gender" : "MALE",
+  "typeOfUser" : "HOST",
+  "apartmentsForRent" : [ ],
+  "blocked" : true
+}, {
+  "username" : "dara",
+  "password" : "111",
+  "name" : "Dara",
+  "surname" : "Daric",
+  "gender" : "FEMALE",
+  "typeOfUser" : "HOST",
+  "apartmentsForRent" : [ ],
+  "blocked" : true
+}, {
+  "username" : "55",
+  "password" : "22",
+  "name" : "bhbj",
+  "surname" : "hkjhk",
+  "gender" : "MALE",
+  "typeOfUser" : "HOST",
+  "apartmentsForRent" : [ ],
+  "blocked" : true
+}, {
+  "username" : "gaga998",
+  "password" : "gaga",
+  "name" : "Dragana",
+  "surname" : "Carapic",
+  "gender" : "FEMALE",
+  "typeOfUser" : "HOST",
+  "apartmentsForRent" : [ ],
+  "blocked" : false
+} ]

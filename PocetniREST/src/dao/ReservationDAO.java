@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -15,9 +14,8 @@ import beans.Reservation;
 import beans.ReservationStatus;
 
 public class ReservationDAO {
-	private String path;
-	private File file;
 	
+	private File file;
 	
 	/*public static void main(String[] args) {
 	
@@ -35,8 +33,15 @@ public class ReservationDAO {
 	
 	
 	public ReservationDAO() {
-		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "reservations.json";
-		file = new File(path);
+		file = new File("WebContent/data/reservations.json");
+		 try {
+		   if (file.createNewFile()){
+		    ArrayList<Reservation> reservations = new ArrayList<Reservation>();
+		    writeInFile(reservations);
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 	}
 	
 	private ArrayList<Reservation> readFromFile() {

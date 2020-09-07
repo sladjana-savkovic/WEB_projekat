@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,7 +12,6 @@ import beans.Apartment;
 
 
 public class AmenitiesDAO {
-	private String path;
 	private File file;
 	
 	/*public static void main(String[] args) {
@@ -27,17 +25,23 @@ public class AmenitiesDAO {
 	amenities.add(a3);
 	
 	AmenitiesDAO aDAO = new AmenitiesDAO();
-	//aDAO.writeInFile(amenities);
-	Amenities a4 = new Amenities(3, "Veš mašina", false);
+	aDAO.writeInFile(amenities);
+	//Amenities a4 = new Amenities(3, "Veš mašina", false);
 	//aDAO.addNewAmenities(a4);
-	aDAO.deleteAmenities(3);
+	//aDAO.deleteAmenities(3);
 	
 	}*/
 	
 	public AmenitiesDAO() {
-		path = Paths.get("WEB projekat\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
-		
-		file = new File(path);
+		file = new File("WebContent/data/amenities.json");
+		 try {
+		   if (file.createNewFile()){
+		    ArrayList<Amenities> amenities = new ArrayList<Amenities>();
+		    writeInFile(amenities);
+		   }
+		  } catch (IOException e) {
+		   e.printStackTrace();
+		  }
 	}
 	
 	private ArrayList<Amenities> readFromFile() {
