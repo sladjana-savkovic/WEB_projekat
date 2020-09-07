@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,6 +14,7 @@ import beans.Apartment;
 
 public class AmenitiesDAO {
 	private File file;
+	private String path;
 	
 	/*public static void main(String[] args) {
 	Amenities a1 = new Amenities(0, "Klima", false);
@@ -33,7 +35,8 @@ public class AmenitiesDAO {
 	}*/
 	
 	public AmenitiesDAO() {
-		file = new File("WebContent/data/amenities.json");
+		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
+		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
 		    ArrayList<Amenities> amenities = new ArrayList<Amenities>();

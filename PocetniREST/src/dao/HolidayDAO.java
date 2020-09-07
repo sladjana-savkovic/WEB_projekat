@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -12,10 +13,12 @@ import beans.Holiday;
 public class HolidayDAO {
 
 	private File file;
+	private String path;
 	
 	public HolidayDAO() {
 		try { 
-		   file = new File("WebContent/data/holidays.json");
+		   path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "holidays.json";
+		   file = new File(path);
 			 
 		   if (file.createNewFile()){
 		    Holiday holiday = new Holiday();
@@ -25,7 +28,7 @@ public class HolidayDAO {
 		   e.printStackTrace();
 		  }
 	}
-	
+		
 	public boolean isHoliday(String date) {
 		Holiday holiday = readFromFile();
 		return holiday.getHolidays().contains(date);

@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -14,9 +15,11 @@ import beans.Guest;
 public class GuestDAO {
 	
 	private File file;
+	private String path;
 	
 	public GuestDAO() {
-		 file = new File("WebContent/data/guests.json");
+		 path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "guests.json";
+		 file = new File(path);
 		 try {
 		   if (file.createNewFile()){
 		    ArrayList<Guest> guests = new ArrayList<Guest>();

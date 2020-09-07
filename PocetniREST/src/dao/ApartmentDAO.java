@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,9 +19,11 @@ import beans.TypeOfApartment;
 public class ApartmentDAO {
 
 	private File file;
+	private String path;
 	
 	public ApartmentDAO() {
-		file = new File("WebContent/data/apartments.json");
+		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "apartments.json";
+		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
 		    ArrayList<Apartment> apartments = new ArrayList<Apartment>();

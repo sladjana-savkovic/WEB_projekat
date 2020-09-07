@@ -2,6 +2,7 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -13,9 +14,11 @@ import beans.Admin;
 public class AdminDAO {
 	
 	private File file;
+	private String path;
 	
 	public AdminDAO() {
-		file = new File("WebContent/data/admins.json");
+		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "admins.json";
+		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
 		    ArrayList<Admin> admins = new ArrayList<Admin>();
