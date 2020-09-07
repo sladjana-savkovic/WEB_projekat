@@ -1,7 +1,9 @@
 package services;
 
-import java.nio.file.Paths;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.ArrayList;
+import java.util.Base64;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +15,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.xml.bind.DatatypeConverter;
 
 import beans.Apartment;
 import beans.TypeOfUser;
@@ -54,6 +57,9 @@ public class ApartmentService {
 	public ArrayList<Apartment> getAllApartments(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		//byte[] decodedBytes = Base64.getDecoder().decode("ZGFjYTE5OTY=");
+		//String lozinka = new String(decodedBytes);
 		
 		//unlogged user or guest
 		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
@@ -109,11 +115,23 @@ public class ApartmentService {
 			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 					filter.getStatus(),apartmentDAO.getAllApartments());
 		}
-		/*System.out.println("------------------------------------------------");
-		System.out.println(filter.getTypes());
-		System.out.println(filter.getAmenities());
-		System.out.println(filter.getStatus());*/
 		return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 				filter.getStatus(),apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
+	
+	@POST
+	@Path("/apartments/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addApartment(Apartment apartment) {
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.addApartment(apartment);
+	}
+	
+	@POST
+	@Path("/apartments/save_image")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void saveImage(Object file) {
+		System.out.println("PRIMLJEN FAJL");
+	}
+	
 }
