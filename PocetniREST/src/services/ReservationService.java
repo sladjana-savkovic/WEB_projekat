@@ -18,12 +18,14 @@ import javax.ws.rs.core.Response.Status;
 
 import beans.Amenities;
 import beans.Apartment;
+import beans.Comment;
 import beans.Gender;
 import beans.Guest;
 import beans.Reservation;
 import beans.ReservationStatus;
 import dao.AmenitiesDAO;
 import dao.ApartmentDAO;
+import dao.CommentDAO;
 import dao.GuestDAO;
 import dao.ReservationDAO;
 
@@ -147,4 +149,38 @@ public class ReservationService {
 		ReservationDAO reservationDAO = new ReservationDAO();
 		reservationDAO.cancelReservationByGuest(reservationDAO.getReservationById(id));
 	}
+	
+	@GET
+	@Path("/reservations/new_id")
+	public int getNewId() {
+		ReservationDAO reservationDAO = new ReservationDAO();
+		return reservationDAO.getLastId()+1;
+	}
+	
+	@POST
+	@Path("/reservations/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addReservation(Reservation reservation) {
+		ReservationDAO reservationDAO = new ReservationDAO();	
+		reservationDAO.addNewReservation(reservation);
+	}
+	
+	@GET
+	@Path("/reservations/total_price/{date}/{numberNight}/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public double getTotalPrice(@PathParam("date") String date, @PathParam("numberNight") int numberNight, @PathParam("id")  int id){
+		ReservationDAO reservationDAO = new ReservationDAO();
+	
+		return reservationDAO.getTotalPrice(date, numberNight, id);
+	}
+	
+	@GET
+	@Path("/reservations/max_num_night/{date}/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public int getMaxNumNight(@PathParam("date") String date, @PathParam("id")  int id){
+		ReservationDAO reservationDAO = new ReservationDAO();
+	
+		return reservationDAO.getMaxNumberNight(date, id);
+	}
+	
 }

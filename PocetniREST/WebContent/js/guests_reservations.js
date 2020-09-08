@@ -82,7 +82,7 @@ function addReservation(r) {
 			btn_type = '<button class="btn btn-danger reservation" data-toggle="modal" data-target="#modalConfirmCancel" id="' + r.id +'" onclick="cancelReservation(this.id)">Odustanite</button>';
 			}
 			if(status == "ZAVŠENA"){
-			btn_type ='<button data-toggle="modal" data-target="#modalFeedbackForm" class="btn btn-brown reservation" type="submit" id="submit_btns">Komentarišite</button>';
+			btn_type ='<button data-toggle="modal" data-target="#modalFeedbackForm" class="btn btn-brown reservation" type="submit" id="' + r.apartmentId +'" onclick="commentApartment(this.id)">Komentarišite</button>';
 			}
 			
 			let reservation = $('<div class="border_apartments">' 
@@ -128,6 +128,69 @@ function cancelReservation(id){
 			},
 			error:  function()  {
 				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
+			}
+		});
+		
+	});
+};
+
+function commentApartment(apartmentId){
+	
+	$('a#yes_comment').click(function(event){
+		
+		event.preventDefault();
+		
+		var new_id;
+		
+		let description = $('#text_comment').val();
+		
+		let rating = 1;
+		
+		if($('#ratio_2').is(":checked")){
+			rating = 2;
+		}
+		if($('#ratio_3').is(":checked")){
+			rating = 3;
+		}
+		if($('#ratio_4').is(":checked")){
+			rating = 4;
+		}
+		if($('#ratio_5').is(":checked")){
+			rating = 5;
+		}
+		
+		
+		$.ajax({
+			type:"GET", 
+			url: "rest/comments/new_id",
+			contentType: "application/json",
+			success:function(id){
+				new_id = id;
+				
+				$.ajax({
+					type:"POST", 
+					url: "rest/comments/add",
+					data: JSON.stringify({ 
+						id: new_id,
+						guestUsername : "pero123",
+						apartmentId : apartmentId,
+						description: description,
+						rating : rating,
+						status : "CREATED"}),
+					contentType: "application/json",
+					success:function(){
+						toastr["success"]("Uspješno ste dodali komentar");
+						setTimeout(function(){
+					           location.reload(); 
+					      }, 50); 
+					},
+					error:function(){
+						toastr["error"]("Došlo je do greške prilikom dodavanja komentara!");
+					}
+				});
+			},
+			error:function(){
+				console.log('error getting last id');
 			}
 		});
 		

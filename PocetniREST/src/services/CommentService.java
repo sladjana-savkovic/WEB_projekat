@@ -15,7 +15,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import beans.Amenities;
 import beans.Comment;
+import dao.AmenitiesDAO;
 import dao.CommentDAO;
 
 @Path ("")
@@ -65,5 +67,20 @@ public class CommentService {
 		CommentDAO commentDAO = getCommentDAO();
 		//treba id odabranog apartmana
 		return commentDAO.getAllCommentsByApartment(1);
+	}
+	
+	@GET
+	@Path("/comments/new_id")
+	public int getNewId() {
+		CommentDAO commentDAO = getCommentDAO();
+		return commentDAO.getLastId()+1;
+	}
+	
+	@POST
+	@Path("/comments/add")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void addComment(Comment comment) {
+		CommentDAO commentDAO = getCommentDAO();	
+		commentDAO.addCommentForApartment(comment);
 	}
 }

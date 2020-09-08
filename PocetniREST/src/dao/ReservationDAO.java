@@ -3,6 +3,7 @@ package dao;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
+import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -11,13 +12,13 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import beans.Apartment;
+import beans.Host;
 import beans.Reservation;
 import beans.ReservationStatus;
 
 public class ReservationDAO {
-	
-	private File file;
 	private String path;
+	private File file;
 	
 	/*public static void main(String[] args) {
 	
@@ -25,15 +26,18 @@ public class ReservationDAO {
 				"", "milica967", ReservationStatus.ACCEPTED);
 		
 		ReservationDAO reservationDAO = new ReservationDAO();
-			ArrayList<Reservation> res = reservationDAO.readFromFile();
+			/*ArrayList<Reservation> res = reservationDAO.readFromFile();
 			ArrayList<Reservation> res11 = reservationDAO.filterReservationsByStatus(rsrarus);
 	
 			System.out.println(res11.get(0).getId());
 			System.out.println(res11.get(1).getId());
 		
+		double d = reservationDAO.getTotalPrice("2020-09-10", 4, 1);
+		int z = reservationDAO.getMaxNumberNight("2020-09-12", 1);
+		System.out.println(z);
+		
 	}*/
-	
-	
+		
 	public ReservationDAO() {
 		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "reservations.json";
 		file = new File(path);
@@ -227,6 +231,63 @@ public class ReservationDAO {
 		return sortedReservations;
 	}
 	
+	public double getTotalPrice(String selectDateStr, int numberOfNights, int idApartment) {
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		HolidayDAO holidayDAO = new HolidayDAO();
+		Apartment apartment = apartmentDAO.getApartment(idApartment);
+		double priceForNight = apartment.getPricePerNight();
+		
+		ArrayList<String> holidays = holidayDAO.getAllHolidays().getHolidays();
 	
-
+		
+		ArrayList<String> dates = new ArrayList<String>();
+		
+		
+		for(int i = 0; i < numberOfNights; i++) {
+				String nextDate = LocalDate.parse(selectDateStr).plusDays(i).toString();
+				dates.add(nextDate);
+		}
+		
+		double total = 0;
+		for(String d : dates) {
+			
+				if((LocalDate.parse(d).getDayOfWeek() == DayOfWeek.FRIDAY || LocalDate.parse(d).getDayOfWeek() == DayOfWeek.SATURDAY || LocalDate.parse(d).getDayOfWeek() == DayOfWeek.SUNDAY) && (holidays.contains(d))) {
+					double price = priceForNight - priceForNight/10;
+					total = total + (price + price/20);
+				}
+				else if(LocalDate.parse(d).getDayOfWeek() == DayOfWeek.FRIDAY || LocalDate.parse(d).getDayOfWeek() == DayOfWeek.SATURDAY || LocalDate.parse(d).getDayOfWeek() == DayOfWeek.SUNDAY) {
+					total = total + (priceForNight - priceForNight/10);
+				}
+				else if(holidays.contains(d)) {
+					total = total + (priceForNight + priceForNight/20);
+				}else {
+					total = total + priceForNight;
+				}
+			
+			
+		}
+		
+		return total;
+	}
+	
+	public int getMaxNumberNight(String selectedDateStr, int apartmentId) {
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		Apartment apartment = apartmentDAO.getApartment(apartmentId);
+		ArrayList<String> dates = apartment.getAvailableDates();
+		
+		int i = 1;
+		
+		while(true) {
+			
+			if(dates.contains(LocalDate.parse(selectedDateStr).plusDays(i).toString())) {
+				i = i + 1; 
+			}else {
+				break;
+			}
+		}
+		
+		return i;
+		
+	}
+	
 }

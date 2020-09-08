@@ -16,6 +16,7 @@
 
   <!-- Your custom styles (optional) -->
   <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link rel="stylesheet" href="toastr.min.css">
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="style_guest_page.css">
    <link rel="stylesheet" href="toastr.min.css">
@@ -26,8 +27,6 @@
 </head>
 <body>
 <script src="guest_navbar.js"></script>
-<script src="quit.js"></script>
-<script src="feedback.js"></script>
 
 <br>
 <h2 id="title-my-res">Moje rezervacije</h2>
@@ -69,6 +68,88 @@
     <!--/.Content-->
   </div>
 </div>
+<!--Modal: modalConfirmDelete-->
+
+
+ <!--Modal: modalConfirmDelete-->
+  <div class="modal fade right" id="modalFeedbackForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header">
+        <p class="heading lead">Ostavite komentar
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          <i class="far fa-file-alt fa-4x mb-3 animated rotateIn"></i>
+          <p>
+            <strong>Stalo nam je do Vašeg mišljenja</strong>
+          </p>
+          <p>Kako da smještaj bude još bolji?
+            <strong>Ostavite Vaš komentar.</strong>
+          </p>
+        </div>
+
+        <hr>
+
+        <!-- Radio -->
+        <p class="text-center">
+          <strong>Izaberite ocjenu:</strong>
+        </p>
+        <div class="form-check mb-4">
+          <input class="form-check-input" name="group1" type="radio" id="ratio_5" value="option1" checked>
+          <label class="form-check-label" for="radio-179">Odlično</label>
+        </div>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" name="group1" type="radio" id="ratio_4" value="option2">
+          <label class="form-check-label" for="radio-279">Veoma dobro</label>
+        </div>
+
+        <div class="form-check mb-4">
+          <input class="form-check-input" name="group1" type="radio" id="ratio_3" value="option3">
+          <label class="form-check-label" for="radio-379">Dobro</label>
+        </div>
+        <div class="form-check mb-4">
+          <input class="form-check-input" name="group1" type="radio" id="ratio_2" value="option4">
+          <label class="form-check-label" for="radio-479">Loše</label>
+        </div>
+        <div class="form-check mb-4">
+          <input class="form-check-input" name="group1" type="radio" id="ratio_1" value="option5">
+          <label class="form-check-label" for="radio-579">Veoma loše</label>
+        </div>
+        <!-- Radio -->
+
+        <p class="text-center">
+          <strong>Vaš komentar:</strong>
+        </p>
+        <!--Basic textarea-->
+        <div class="md-form">
+  <i class="fas fa-pencil-alt prefix"></i>
+  <textarea id="text_comment" class="md-textarea form-control" rows="5"></textarea>
+  <label for="form10">Unesite komentar</label>
+</div>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <a type="button" class="btn btn-primary waves-effect waves-light" id="yes_comment">Pošalji
+          <i class="fa fa-paper-plane ml-1"></i>
+        </a>
+        <a type="button" class="btn btn-outline-primary waves-effect" data-dismiss="modal" id="no_comment">Odustani</a>
+      </div>
+    </div>
+  </div>
+</div>	
 <!--Modal: modalConfirmDelete-->
  
   

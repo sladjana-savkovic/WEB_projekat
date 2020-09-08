@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	
+
 	var id = window.location.href.split("=")[1];
 	
 	$.ajax({
@@ -124,4 +125,180 @@ $('div#div_amenities').append(amenities);
 
 
 
+};
+
+
+function newReservation(apartmentId){
+	
+	//var now = new Date();
+	//var day = ("0" + now.getDate()).slice(-2);
+	//var month = ("0" + (now.getMonth() + 1)).slice(-2);
+	//var today = now.getFullYear() + "-" + (month) + "-" + (day);
+	
+	// $('#start_date').attr('min', "2020-09-09");
+	 //$('#start_date').attr('max', "2020-09-09");
+	 
+	 
+	// $('#start_date').attr('min', "2020-09-13");
+	 //$('#start_date').attr('max', "2020-09-13");
+	
+	
+	 $.ajax({
+			type:"GET", 
+			url: "rest/apartments/" + apartmentId,
+			contentType: "application/json",
+			success: function(apartment){	
+				
+				$("#name_of_apartment").append('<strong>' + apartment.name + '</strong>')
+				
+				let dates = apartment.availableDates;
+				
+				for(let d of dates){
+					let optionDate = $('<option id="' + d +'">' + d + '</option>');
+					$('#start_date').append(optionDate);
+				}
+				//uzmi iz pretrage
+				$("#2020-09-09").prop("selected",true);
+				$('#night_number').val(1);
+				
+				let selectDate = $("#start_date :selected").text();
+				let numberOfNights = $('#night_number').val();
+				
+				$.ajax({
+					type:"GET", 
+					url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
+					contentType: "application/json",
+					success: function(total){									
+						
+						$("#total_price").val(total);
+						
+					},
+					error:function(){
+						console.log('error calculatin total price of reservation');
+					}
+				});
+				
+			},
+			error:function(){
+				console.log('error search reservations');
+			}
+		});
+	 
+	 
+	// $('#start_date').on('select', function() {
+	//$('#start_date option').each(function() {
+	 $('#start_date').change(function () {
+		 
+	let selectDate = $("#start_date :selected").text();
+	//let numberOfNights = $('#night_number').val();
+		 
+	 $.ajax({
+			type:"GET", 
+			url: "rest/reservations/max_num_night/" + selectDate + "/" + apartmentId,
+			contentType: "application/json",
+			success: function(maxNumber){		
+			
+			 	$('#night_number').attr('max', maxNumber);
+			 	
+			 	let numberOfNights = $('#night_number').val();
+				$.ajax({
+					type:"GET", 
+					url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
+					contentType: "application/json",
+					success: function(total){									
+						
+						$("#total_price").val(total);
+						
+					},
+					error:function(){
+						console.log('error calculatin total price of reservation');
+					}
+				});
+				
+			},
+			error:function(){
+				console.log('error get max number of night');
+			}
+		});
+	 
+	 
+	 });
+	 
+	$('#night_number').on('input', function() {
+		
+		let selectDate = $("#start_date :selected").text();
+		let numberOfNights = $('#night_number').val();
+		
+		$.ajax({
+			type:"GET", 
+			url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
+			contentType: "application/json",
+			success: function(total){									
+				
+				$("#total_price").val(total);
+				
+			},
+			error:function(){
+				console.log('error calculatin total price of reservation');
+			}
+		});
+		
+		 
+	});
+	
+	$('#reserve_confirm').click(function(event){
+		
+		event.preventDefault();
+		
+		var new_id;
+		
+		let message = $('#message_text').val();
+		
+		let startDate = $('#start_date').val();
+	
+		
+		let numberOfNights = $('#night_number').val();
+		
+		
+		let total_price = $('#total_price').val();
+		
+		
+		$.ajax({
+			type:"GET", 
+			url: "rest/reservations/new_id",
+			contentType: "application/json",
+			success:function(id){
+				new_id = id;
+				
+				$.ajax({
+					type:"POST", 
+					url: "rest/reservations/add",
+					data: JSON.stringify({ 
+						id: new_id,
+						apartmentId : apartmentId,
+						startDate : startDate,
+						numberOfNights : numberOfNights,
+						totalPrice : total_price,
+						message : message,
+						guestUsername : "pero123",
+						status : "CREATED"}),
+					contentType: "application/json",
+					success:function(){
+						$('#modalReservationForm').modal('toggle');
+						toastr["success"]("Uspješno ste rezervisali apartman!");
+						setTimeout(function(){
+					           location.reload(); 
+					      }, 50); 
+					},
+					error:function(){
+						toastr["error"]("Došlo je do greške prilikom rezervisanja apartmana!");
+					}
+				});
+			},
+			error:function(){
+				console.log('error getting last id');
+			}
+		});
+		
+	});
 };
