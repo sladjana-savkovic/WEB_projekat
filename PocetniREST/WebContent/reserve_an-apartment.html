@@ -17,14 +17,16 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
   <!-- Your custom styles (optional) -->
   <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="toastr.min.css">
+  <link rel="stylesheet" href="style_host_page.css">
   <script src="jquery-3.3.1.min.js"></script>
   <script  type="text/javascript" src="js/view_apartment.js"></script>
+ 
+  
 </head>
 <body>
   <script src="signin.js"></script>
-   <script src="register.js"></script>
    <script src="images.js"></script>
-   <script src="reservation.js"></script>
 
       <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;" >
 	  <div class="container">
@@ -80,7 +82,7 @@
 
 	<h2 id="title" style="margin-left: 50%; margin-top: 40px;">Apartmani Sunce</h2>
 	<br>
-
+	
 	
   <div class="container" id="images" style="margin-left: 27%;">
     
@@ -129,6 +131,80 @@
 	<div class="row justify-content-center" id="div_amenities" style="width: 40%; margin-left: 33%; color: gray;">
 	
 	</div>
+	
+	
+	<!--Modal: modalConfirmDelete-->
+  <div class="modal fade right" id="modalReservationForm" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+  aria-hidden="true" data-backdrop="false">
+  <div class="modal-dialog modal-full-height modal-right modal-notify modal-info" role="document">
+    <div class="modal-content">
+      <!--Header-->
+      <div class="modal-header" style="background: green;">
+        <p class="heading lead">Raspoloživost
+        </p>
+
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true" class="white-text">×</span>
+        </button>
+      </div>
+
+      <!--Body-->
+      <div class="modal-body">
+        <div class="text-center">
+          
+          <p>
+            Provjerite i dodajte podatke potrebne za rezervaciju smještaja!
+          </p>
+          <p id="name_of_apartment"></p>
+          
+        </div>
+
+        <hr>
+
+        
+        <p class="text-left">
+          <strong>Datum prijave:</strong>
+        </p>
+        <div >
+        <select id="start_date" class="browser-default custom-select form-control" style="width: 180px">
+      
+  		</select>
+  		</div> 		 
+        
+        <p class="text-left">
+          <strong>Broj noći:</strong>
+        </p>
+        <div>
+        <input type="number" placeholder="Unesite broj noći"  id="night_number" class="form-control" min="1" max="30" style="width: 180px"/>
+        </div>
+        
+        <p class="text-left">
+          <strong>Ukupna cijena (RSD):</strong>
+        </p>
+        <div>
+        <input type="number" placeholder="" id="total_price" class="form-control" min="1" style="width: 180px" readonly/>
+        </div>
+
+        <p class="text-left">
+          <strong>Vaša poruka domaćinu:</strong>
+        </p>
+        <!--Basic textarea-->
+        <div class="md-form">
+  <i class="fas fa-pencil-alt prefix"></i>
+  <textarea class="md-textarea form-control" id="message_text" rows="3"></textarea>
+  <label for="form10">Unesite poruku</label>
+</div>
+
+      </div>
+
+      <!--Footer-->
+      <div class="modal-footer justify-content-center">
+        <button class="btn btn-green" type="submit" id="reserve_confirm" style="margin-top: 30px; color: white;">Rezervišite</button>  
+      </div>
+    </div>
+  </div>
+</div>
+<!--Modal: modalConfirmDelete-->
 
 
   <!-- jQuery -->
