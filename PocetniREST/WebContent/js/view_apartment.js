@@ -1,8 +1,16 @@
 $(document).ready(function() {
-	
 
 	var id = window.location.href.split("=")[1];
 	
+	//map
+	var map = L.map('map').setView([44.815071, 20.460480], 6);
+	
+	  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
+	  }).addTo(map);
+		  
+	  var marker;
+	 
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments_comments",
@@ -22,9 +30,15 @@ $(document).ready(function() {
 		url: "rest/apartments/" + id,
 		contentType: "application/json",
 		success: function(apartment){	
+			var lat = (apartment.location.latitude);
+		    var lng = (apartment.location.longitude);
+		    var newLatLng = new L.LatLng(lat, lng);
+		    marker = new L.Marker(newLatLng);
+		    map.addLayer(marker);
+		    map.setView([lat,lng], 12);
+			
 			$('#apartman_name').text(apartment.name);
 			addInfoApartment(apartment);
-				
 		},
 		error:function(){
 			console.log('error search reservations');

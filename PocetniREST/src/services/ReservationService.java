@@ -2,7 +2,6 @@ package services;
 
 import java.util.ArrayList;
 
-import javax.annotation.PostConstruct;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.PathParam;
@@ -13,20 +12,9 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.Response.Status;
 
-import beans.Amenities;
-import beans.Apartment;
-import beans.Comment;
-import beans.Gender;
-import beans.Guest;
 import beans.Reservation;
 import beans.ReservationStatus;
-import dao.AmenitiesDAO;
-import dao.ApartmentDAO;
-import dao.CommentDAO;
-import dao.GuestDAO;
 import dao.ReservationDAO;
 
 @Path("")
@@ -37,7 +25,23 @@ public class ReservationService {
 	
 	@Context
 	HttpServletRequest request;
-
+	
+	private ReservationDAO getReservationDAO() {
+		ReservationDAO reservationDAO = (ReservationDAO) ctx.getAttribute("reservationDAO");
+		if(reservationDAO == null) {
+			reservationDAO = new ReservationDAO();
+			ctx.setAttribute("reservationDAO", reservationDAO);
+		}
+		return reservationDAO;
+	}
+	
+	@GET
+	@Path("/reservations/apartment_delete/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public boolean checkIfApartmentHasReservation(@PathParam("id") int id) {
+		ReservationDAO reservationDAO = getReservationDAO();
+		return reservationDAO.checkIfApartmentHasReservation(id);
+	}
 	
 	@GET
 	@Path("/hosts_reservations/search/{username}")
@@ -97,7 +101,6 @@ public class ReservationService {
 		//treba ime ulogovanog domacina
 		return reservationDAO.filterReservationsByStatus(status, reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
-	
 	
 
 	@GET

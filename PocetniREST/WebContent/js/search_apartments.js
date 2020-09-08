@@ -367,22 +367,52 @@ function deleteApartment(id){
 	$('a#yes_delete').click(function(event){
 		
 		event.preventDefault();
+		alert(id);
 		
 		$.ajax({
-			type: "DELETE",
-			url: "rest/apartments/delete",
+			type: "GET",
+			url: "rest/reservations/apartment_delete/" + id,
 			contentType: "application/json",
-			data:id,
-			success: function(){
-				$('a#no_delete').click();
-				toastr["success"]("Uspješno ste dodali obrisali apartman");
-				setTimeout(function(){
-					location.reload(); }, 500); 
+			success: function(result){
+				if(result){
+					toastr["error"]("Za apartman koji želite obrisati postoje rezervacije");
+					$('a#no_delete').click();
+					return;
+				}else{
+					$.ajax({
+						type: "DELETE",
+						url: "rest/host_guest/delete_apartman",
+						contentType: "application/json",
+						data:id,
+						success: function(){
+							$.ajax({
+								type: "DELETE",
+								url: "rest/apartments/delete",
+								contentType: "application/json",
+								data:id,
+								success: function(){
+									$('a#no_delete').click();
+									toastr["success"]("Uspješno ste dodali obrisali apartman");
+									setTimeout(function(){
+										location.reload(); }, 500); 
+								},
+								error:  function()  {
+									console.log('Došlo je do greške prilikom brisanja apartmana');
+								}
+							});
+						},
+						error:  function()  {
+							console.log('Došlo je do greške prilikom brisanja apartmana kod gosta i domacina');
+						}
+					});
+					
+				}
 			},
 			error:  function()  {
-				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
+				console.log('Došlo je do greške prilikom provjere da li apartman ima rezervacije');
 			}
 		});
+		
 		
 	});
 };

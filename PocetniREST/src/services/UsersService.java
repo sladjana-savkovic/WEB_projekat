@@ -6,6 +6,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -313,6 +314,15 @@ public class UsersService {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
 		return Response.ok().entity(session.getAttribute("loggedUser")).build();
+	}
+	
+	@DELETE
+	@Path("/host_guest/delete_apartman")
+	public void deleteApartmanForHostAndGuest(int id) {
+		HostDAO hostDAO = getHostDAO();
+		GuestDAO guestDAO = getGuestDAO();
+		hostDAO.deleteApartmentForRentForHosts(id);
+		guestDAO.deleteRentedApartmentForAllGuests(id);
 	}
 
 }

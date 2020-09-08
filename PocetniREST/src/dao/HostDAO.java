@@ -46,6 +46,15 @@ public class HostDAO {
 		return true;
 	}
 	
+	public void deleteApartmentForRentForHosts(int apartmentId) {
+		ArrayList<Host> hosts = readFromFile();
+		for(Host host:hosts) {
+			if(host.getApartmentsForRent().contains(apartmentId))
+				host.getApartmentsForRent().remove(apartmentId);
+		}
+		writeInFile(hosts);
+	}
+	
 	public ArrayList<Host> getAllHosts(){
 		ArrayList<Host> hosts = readFromFile();
 		return hosts;

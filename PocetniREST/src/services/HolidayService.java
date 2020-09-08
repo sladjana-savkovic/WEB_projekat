@@ -1,20 +1,14 @@
 package services;
 
-import java.util.ArrayList;
-
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
-import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import beans.Holiday;
 import dao.HolidayDAO;
@@ -50,5 +44,19 @@ public class HolidayService {
 	public void deleteHoliday(String date) {
 		HolidayDAO holidayDAO = getHolidayDAO();
 		holidayDAO.deleteHoliday(date);
+	}
+	
+	@GET
+	@Path("/holidays/contains")
+	public boolean checkIfContain(String date) {
+		HolidayDAO holidayDAO = getHolidayDAO();
+		return holidayDAO.isHoliday(date);
+	}
+	
+	@POST
+	@Path("/holidays/add")
+	public void addHoliday(String date) {
+		HolidayDAO holidayDAO = getHolidayDAO();
+		holidayDAO.addHoliday(date);
 	}
 }

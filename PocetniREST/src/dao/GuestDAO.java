@@ -40,6 +40,15 @@ public class GuestDAO {
 		return null;
 	}
 	
+	public void deleteRentedApartmentForAllGuests(int id) {
+		ArrayList<Guest> guests = readFromFile();
+		for(Guest guest:guests) {
+			if(guest.getRentedApartments().contains(id))
+				guest.getRentedApartments().remove(id);
+		}
+		writeInFile(guests);
+	}
+	
 	public boolean checkPassword(String guestUsername,String password) {
 		Guest guest = getGuest(guestUsername);
 		if(guest == null || !guest.getPassword().equals(password))

@@ -68,7 +68,7 @@ public class ApartmentDAO {
 		ArrayList<Apartment> filtratedApartmens = new ArrayList<Apartment>();
 		
 		for(Apartment apartment:allApartments) {
-			if(apartment.getHostUsername().equals(hostUsername)) {
+			if(apartment.getHostUsername().equals(hostUsername) && !apartment.isDeleted()) {
 				filtratedApartmens.add(apartment);
 			}
 		}
@@ -80,7 +80,7 @@ public class ApartmentDAO {
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
-			if(a.isActive()) 
+			if(a.isActive() && !a.isDeleted()) 
 				filteredApartments.add(a);
 		}
 		return filteredApartments;
@@ -91,7 +91,7 @@ public class ApartmentDAO {
 		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
-			if(!a.isActive()) 
+			if(!a.isActive() && !a.isDeleted()) 
 				filteredApartments.add(a);
 		}
 		return filteredApartments;

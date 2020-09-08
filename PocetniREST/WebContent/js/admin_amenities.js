@@ -2,6 +2,9 @@ $(document).ready(function() {
 	
 	//checkLoggedUser();
 	
+	$('#edit_name').prop("disabled",true);
+	$('#edit_name').val("");
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/amenities",

@@ -71,6 +71,16 @@ public class ReservationDAO {
         }
 	}
 	
+	public boolean checkIfApartmentHasReservation(int apartmentId) {
+		ArrayList<Reservation> reservations = readFromFile();
+		for(Reservation r:reservations) {
+			if(r.getApartmentId() == apartmentId) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	public int getLastId() {		
 		ArrayList<Reservation> reservationsFromFile = readFromFile();
 		if(reservationsFromFile.size() == 0) {

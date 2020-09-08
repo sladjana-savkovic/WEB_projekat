@@ -75,7 +75,7 @@ document.write(`
 </div>
 			
   <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
-  <h4 class="navbar-brand" id="title" style="margin-right: 50px; color: white; margin-bottom: 40px;">DSTOURS.COM</h4>
+  <h4 class="navbar-brand" id="title" style="margin-right: 50px;">DSTOURS.COM</h4>
 
   <!-- Links -->
   <ul class="navbar-nav">
