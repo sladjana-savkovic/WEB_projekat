@@ -22,6 +22,7 @@ import beans.TypeOfUser;
 import beans.User;
 import dao.ApartmentDAO;
 import dto.FilterApartmentsDTO;
+import dto.SearchApartments;
 
 import javax.ws.rs.PathParam;
 
@@ -132,6 +133,47 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void saveImage(Object file) {
 		System.out.println("PRIMLJEN FAJL");
+	}
+	
+	@POST
+	@Path("/apartments/search")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Apartment> searchApartments(SearchApartments searchApartments){
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		//unlogged user or guest
+		
+		/*System.out.println(searchApartments.getCity());
+		System.out.println(searchApartments.getStartDate());
+		System.out.println(searchApartments.getEndDate());
+		System.out.println(searchApartments.getMinPrice());
+		System.out.println(searchApartments.getMaxPrice());
+		System.out.println(searchApartments.getMinRooms());
+		System.out.println(searchApartments.getMaxRooms());
+		System.out.println(searchApartments.getPersons());*/
+		
+		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			//System.out.println("gost");
+			return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
+					searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
+					searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),
+					apartmentDAO.getActiveApartments());
+		}
+		//admin
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			//System.out.println("admin");
+			return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
+					searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
+					searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),
+					apartmentDAO.getAllApartments());
+		}
+		//host
+	//	System.out.println("domacin");
+		return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
+				searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
+				searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),
+				apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 	
 }

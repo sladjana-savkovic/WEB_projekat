@@ -19,6 +19,7 @@ import beans.Admin;
 import beans.Gender;
 import beans.Guest;
 import beans.Host;
+import beans.TypeOfUser;
 import beans.User;
 import dao.AdminDAO;
 import dao.GuestDAO;
@@ -214,8 +215,12 @@ public class UsersService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Guest> getHostsGuests(){
 		GuestDAO guestDAO = getGuestDAO();
-		//username ulogovanog domacina
-		return guestDAO.getGuestsByHost("gaga998");
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return guestDAO.getGuestsByHost(loggedUser.getUsername());
+		}
+		return new ArrayList<Guest>();
+		
 	}
 	
 	@GET 

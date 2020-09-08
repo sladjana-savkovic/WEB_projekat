@@ -24,9 +24,7 @@
   <link rel="stylesheet" href="style_admin_page.css">
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
-  <script  type="text/javascript" src="js/edit_profile.js"></script>
-  <script  type="text/javascript" src="js/host_apartments.js"></script>
-  <script  type="text/javascript" src="js/sign_out.js"></script>
+  
   <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   
   <!-- Load Leaflet from CDN -->
@@ -49,65 +47,69 @@
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script> 
-    <script type="text/javascript" src="js/map.js"></script>
+    
+    <script  type="text/javascript" src="js/edit_profile.js"></script>
+    <script type="text/javascript" src="js/search_apartments.js"></script>
+    <script  type="text/javascript" src="js/host_apartments.js"></script>
+    <script  type="text/javascript" src="js/sign_out.js"></script>
 </head>
 <body id="admin_apartments">
    <script src="host_navbar.js"></script>
   
   <div id="border" style="margin-top: 30px; background-color: #f2f2f2;">
-  <form>
+  <form id="search_apartments">
   <table>
   	<tr>
   		<td rowspan="4">
-  			<div id="map" style="height: 217px; width: 700px;"></div>
+  			<div id="map" style="height: 217px; width: 750px; margin-right: -50px;"></div>
   		</td>
   		
   		<td width="25%;">
-	  		<input class="textbox-n form-control" type="text" placeholder="Početni datum" onfocus="(this.type='date')" 
+	  		<input id="st_date" class="textbox-n form-control" type="text" placeholder="Početni datum" onfocus="(this.type='date')" 
 	  			onblur="(this.type='text')" style="width: 180px; height: 35px; 
 	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
 	    </td>
 	    
 	    <td width="25%">
-	  		<input class="textbox-n form-control" type="text" placeholder="Krajnji datum" onfocus="(this.type='date')" 
+	  		<input id="end_date" class="textbox-n form-control" type="text" placeholder="Krajnji datum" onfocus="(this.type='date')" 
 	  			onblur="(this.type='text')" style="width: 180px; 
 	  			height: 35px; margin-left: 10px; margin-top: 10px;"/>
 	    </td>
 	 </tr>
 	 <tr>
 	    <td width="25%">
-	  		<input type="number" placeholder="Cijena (min)" class="form-control" min="0" 
+	  		<input id="price_min" type="number" placeholder="Cijena (min)" class="form-control" min="0" 
 	  			style="width: 180px;height: 35px; 
 	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
 	  	</td>
 	  	
 	  	<td width="25%">
-	  		<input type="number" placeholder="Cijena (max)" class="form-control" 
+	  		<input id="price_max" type="number" placeholder="Cijena (max)" class="form-control" 
 	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
 	  	</td>  	
   	</tr>
   	
   	<tr>
   		<td width="25%">
-	  		<input type="number" placeholder="Broj soba (min)" class="form-control" min="1" 
+	  		<input id="rooms_min" type="number" placeholder="Broj soba (min)" class="form-control" min="1" 
 	  			style="width: 180px;height: 35px; 
 	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
 	  	</td>
 	  	
 	  	<td width="25%">
-	  		<input type="number" placeholder="Broj soba (max)" class="form-control" 
+	  		<input id="rooms_max" type="number" placeholder="Broj soba (max)" class="form-control" 
 	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
 	  	</td>
 	</tr>
 	<tr>
 	  	
 	  	<td width="25%">
-	  		<input type="number" placeholder="Broj osoba" class="form-control" min="1" 
+	  		<input id="persons" type="number" placeholder="Broj osoba" class="form-control" min="1" 
 	  			style="width: 180px; height: 35px; 
 	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
 	  	</td>
 	  	
-	  	<td><button class="btn btn-primary mb-2" id="search_btn"
+	  	<td><button class="btn btn-primary mb-2" id="search_btn" type="submit"
 	  			style="margin-left: 240px; margin-top: 10px;">Pretraži</button></td>
 	 </tr>
    </table>	

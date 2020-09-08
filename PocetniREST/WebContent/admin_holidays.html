@@ -23,6 +23,7 @@
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
   <script  type="text/javascript" src="js/edit_profile.js"></script>
+  <script type="text/javascript" src="js/admin_holidays.js"></script>
   <script  type="text/javascript" src="js/sign_out.js"></script>
 </head>
 <body id="guests-review">
@@ -30,38 +31,30 @@
   	<script src="admin_navbar.js"></script>
   
 	<div class="container" id="border" style="background:white; width: 55%; margin:auto; margin-top: 30px; height: 95px;">
-	  <form id="add_amen">
+	  <form id="add_holiday" class="add_amen">
 	    <div class="row">
 	      <div class="col">
-	        <label for="name_amen" id="amen">Dodaj praznik:</label>
+	        <label for="name_holiday" class="amen">Dodaj sadržaj:</label>
 	      </div>
 	      <div class="col">
-	        <input style="width: 250px; margin:0px;" type="date" class="form-control" id="name_amen" name="name_amen" placeholder="Unesite naziv sadržaja">
+	        <input style="width: 250px; margin:0px;" type="date" class="form-control name_amen" id="name_holiday" name="name_holiday" >
 	      </div>
 		    <div class="col">
-		      <input type="submit" class="btn btn-primary mb-2 btn-dark-green" value="Dodaj" id="btn_amen">
+		      <input type="submit" class="btn btn-primary mb-2 btn-dark-green" value="Dodaj" class="btn_amen">
 		    </div>
 	    </div>
 	  </form>
     </div>
 
-	<table class="guests" style="background: white;">
+	<table id="holidays" class="guests" style="background: white;">
+	<thead>
 		<tr style="background: gray;">
 			<th style="width:70%;">Praznici</th>
 			<th>Uklanjanje praznika</th>
 		</tr>
-		<tr>
-			<td>25.04.2020.</td>
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
-		<tr>
-			<td>07.01.2020.</td>
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
-		<tr>
-			<td>31.12.2020.</td>
-			<td><button class="btn del_amen"><i class="fas fa-times"></i></button></td>
-		</tr>
+	</thead>
+	<tbody>
+	</tbody>
 	</table>
 
  <script src="jquery-3.3.1.min.js"></script>

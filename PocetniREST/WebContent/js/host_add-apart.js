@@ -40,7 +40,7 @@ $(document).ready(function() {
 	}
 	$('#files').val('');
 	
-	//maps
+	//map
 	var map = L.map('map').setView([45.267136, 19.833549], 10);
 	
 	  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -110,6 +110,21 @@ $(document).ready(function() {
 	$('#add_apart').submit(function(event){
 		
 		event.preventDefault();
+		
+		/*var form = new FormData();
+		form.append("image",chosen_images[0]);
+		  
+		  
+		  $.ajax({
+	            url: 'rest/apartments/save_image',
+	            type: 'POST',
+	            processData:false,
+	            contentType: false,
+	            data: form,
+	            success: function(){
+	            	alert("uspjesno");
+	            },
+	        });*/
 				
 		let name = $('#name_apart').val();
 		let type = "WHOLE_APARTMENT";
@@ -127,7 +142,7 @@ $(document).ready(function() {
 		let street = street_number[1];
 		let number = street_number[2];
 		let zipCode = split_address[1];
-		let city = split_address[2];
+		let city = split_address[split_address.length - 3];
 		let country = split_address[split_address.length - 1];
 		
 		let checked_amenities = [];
@@ -229,7 +244,9 @@ $(document).ready(function() {
 				checked_amenities.push(a);
 			}
 		}
-				
+		
+		
+		
 		/*for(let image of chosen_images){
 			
 		

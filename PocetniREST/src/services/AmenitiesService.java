@@ -84,12 +84,12 @@ public class AmenitiesService {
 	}
 	
 	@GET
-	@Path("/apartments_amenities")
+	@Path("/apartments_amenities/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Amenities> getApartmentsAmenities(){
+	public ArrayList<Amenities> getApartmentsAmenities(@PathParam("id") int id){
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
 		//treba id odabranog apartmana
-		return amenitiesDAO.getApartmentAmenities(1);
+		return amenitiesDAO.getApartmentAmenities(id);
 	}
 	
 }

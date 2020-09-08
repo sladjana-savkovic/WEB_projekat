@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 import java.time.LocalDate;
+import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -216,65 +217,112 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
-	public ArrayList<Apartment> searchApartments(String location, LocalDate startDate, LocalDate endDate, int minPrice, int maxPrice,
+	public ArrayList<Apartment> searchApartments(String city, String startDate, String endDate, int minPrice, int maxPrice,
 								int minRooms, int maxRooms, int persons,ArrayList<Apartment> apartments) {
 		
 		ArrayList<Apartment> filtratedApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
-			if(!location.equals("") && (a.getLocation().getAddress().getCity().toLowerCase().equals(location.toLowerCase()) || 
-			   a.getLocation().getAddress().getCountry().toLowerCase().equals(location.toLowerCase()))) {
+			//System.out.println("------------------------------------------");
+			if(!city.equals("null") && a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
+				//	System.out.println("dodalo grad " + a.getName());
 					filtratedApartments.add(a);
 			}
+			else if(!city.equals("null") && !a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
+				continue;
+			}
 					
-			if (startDate != null && a.getAvailableDates().contains(startDate.toString()) && !filtratedApartments.contains(a))
+			if (!startDate.equals("null") && a.getAvailableDates().contains(startDate) && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo pocetni datum "+ a.getName());
 				filtratedApartments.add(a);
-			else if (startDate != null && !a.getAvailableDates().contains(startDate.toString())  && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
+			}
+			else if (!startDate.equals("null") && !a.getAvailableDates().contains(startDate)) {
+				//System.out.println("uklonilo pocetni datum "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
 				continue;
 			}
 				
-			if (endDate !=null && a.getAvailableDates().contains(endDate.toString()) && !filtratedApartments.contains(a))
+			if (!endDate.equals("null") && a.getAvailableDates().contains(endDate.toString()) && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo kranji datum "+ a.getName());
 				filtratedApartments.add(a);
-			else if(endDate != null && !a.getAvailableDates().contains(endDate.toString()) && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
-				continue;
 			}
-				
-			if (minPrice != 0 && a.getPricePerNight() >= minPrice && !filtratedApartments.contains(a))
-				filtratedApartments.add(a);
-			else if(a.getPricePerNight() < minPrice && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
-				continue;
-			}
-				
-			if (maxPrice != 0 && a.getPricePerNight() <= maxPrice && !filtratedApartments.contains(a))
-				filtratedApartments.add(a);
-			else if(a.getPricePerNight() > maxPrice && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
-				continue;
-			}
-				
-			if (minRooms != 0 && a.getNumberOfRooms() >= minRooms && !filtratedApartments.contains(a))
-				filtratedApartments.add(a);
-			else if(a.getNumberOfRooms() < minRooms && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
+			else if(!endDate.equals("null") && !a.getAvailableDates().contains(endDate.toString())) {
+				//System.out.println("uklonilo krajnji datum "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
 				continue;
 			}
 			
-			if (maxRooms != 0 && a.getNumberOfRooms() <= maxRooms && !filtratedApartments.contains(a))
+			if(!startDate.equals("null") && !endDate.equals("null")) {
+				int difference = Period.between(LocalDate.parse(startDate), LocalDate.parse(endDate)).getDays();
+				for(int i=1; i<difference; i++) {
+					LocalDate date = LocalDate.parse(startDate).plusDays(i);
+					if(!a.getAvailableDates().contains(date.toString())) {
+						System.out.println("uklonilo oba datuma "+ a.getName());
+						if(filtratedApartments.contains(a))
+							filtratedApartments.remove(a);
+						continue;
+					}
+				}
+			}
+				
+			if (minPrice != 0 && a.getPricePerNight() >= minPrice && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo min cijenu "+ a.getName());
 				filtratedApartments.add(a);
-			else if(a.getNumberOfRooms() > maxRooms && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
+			}
+			else if(minPrice != 0 && a.getPricePerNight() < minPrice) {
+				//System.out.println("uklonilo min cijenu "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
+				continue;
+			}
+				
+			if (maxPrice != 0 && a.getPricePerNight() <= maxPrice && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo maks cijenu "+ a.getName());
+				filtratedApartments.add(a);
+			}
+			else if(maxPrice != 0 && a.getPricePerNight() > maxPrice) {
+				//System.out.println("uklonilo maks cijenu "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
+				continue;
+			}
+				
+			if (minRooms != 0 && a.getNumberOfRooms() >= minRooms && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo min br soba "+ a.getName());
+				filtratedApartments.add(a);
+			}
+			else if(minRooms !=0 && a.getNumberOfRooms() < minRooms) {
+				//System.out.println("uklonilo min br soba "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
 				continue;
 			}
 			
-		    if (persons != 0 && a.getNumberOfGuests() == persons && !filtratedApartments.contains(a))
+			if (maxRooms != 0 && a.getNumberOfRooms() <= maxRooms && !filtratedApartments.contains(a)) {
+				//System.out.println("dodalo maks br soba "+ a.getName());
 				filtratedApartments.add(a);
-			else if(a.getNumberOfGuests() != persons && filtratedApartments.contains(a)) {
-				filtratedApartments.remove(a);
+			}
+			else if(maxRooms !=0 && a.getNumberOfRooms() > maxRooms) {
+				//System.out.println("uklonilo maks br soba "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
 				continue;
-			}			
+			}
+			
+		    if (persons != 0 && a.getNumberOfGuests() == persons && !filtratedApartments.contains(a)) {
+		    	//System.out.println("dodalo osobe "+ a.getName());
+				filtratedApartments.add(a);
+		    }
+			else if(persons !=0 && a.getNumberOfGuests() != persons) {
+				//System.out.println("uklonilo osobe "+ a.getName());
+				if(filtratedApartments.contains(a))
+					filtratedApartments.remove(a);
+				continue;
+			}		
 		}
 		
 		return filtratedApartments;

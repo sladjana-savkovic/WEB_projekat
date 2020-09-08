@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	var id = window.location.href.split("=")[1];
+	
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments_comments",
@@ -13,16 +15,14 @@ $(document).ready(function() {
 			console.log('error getting comments');
 		}
 	});
-	
-	let id=1;
-	
+		
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments/" + id,
 		contentType: "application/json",
-		success: function(apartment){					
-	
-		addInfoApartment(apartment);
+		success: function(apartment){	
+			$('#apartman_name').text(apartment.name);
+			addInfoApartment(apartment);
 				
 		},
 		error:function(){
@@ -32,9 +32,15 @@ $(document).ready(function() {
 	
 	$.ajax({
 		type:"GET", 
-		url: "rest/apartments_amenities",
+		url: "rest/apartments_amenities/" + id,
 		contentType: "application/json",
 		success:function(amenities){
+			
+			if(amenities.length == 0){
+				$('div#div_amenities').append('Nema sadržaja');
+				return;
+			}
+			
 			for (let a of amenities) {
 				addAmenities(a);
 			}
@@ -96,8 +102,9 @@ function addInfoApartment(apartment) {
 		     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
 		   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
 		  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
-		  + '</tr></table></td><td style="vertical-align: bottom;">'
-	     + '<div><button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button></div>'
+		  + '</tr></table>'
+		  + '<td><span width="200px;"></span>'
+	     + '<button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>'
 	    + '</td></tr></table></div>');
 
 $('div#div_about_apartment').append(a);
@@ -108,8 +115,6 @@ $('div#div_about_apartment').append(a);
 
 
 function addAmenities(a) {
-	
-	let u = ''
 	
 	let amenities = $('<ul class="list-group list-group-flush"><ul class="list-group"><li class="list-group-item">'
 			   +'<div class="md-v-line"></div>' + a.name +'</li></ul>'

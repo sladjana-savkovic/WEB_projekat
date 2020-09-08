@@ -17,23 +17,23 @@ select.combo{
 	padding: 0px;
 	margin: 0px;
 }
-form#add_amen{
+form.add_amen{
 	margin:auto; 
 	margin-left: 50px; 
 	margin-top: 10px; 
 	width: 100%;
 }
-form#edit_amen{
+form.edit_amen{
 	margin: auto; 
 	margin-left: 50px; 
 	margin-top: 30px; 
 	width: 100%;
 }
-label#amen{
+label.amen{
 	font-size: 20px; 
 	font-weight: bolder;
 }
-input[type=submit]#btn_amen{
+input[type=submit].btn_amen{
 	 width: 100px; 
 	 padding:0px; 
 	 height: 38px; 
