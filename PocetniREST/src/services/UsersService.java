@@ -6,7 +6,6 @@ import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -16,15 +15,10 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.PathParam;
 
-import beans.Admin;
 import beans.Gender;
-import beans.Guest;
-import beans.Host;
 import beans.TypeOfUser;
 import beans.User;
-import dao.AdminDAO;
-import dao.GuestDAO;
-import dao.HostDAO;
+import dao.UserDAO;
 import dto.LoginUserDTO;
 
 @Path ("")
@@ -36,47 +30,30 @@ public class UsersService {
 	@Context
 	HttpServletRequest request;
 	
-	private GuestDAO getGuestDAO() {
-		GuestDAO guestDAO = (GuestDAO) ctx.getAttribute("guestDAO");
-		if (guestDAO == null) {
-			guestDAO = new GuestDAO();
-			ctx.setAttribute("guestDAO", guestDAO);
+	private UserDAO getUserDAO() {
+		UserDAO userDAO = (UserDAO) ctx.getAttribute("userDAO");
+		if (userDAO == null) {
+			userDAO = new UserDAO();
+			ctx.setAttribute("userDAO", userDAO);
 		}
 
-		return guestDAO;
-	}
-	private HostDAO getHostDAO() {
-		HostDAO hostDAO = (HostDAO) ctx.getAttribute("hostDAO");
-		if(hostDAO == null) {
-			hostDAO = new HostDAO();
-			ctx.setAttribute("hostDAO", hostDAO);
-		}
-		return hostDAO;
-	}
-	
-	private AdminDAO getAdminDAO() {
-		AdminDAO adminDAO = (AdminDAO) ctx.getAttribute("adminDAO");
-		if(adminDAO == null) {
-			adminDAO = new AdminDAO();
-			ctx.setAttribute("adminDAO", adminDAO);
-		}
-		return adminDAO;
+		return userDAO;
 	}
 	
 	@POST
 	@Path("/registration")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response registration(Guest guest) {
-		GuestDAO guestDAO = getGuestDAO();
-		if (guestDAO.getGuest(guest.getUsername()) != null) 
+	public Response registration(User user) {
+		UserDAO userDAO = getUserDAO();
+		if (userDAO.getUser(user.getUsername()) != null) 
 			return Response.status(Response.Status.BAD_REQUEST)
 					.entity("Korisničko ime je zauzeto. Odaberite drugo korisničko ime").build();
 		
-		guestDAO.addGuest(guest);
+		userDAO.addUser(user);
 		return Response.ok().build();
 	}
 	
-	@POST
+	/*@POST
 	@Path("/host_add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addHost(Host host) {
@@ -86,37 +63,31 @@ public class UsersService {
 					.entity("Korisničko ime je zauzeto. Odaberite drugo korisničko ime").build();
 		hostDAO.addHost(host);
 		return Response.ok().build();
-	}
+	}*/
 	
 	@POST
 	@Path("/edit_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void edit_profile(Guest guest) {
-		GuestDAO guestDAO = getGuestDAO();
-		guestDAO.editGuest(guest);
+	public void edit_profile(User user) {
+		UserDAO userDAO = getUserDAO();
+		userDAO.editUser(user);
 	}
 	
 	@GET
-	@Path("/guests/{username}")
+	@Path("/users/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Guest getGuest(@PathParam("username") String username) {
-		GuestDAO guestDAO = getGuestDAO();
-		return guestDAO.getGuest(username);
-	}
-	
-	@GET
-	@Path("/hosts/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Host getHost(@PathParam("username") String username) {
-		HostDAO hostDAO = getHostDAO();
-		return hostDAO.getHost(username);
+	public User getUser(@PathParam("username") String username) {
+		UserDAO userDAO = getUserDAO();
+		return userDAO.getUser(username);
 	}
 	
 	@GET
 	@Path("/hosts_guests/search/{username}/{gender}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Guest> searchHostsGuests(@PathParam("username") String username,@PathParam("gender") String gender){
-		GuestDAO guestDAO = getGuestDAO();
+	public ArrayList<User> searchGuestsByLoggedHosts(@PathParam("username") String username,@PathParam("gender") String gender){
+		UserDAO userDAO = getUserDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
 		String u = username;
 		Gender g = Gender.MALE;
 		
@@ -129,60 +100,20 @@ public class UsersService {
 			g = null;
 		}
 		
-		//umjesto gaga998 ide username ulogovang domacina
-		return guestDAO.getHostsGuestsByUsernameAndGender("gaga998",u, g);
+		if(loggedUser == null || loggedUser.getTypeOfUser() != TypeOfUser.HOST) {
+			return new ArrayList<User>();
+		}
+		
+		return userDAO.getGuestsByUsernameAndGender(u, g, userDAO.getGuestsByHost(loggedUser.getUsername()));
 	}
-	
+		
 	@GET
-	@Path("/guests/search/{username}/{gender}")
+	@Path("/guests_and_hosts/search/{username}/{gender}/{usertype}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Guest> searchGuests(@PathParam("username") String username,@PathParam("gender") String gender){
-		GuestDAO guestDAO = getGuestDAO();
-		String u = username;
-		Gender g = Gender.MALE;
-		
-		if(u.equals("null")) {
-			u = null;
-		}
-		if(gender.equals("female")){
-			g = Gender.FEMALE;
-		}else if(gender.equals("null")) {
-			g = null;
-		}
-		
-		return guestDAO.getGuestsByUsernameAndGender(u, g);
-	
-	}
-	
-	@GET
-	@Path("/hosts/search/{username}/{gender}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Host> searchHosts(@PathParam("username") String username,@PathParam("gender") String gender){
-		HostDAO hostDAO = getHostDAO();
-		String u = username;
-		Gender g = Gender.MALE;
-		
-		if(u.equals("null")) {
-			u = null;
-		}
-		if(gender.equals("female")){
-			g = Gender.FEMALE;
-		}else if(gender.equals("null")) {
-			g = null;
-		}
-		
-		return hostDAO.getHostsByUsernameAndGender(u, g);
-	}
-	
-	@GET
-	@Path("/guests_hosts/search/{username}/{gender}")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<User> searchGuestsAndHosts(@PathParam("username") String username,@PathParam("gender") String gender){
-		HostDAO hostDAO = getHostDAO();
-		GuestDAO guestDAO = getGuestDAO();
+	public ArrayList<User> searchGuestsAndHosts(@PathParam("username") String username,@PathParam("gender") String gender,
+												@PathParam("usertype") String usertype){
+		UserDAO userDAO = getUserDAO();
 		String u = username;
 		Gender g = Gender.MALE;
 		
@@ -196,9 +127,16 @@ public class UsersService {
 		}
 		
 		ArrayList<User> retVal = new ArrayList<User>();
-		retVal.addAll(hostDAO.getHostsByUsernameAndGender(u, g));
-		retVal.addAll(guestDAO.getGuestsByUsernameAndGender(u, g));
 		
+		if(usertype.equals("guest")) {
+			retVal.addAll(userDAO.getGuestsByUsernameAndGender(u, g, userDAO.getAllGuests()));
+		}
+		else if(usertype.equals("host")) {
+			retVal.addAll(userDAO.getHostsByUsernameAndGender(u, g, userDAO.getAllHosts()));
+		}else {
+			retVal.addAll(userDAO.getGuestsByUsernameAndGender(u, g, userDAO.getAllGuests()));
+			retVal.addAll(userDAO.getHostsByUsernameAndGender(u, g, userDAO.getAllHosts()));
+		}
 		
 		return retVal;
 	}
@@ -206,42 +144,48 @@ public class UsersService {
 	@GET
 	@Path("/guests")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Guest> getAllGuests(){
-		GuestDAO guestDAO = getGuestDAO();
-		return guestDAO.getAllGuests();
+	public ArrayList<User> getAllGuests(){
+		UserDAO userDAO = getUserDAO();
+		return userDAO.getAllGuests();
+	}
+	
+	@GET
+	@Path("/guests_and_hosts")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<User> getAllGuestsAndHosts(){
+		UserDAO userDAO = getUserDAO();
+		ArrayList<User> guests_hosts = new ArrayList<User>();
+		guests_hosts.addAll(userDAO.getAllGuests());
+		guests_hosts.addAll(userDAO.getAllHosts());
+		return guests_hosts;
 	}
 	
 	@GET
 	@Path("/hosts_guests")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Guest> getHostsGuests(){
-		GuestDAO guestDAO = getGuestDAO();
+	public ArrayList<User> getHostsGuests(){
+		UserDAO userDAO = getUserDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
-			return guestDAO.getGuestsByHost(loggedUser.getUsername());
+		if (loggedUser != null && loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return userDAO.getGuestsByHost(loggedUser.getUsername());
 		}
-		return new ArrayList<Guest>();
+		return new ArrayList<User>();
 		
 	}
 	
 	@GET 
 	@Path("/hosts")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Host> getAllHosts(){
-		HostDAO hostDAO = getHostDAO();
-		return hostDAO.getAllHosts();
+	public ArrayList<User> getAllHosts(){
+		UserDAO userDAO = getUserDAO();
+		return userDAO.getAllHosts();
 	}
 	
 	@POST
 	@Path("/users_block")
 	public Response blockUser(String username) {	
-		GuestDAO guestDAO = getGuestDAO();
-		HostDAO hostDAO = getHostDAO();
-		if(guestDAO.getGuest(username) != null) {
-			guestDAO.blockGuest(username);
-		}else {
-			hostDAO.blockHost(username);
-		}
+		UserDAO userDAO = getUserDAO();
+		userDAO.blockUser(username);
 		return Response.status(200).build();
 	}
 	
@@ -249,44 +193,27 @@ public class UsersService {
 	@Path("/signin")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.TEXT_HTML)
-	public Response signIn(LoginUserDTO user) {
-		String username = user.getUsername();
-		String password = user.getPassword();
+	public Response signIn(LoginUserDTO userDTO) {
+		String username = userDTO.getUsername();
+		String password = userDTO.getPassword();
 		
-		GuestDAO guestDAO = getGuestDAO();
-		HostDAO hostDAO = getHostDAO();
-		AdminDAO adminDAO = getAdminDAO();
+		UserDAO userDAO = getUserDAO();
 		
-		if(guestDAO.getGuest(username) != null) {
-			if(!guestDAO.checkPassword(username, password)) {
+		if(userDAO.getUser(username) != null) {
+			if(!userDAO.checkPassword(username, password)) {
 					return Response.status(Response.Status.BAD_REQUEST)
 									.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
 			}else {
-				Guest guest = guestDAO.getGuest(username);
-				request.getSession().setAttribute("loggedUser", guest);
-				return Response.ok().entity("guest_new-reservation.html").build();
-			}
-		}
-		
-		else if(hostDAO.getHost(username) != null) {
-			if(!hostDAO.checkPassword(username, password)) {
-				return Response.status(Response.Status.BAD_REQUEST)
-								.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
-			}else {
-				Host host = hostDAO.getHost(username);
-				request.getSession().setAttribute("loggedUser", host);
-				return Response.ok().entity("host_guests-review.html").build();	
-			}
-		}
-		
-		else if(adminDAO.getAdmin(username) != null) {
-			if(!adminDAO.checkPassword(username, password)) {
-				return Response.status(Response.Status.BAD_REQUEST)
-								.entity("Pogrešna lozinka! Pokušajte ponovo.").build();
-			}else {
-				Admin admin = adminDAO.getAdmin(username);
-				request.getSession().setAttribute("loggedUser", admin);
-				return Response.ok().entity("admin_apartments.html").build();	
+				User user = userDAO.getUser(username);
+				request.getSession().setAttribute("loggedUser", user);
+				
+				if(user.getTypeOfUser() == TypeOfUser.GUEST)
+					return Response.ok().entity("guest_new-reservation.html").build();
+				else if(user.getTypeOfUser() == TypeOfUser.HOST)
+					return Response.ok().entity("host_guests-review.html").build();	
+				else 
+					return Response.ok().entity("admin_apartments.html").build();	
+					
 			}
 		}
 		
@@ -309,20 +236,11 @@ public class UsersService {
 	@Path("/get_loggedUser")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Response getLoggedUser() {
-		HttpSession session = request.getSession();
-		if(session.getAttribute("loggedUser") == null) {
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if(loggedUser == null) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
-		return Response.ok().entity(session.getAttribute("loggedUser")).build();
+		return Response.ok().entity(loggedUser).build();
 	}
 	
-	@DELETE
-	@Path("/host_guest/delete_apartman")
-	public void deleteApartmanForHostAndGuest(int id) {
-		HostDAO hostDAO = getHostDAO();
-		GuestDAO guestDAO = getGuestDAO();
-		hostDAO.deleteApartmentForRentForHosts(id);
-		guestDAO.deleteRentedApartmentForAllGuests(id);
-	}
-
 }

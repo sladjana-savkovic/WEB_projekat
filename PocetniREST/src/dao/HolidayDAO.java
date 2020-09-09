@@ -16,10 +16,13 @@ public class HolidayDAO {
 	private String path;
 	
 	public HolidayDAO() {
+		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
+		if(!dataDir.exists()) {
+			dataDir.mkdir();
+		}
+		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "holidays.json";
+		file = new File(path);
 		try { 
-		   path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "holidays.json";
-		   file = new File(path);
-			 
 		   if (file.createNewFile()){
 		    Holiday holiday = new Holiday();
 		    writeInFile(holiday);

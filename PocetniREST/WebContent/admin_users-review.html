@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="style_host_page.css">
   <link rel="stylesheet" href="style_admin_page.css">
+  <link rel="icon" href="data:;base64,iVBORwOKGO=" />
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
   <script  type="text/javascript" src="js/edit_profile.js"></script>
@@ -39,7 +40,7 @@
   	<div style="margin-left: 20px;">
   		<label class="help">Uloga</label>
   		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="user_type">
-  		  <option value="" disabled selected >Odaberite</option>
+  		  <option value="" disabled selected id="no_type">Odaberite</option>
 		  <option value="guest" id="guest_search">Gost</option>
 		  <option value="host" id="host_search">Domaćin</option>
 		</select>
@@ -47,7 +48,7 @@
   	<div style="margin-left: 20px;">
   		<label class="help">Pol</label>
   		<select class="mdb-select md-form colorful-select dropdown-primary combo" id="gender_type">
-  		  <option value="" disabled selected >Odaberite</option>
+  		  <option value="" disabled selected id="no_gender">Odaberite</option>
 		  <option value="male" id="male_search">Muški</option>
 		  <option value="female" id="female_search">Ženski</option>
 		</select>

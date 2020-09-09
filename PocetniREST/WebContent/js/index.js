@@ -1,56 +1,10 @@
 $(document).ready(function() {
 	
-	$('input[type="checkbox"]').each(function(){
-	  	$(this).prop('checked', false);
-	});
+	let split_href = window.location.href.split('/');
 	
-	//form - getting amenities filters
-	$.ajax({
-		type:"GET", 
-		url: "rest/amenities",
-		contentType: "application/json",
-		success:function(amenities){
-			for (let a of amenities) {
-				let a_div = $('<div class="form-check">'
-							+ '<input type="checkbox" class="form-check-input" id="' + a.id + '">'
-							+ '<label class="form-check-label" >' + a.name + '</label></div>');
-				
-				$('div#filter_amenities').append(a_div);
-			}
-			
-		},
-		error:function(){
-			console.log('error getting amenities');
-		}
-	});
-	
-	$('#st_date').prop("min",new Date().toISOString().split("T")[0]);
-	$('#end_date').prop("min",new Date().toISOString().split("T")[0]);
-	
-	$('input[type="text"]').each(function(){
-	  	$(this).val('');
-	});
-	
-	$('input[type="number"]').each(function(){
-	  	$(this).val('');
-	});
-	
-	//getting all apartmets
-	$.ajax({
-		type:"GET", 
-		url: "rest/apartments",
-		contentType: "application/json",
-		success:function(apartments){
-			for (let a of apartments) {
-				addApartmentTable(a);
-			}
-		},
-		error:function(){
-			console.log('error getting apartments');
-		}
-	});
-	
-	
+	if(split_href[split_href.length - 1] == "guest_new-reservation.html"){
+		//checkLoggedUser();
+	}
 	
 	//map
 	var map = L.map('map').setView([45.267136, 19.833549], 10);
@@ -82,6 +36,33 @@ $(document).ready(function() {
 	      
 	    });
 	  });
+	
+    $('#st_date').prop("min",new Date().toISOString().split("T")[0]);
+	$('#end_date').prop("min",new Date().toISOString().split("T")[0]);
+	
+	$('input[type="text"]').each(function(){
+	  	$(this).val('');
+	});
+	
+	$('input[type="number"]').each(function(){
+	  	$(this).val('');
+	});
+    
+  
+	//getting all apartments
+	$.ajax({
+		type:"GET", 
+		url: "rest/apartments",
+		contentType: "application/json",
+		success:function(apartments){
+			for (let a of apartments) {
+				addApartmentTable(a);
+			}
+		},
+		error:function(){
+			console.log('error getting apartments');
+		}
+	});
 	  
 	  $('#first_lowest').click(function() {
 			
@@ -123,63 +104,7 @@ $(document).ready(function() {
 			
 		});	
 		
-		$('#filter').click(function() {
-			
-			var filter_types = [];
-			var filter_amenities = [];
-			var filter_status = [];
-			
-			if($('#apartmentFilter').is(":checked")){
-				filter_types.push("WHOLE_APARTMENT");
-			}
-			if($('#roomFilter').is(":checked")){
-				filter_types.push("ROOM");
-			}
-			if($('#active_apart').is(":checked")){
-				filter_status.push("active");
-			}
-			if($('#inactive_apart').is(":checked")){
-				filter_status.push("inactive");
-			}
-			
-			$.ajax({
-				type:"GET", 
-				url: "rest/amenities",
-				contentType: "application/json",
-				success:function(amenities){
-					for (let am of amenities) {
-						if($('input#' + am.id).is(":checked")){
-							filter_amenities.push(am.id);
-						}
-					}
-					$.ajax({
-						type:"POST", 
-						url: "rest/apartments/filter",
-						contentType: "application/json",
-						data:JSON.stringify({ 
-							types: filter_types, 
-							amenities: filter_amenities, 
-							status: filter_status}),
-						success:function(apartments){
-							$('div#apartments').empty();
-							for (let a of apartments) {
-								addApartmentTable(a);
-							}
-							
-						},
-						error:function(){
-							console.log('error getting apartments');
-						}
-					});
-				},
-				error:function(){
-					console.log('error getting amenities');
-				}
-			});
-
-		});
-	  
-	  $('#search_apartments').submit(function(event) {
+		$('#search_apartments').submit(function(event) {
 			
 			event.preventDefault();
 			
@@ -277,11 +202,8 @@ $(document).ready(function() {
 				}
 			});
 	  });
+	
 });
-
-function viewApartment(id){
-	window.location.href = "reserve_an-apartment.html?id=" + id;
-};
 
 function addApartmentTable(a){
 	
@@ -337,14 +259,13 @@ function addApartmentTable(a){
 				 					+ '<tr><td colspan="2"><a id="' + a.id + '" onclick="viewApartment(this.id)">'
 				 					+ '<h5 style="color:#1E90FF;">' + a.name + '</h5></a></td></tr>'
 				 					+ '<tr><th style="width: 35%;">Tip apartmana:</th><td>' + type + '</td></tr>'
-				 					+ '<tr><th>Status:</th>' + td_status + '</tr>'
 				 					+ '<tr><th>Adresa:</th><td>' + address + '</td></tr>'
 				 					+ '<tr><th>Cijena po noći:</th><td> ' + a.pricePerNight + ' rsd</td></tr>'
 				 					+ '<tr><th>Domaćin:</th><td>' + host + '</td></tr>'
 				 					+ '<tr><th>Sadržaj:</th><td>' + amenities.substring(0, amenities.length-2) + '</td></tr>'
 				 					+ '</table></td>'
-				 					+ '<td style="vertical-align: bottom;"><button class="btn btn-orange edit_delete" type="submit" id="' + a.id +'" onclick="editApartment(this.id)">Izmijeni</button>'
-				 					+ '<button class="btn btn-red edit_delete" type="submit"  data-toggle="modal" data-target="#modalConfirmDelete" id="' + a.id +'" onclick="deleteApartment(this.id)">Obriši</button>'
+				 					+ '<td style="vertical-align: bottom;">'
+				 					+ '<button class="btn btn-green edit_delete"  data-toggle="modal" data-target="#modalConfirmDelete" id="' + a.id +'" onclick="reserveApartment(this.id)">Rezerviši</button>'
 				 					+ '</td></tr></table></div>');
 					
 					$('div#apartments').append(apartment);
@@ -362,60 +283,32 @@ function addApartmentTable(a){
 	});
 };
 
-function deleteApartment(id){
-	
-	$('a#yes_delete').click(function(event){
-		
-		event.preventDefault();
-		alert(id);
-		
-		$.ajax({
-			type: "GET",
-			url: "rest/reservations/apartment_delete/" + id,
-			contentType: "application/json",
-			success: function(result){
-				if(result){
-					toastr["error"]("Za apartman koji želite obrisati postoje rezervacije");
-					$('a#no_delete').click();
-					return;
-				}else{
-					$.ajax({
-						type: "DELETE",
-						url: "rest/host_guest/delete_apartman",
-						contentType: "application/json",
-						data:id,
-						success: function(){
-							$.ajax({
-								type: "DELETE",
-								url: "rest/apartments/delete",
-								contentType: "application/json",
-								data:id,
-								success: function(){
-									$('a#no_delete').click();
-									toastr["success"]("Uspješno ste dodali obrisali apartman");
-									setTimeout(function(){
-										location.reload(); }, 500); 
-								},
-								error:  function()  {
-									console.log('Došlo je do greške prilikom brisanja apartmana');
-								}
-							});
-						},
-						error:  function()  {
-							console.log('Došlo je do greške prilikom brisanja apartmana kod gosta i domacina');
-						}
-					});
-					
-				}
-			},
-			error:  function()  {
-				console.log('Došlo je do greške prilikom provjere da li apartman ima rezervacije');
-			}
-		});
-		
-		
-	});
+function viewApartment(id){
+	let start_date = $('#st_date').val();
+	window.location.href = "reserve_an-apartment.html?id=" + id + '&start_date=' + start_date;
 };
+
+function reserveApartment(id){
+	
+	$.ajax({
+		type:"GET", 
+		url: "rest/verification/is_logged",
+		contentType: "application/json",
+		success:function(user){
+			if(user == null){
+				toastr["error"]("Registrujte se ili prijavite da biste rezervisali apartman");
+				return;
+			}else{
+				let start_date = $('#st_date').val();
+				window.location.href = "reserve_an-apartment.html?id=" + id + '&start_date=' + start_date;
+			}
+		},
+		error:function(){
+			console.log('error getting user');
+		}
+	});
+	
+}
 
 function transliterate(word){
     var answer = ""
@@ -438,3 +331,17 @@ function transliterate(word){
    }
    return answer;
 };
+
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/guest",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('#admin_amenities').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
+	});
+}

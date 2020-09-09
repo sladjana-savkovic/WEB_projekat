@@ -11,12 +11,12 @@
   "apartmentId" : 1,
   "description" : "Prosječan apartman",
   "rating" : 3,
-  "status" : "CREATED"
+  "status" : "DISAPPROVED"
 }, {
   "id" : 2,
   "guestUsername" : "milica967",
   "apartmentId" : 1,
   "description" : "Jako loše!!!",
   "rating" : 1,
-  "status" : "CREATED"
+  "status" : "APPROVED"
 } ]

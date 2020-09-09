@@ -1,6 +1,10 @@
 $(document).ready(function() {
-
-	var id = window.location.href.split("=")[1];
+	
+	let url_split = window.location.href.split("?")[1];
+	let parameters = url_split.split("&");
+	
+	var id = parameters[0].split("=")[1];
+	var reservation_date = parameters[1].split("=")[1];
 	
 	//map
 	var map = L.map('map').setView([44.815071, 20.460480], 6);
@@ -118,8 +122,8 @@ function addInfoApartment(apartment) {
 		   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
 		  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
 		  + '</tr></table>'
-		  + '<td><span width="200px;"></span>'
-	     + '<button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>'
+		  + '<td style="vertical-align:bottom;">'
+	     + '<button  data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>'
 	    + '</td></tr></table></div>');
 
 $('div#div_about_apartment').append(a);

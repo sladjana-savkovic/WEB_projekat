@@ -35,7 +35,12 @@ public class AmenitiesDAO {
 	}*/
 	
 	public AmenitiesDAO() {
-		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
+		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
+		if(!dataDir.exists()) {
+			dataDir.mkdir();
+		}
+		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "amenities.json";
+		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){

@@ -57,67 +57,11 @@
 </head>
 	
 <body>
-  	<script type="text/javascript" src="host_navbar.js"></script>
-
-	<div id="border" style="margin-top: 30px; background-color: #f2f2f2;">
-  <form id="search_apartments">
-  <table>
-  	<tr>
-  		<td rowspan="4">
-  			<div id="map" style="height: 217px; width: 750px; margin-right: -50px;"></div>
-  		</td>
-  		
-  		<td width="25%;">
-	  		<input id="st_date" class="textbox-n form-control" type="text" placeholder="Početni datum" onfocus="(this.type='date')" 
-	  			onblur="(this.type='text')" style="width: 180px; height: 35px; 
-	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
-	    </td>
-	    
-	    <td width="25%">
-	  		<input id="end_date" class="textbox-n form-control" type="text" placeholder="Krajnji datum" onfocus="(this.type='date')" 
-	  			onblur="(this.type='text')" style="width: 180px; 
-	  			height: 35px; margin-left: 10px; margin-top: 10px;"/>
-	    </td>
-	 </tr>
-	 <tr>
-	    <td width="25%">
-	  		<input id="price_min" type="number" placeholder="Cijena (min)" class="form-control" min="0" 
-	  			style="width: 180px;height: 35px; 
-	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
-	  	</td>
-	  	
-	  	<td width="25%">
-	  		<input id="price_max" type="number" placeholder="Cijena (max)" class="form-control" 
-	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
-	  	</td>  	
-  	</tr>
+  	<script type="text/javascript" src="guest_navbar.js"></script>
   	
-  	<tr>
-  		<td width="25%">
-	  		<input id="rooms_min" type="number" placeholder="Broj soba (min)" class="form-control" min="1" 
-	  			style="width: 180px;height: 35px; 
-	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
-	  	</td>
-	  	
-	  	<td width="25%">
-	  		<input id="rooms_max" type="number" placeholder="Broj soba (max)" class="form-control" 
-	  			style="width: 180px; height: 35px; margin-left: 10px; margin-top: 10px;"/>
-	  	</td>
-	</tr>
-	<tr>
-	  	
-	  	<td width="25%">
-	  		<input id="persons" type="number" placeholder="Broj osoba" class="form-control" min="1" 
-	  			style="width: 180px; height: 35px; 
-	  			vertical-align: center; margin-left: 150px; margin-top: 10px;"/>
-	  	</td>
-	  	
-	  	<td><button class="btn btn-primary mb-2" id="search_btn" type="submit"
-	  			style="margin-left: 240px; margin-top: 10px;">Pretraži</button></td>
-	 </tr>
-   </table>	
-  </form>
-  </div>
+  	<div id="border" style="margin-top: 30px;">
+  		<div id="map" style="height: 218px;"></div>
+  	</div>
 
     <div class="container container_colored" id="div_comments" style="border: 1px solid black; position: absolute; left: 50px; width: 18%; top: 230px; margin-top: 180px;">		
     	<h4  style="font-weight:bolder; text-align: center;">Komentari</h4>     

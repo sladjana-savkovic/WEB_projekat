@@ -1,10 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
+ <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <title>Početna strana</title>
   <!-- Font Awesome -->
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
   <!-- Google Fonts Roboto -->
@@ -20,10 +19,13 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="style_host_page.css">
   <link rel="stylesheet" href="style_admin_page.css">
+  <link rel="icon" href="data:;base64,iVBORwOKGO=" />
   <script src="jquery-3.3.1.min.js"></script>
   <script type="text/javascript" src="js/toastr.min.js"></script>
   <script  type="text/javascript" src="js/registration.js"></script>
   <script  type="text/javascript" src="js/sign_in.js"></script>
+  <title>Rezervišite smještaj</title>
+  
   <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
   
   <!-- Load Leaflet from CDN -->
@@ -46,15 +48,16 @@
   <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
     integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
     crossorigin=""></script> 
-    <script src="js/map.js"></script>
+    
+    <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
-  <script src="register.js"></script>
-  <script src="signin.js"></script>
-  
-      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;">
+	<script src="register.js"></script>
+    <script src="signin.js"></script>
+
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+	<h4 class="navbar-brand" id="title" style="margin-right: 50px;">DSTOURS.COM</h4>
 	  <div class="container">
-	    <h4 class="navbar-brand" id="title">DSTOURS.COM</h4>
 	    <div class="collapse navbar-collapse" id="navbarResponsive">
 	      <ul class="navbar-nav ml-auto">
 	        <li class="nav-item">
@@ -67,8 +70,8 @@
 	    </div>
 	  </div>
   </nav>
-  
-  <div id="border" style="margin-top: 130px; background-color: #f2f2f2;">
+ 
+	<div id="border" style="margin-top: 30px; background-color: #f2f2f2;">
   <form id="search_apartments">
   <table>
   	<tr>
@@ -128,73 +131,14 @@
   </form>
   </div>
   
-  <div id="randomCarousel" class="carousel slide" data-ride="carousel">
-
-    <!--Indicator Buttons-->
-    <ol class="carousel-indicators">
-        <li data-target="#randomCarousel" data-slide-to="0" class="active"></li>
-        <li data-target="#randomCarousel" data-slide-to="1"></li>
-        <li data-target="#randomCarousel" data-slide-to="2"></li>
-    </ol>
-
-    <!--Carousel w/Images-->
-    <div class="container">
-        <div class="carousel-inner">
-
-            <!--ALL PICS ARE PART OF CREATIVE COMMONS; ADDED SIMPLY FOR FUN-->
-            <div class="carousel-item active">
-                <img src="images/bg.jpg" class="d-block w-100" alt="First">
-                <div class="carousel-caption d-none d-md-block">
-		        <h4>Beograd</h4>
-    	    </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="images/ns.jpg" class="d-block w-100" alt="Second">
-                <div class="carousel-caption d-none d-md-block">
-		        <h4>Novi Sad</h4>
-    	    </div>
-            </div>
-
-            <div class="carousel-item">
-                <img src="images/nis.jpg" class="d-block w-100" alt="Third">
-                <div class="carousel-caption d-none d-md-block">
-		        <h4>Niš</h4>
-    	    </div>
-            </div>
-
-        </div>
-    </div>
-
-    <!--Next and Previous buttons-->
-    <a class="carousel-control-prev" href="#randomCarousel" role="button" data-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="sr-only">Previous</span>
-    </a>   
-    <a class="carousel-control-next" href="#randomCarousel" role="button" data-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="sr-only">Next</span>
-    </a>
-
-</div>
-
-<div class="container" id="contact">
-	<div class="row-fluid">
-        <div class="span8">
-        	<iframe width="100%" height="350" src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2809.3731661117445!2d19.824290715512845!3d45.24024627909895!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x475b10233c4cf37f%3A0x9f3b482052bbd279!2sBulevar%20cara%20Lazara%20105%2C%20Novi%20Sad%2021000%2C%20Serbia!5e0!3m2!1sen!2sba!4v1597181247755!5m2!1sen!2sba"></iframe>
-    	</div>
-    	
-      	<div class="span4">
-    		<h2>Kontaktirajte nas</h2>
-    		<address>
-    			<strong>Novi Sad</strong><br>
-    			Bulevar Cara Lazara 105<br>
-    			021/567-85-52<br>
-    			bustours@mail.com<br>
-    		</address>
-    	</div>
-    </div>
-</div>
+  <div class="container container_colored" id="sort">		
+    	<h5  style="font-weight:bolder; text-align: center;">Sortiraj po cijeni</h5>
+    	<button class="btn btn-default" type="submit" id="first_lowest"><i class="fas fa-sort-up"></i>Prvo najniža</button>
+    	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
+   </div>
+   
+  <div class="container" id="apartments" style="margin-top: 150px;">
+  </div>
 
   <!-- jQuery -->
   <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
@@ -204,6 +148,7 @@
   <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
   <!-- MDB core JavaScript -->
   <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
-
+  
+  
 </body>
 </html>

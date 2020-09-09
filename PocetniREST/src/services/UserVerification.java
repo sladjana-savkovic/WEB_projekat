@@ -2,21 +2,16 @@ package services;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
-import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 
-import beans.Admin;
-import beans.Guest;
-import beans.Host;
+import beans.TypeOfUser;
 import beans.User;
 
-import javax.ws.rs.PathParam;
 
 @Path ("")
 public class UserVerification {
@@ -27,7 +22,7 @@ public class UserVerification {
 	@Context
 	HttpServletRequest request;
 	
-	/*@GET
+	@GET
 	@Path("/verification/is_logged")
 	@Produces(MediaType.APPLICATION_JSON)
 	public User getLoggedUser() {
@@ -36,7 +31,7 @@ public class UserVerification {
 			return null;
 		}
 		return loggedUser;
-	}*/
+	}
 	
 	@GET
 	@Path("/verification/admin")
@@ -46,7 +41,7 @@ public class UserVerification {
 		if (loggedUser == null) {
 			return Response.status(Response.Status.FORBIDDEN)
 					.entity("Prijavite se da biste pristupili ovoj stranici.").build();
-		} else if (loggedUser instanceof Admin) {
+		} else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return Response.ok().build();
 		} else {
 			return Response.status(Response.Status.FORBIDDEN)
@@ -62,7 +57,7 @@ public class UserVerification {
 		if (loggedUser == null) {
 			return Response.status(Response.Status.FORBIDDEN)
 					.entity("Prijavite se da biste pristupili ovoj stranici.").build();
-		} else if (loggedUser instanceof Host) {
+		} else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
 			return Response.ok().build();
 		} else {
 			return Response.status(Response.Status.FORBIDDEN)
@@ -78,7 +73,7 @@ public class UserVerification {
 		if (loggedUser == null) {
 			return Response.status(Response.Status.FORBIDDEN)
 					.entity("Prijavite se da biste pristupili ovoj stranici.").build();
-		} else if (loggedUser instanceof Guest) {
+		} else if (loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
 			return Response.ok().build();
 		} else {
 			return Response.status(Response.Status.FORBIDDEN)

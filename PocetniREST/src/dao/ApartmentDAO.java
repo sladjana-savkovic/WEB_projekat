@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -23,7 +22,12 @@ public class ApartmentDAO {
 	private String path;
 	
 	public ApartmentDAO() {
-		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "apartments.json";
+		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
+		if(!dataDir.exists()) {
+			dataDir.mkdir();
+		}
+		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "apartments.json";
+		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "apartments.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){

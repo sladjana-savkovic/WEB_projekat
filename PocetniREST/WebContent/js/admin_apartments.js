@@ -12,7 +12,7 @@ function addApartmentTable(a){
 	//Preuzimanje domacina
 	$.ajax({
 		type:"GET", 
-		url: "rest/hosts/" + a.hostUsername,
+		url: "rest/users/" + a.hostUsername,
 		contentType: "application/json",
 		success:function(h){
 			host = h.name + " " + h.surname;

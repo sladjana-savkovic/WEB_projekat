@@ -2,9 +2,20 @@ $(document).ready(function() {
 	
 	//checkLoggedUser();
 	
+	$('#username_search').val('');
+	$('#no_type').prop("selected",true);
+	$('#no_gender').prop("selected",true);
+	
+	$('#host_name').val('');
+	$('#host_surname').val('');
+	$('#host_username').val('');
+	$('#host_psw').val('');
+	$('#host_psw-repeat').val('');
+	$('#host_male').prop("checked",true);
+	
 	$.ajax({
 		type:"GET", 
-		url: "rest/hosts",
+		url: "rest/guests_and_hosts",
 		contentType: "application/json",
 		success:function(hosts){
 			for (let h of hosts) {
@@ -12,23 +23,10 @@ $(document).ready(function() {
 			};
 		},
 		error:function(){
-			console.log('error getting hosts');
+			console.log('error getting guests and hosts');
 		}
 	});
-	
-	$.ajax({
-		type:"GET", 
-		url: "rest/guests",
-		contentType: "application/json",
-		success:function(guests){
-			for (let g of guests) {
-				adduserTr(g);
-			}
-		},
-		error:function(){
-			console.log('error getting guests');
-		}
-	});
+
 	
 	$('#cancel_btn').click(function() {
 		$('#cancel_btn').attr("hidden",true);
@@ -95,7 +93,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type: "POST",
-			url: "rest/host_add",
+			url: "rest/registration",
 			data: JSON.stringify({ 
 				username: username, 
 				password: password, 
@@ -145,57 +143,22 @@ $(document).ready(function() {
 			return;
 		}
 		
-		if(user_type == "host"){
-			$.ajax({
-				type:"GET", 
-				url: "rest/hosts/search/" + username + "/" + gender_type,
-				contentType: "application/json",
-				success:function(hosts){
-					$('#users tbody').empty();
-					$('#cancel_btn').attr("hidden",false);
-					for (let h of hosts) {
-						adduserTr(h);
-					}
-				},
-				error:function(){
-					console.log('error search hosts');
+		$.ajax({
+			type:"GET", 
+			url: "rest/guests_and_hosts/search/" + username + "/" + gender_type + "/" + user_type,
+			contentType: "application/json",
+			success:function(hosts){
+				$('#users tbody').empty();
+				$('#cancel_btn').attr("hidden",false);
+				for (let h of hosts) {
+					adduserTr(h);
 				}
-			});
-		}
-		else if(user_type == "guest"){
-			$.ajax({
-				type:"GET", 
-				url: "rest/guests/search/" + username + "/" + gender_type,
-				contentType: "application/json",
-				success:function(guests){
-					$('#users tbody').empty();
-					$('#cancel_btn').attr("hidden",false);
-					for (let g of guests) {
-						adduserTr(g);
-					}
-				},
-				error:function(){
-					console.log('error search guests');
-				}
-			});
-		}
-		else{
-			$.ajax({
-				type:"GET", 
-				url: "rest/guests_hosts/search/" + username + "/" + gender_type,
-				contentType: "application/json",
-				success:function(users){
-					$('#users tbody').empty();
-					$('#cancel_btn').attr("hidden",false);
-					for (let u of users) {
-						adduserTr(u);
-					}
-				},
-				error:function(){
-					console.log('error search users');
-				}
-			});
-		}
+			},
+			error:function(){
+				console.log('error search hosts');
+			}
+		});
+		
 	});
 });
 

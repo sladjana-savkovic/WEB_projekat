@@ -80,9 +80,16 @@ public class ApartmentService {
 	public ArrayList<Apartment> sortApartmentsAscending(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+		
+		//unlogged user or guest
+		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return apartmentDAO.sortApartmentsAscending(apartmentDAO.getActiveApartments());
+		}
+		//admin
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return apartmentDAO.sortApartmentsAscending(apartmentDAO.getAllApartments());
 		}
+		//host
 		return apartmentDAO.sortApartmentsAscending(apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 	
@@ -92,7 +99,12 @@ public class ApartmentService {
 	public ArrayList<Apartment> sortApartmentsDescending(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+		//unlogged user or guest
+		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return apartmentDAO.sortApartmentsDescending(apartmentDAO.getActiveApartments());
+		}
+		//admin
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return apartmentDAO.sortApartmentsDescending(apartmentDAO.getAllApartments());
 		}
 		return apartmentDAO.sortApartmentsDescending(apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));

@@ -1,48 +1,32 @@
 $(document).ready(function() {
 		
-	var name="";
-	var surname="";
-	var gender="FEMALE";
-	var username="";
-	var password="";
-	
-	$.ajax({
-		type:"GET", 
-		url: "rest/get_loggedUser",
-		contentType: "application/json",
-		success:function(user){
-			name = user.name;
-			surname = user.surname;
-			if(user.gender == "MALE"){
-				gender = "MALE";
-			}
-			password = user.password;
-			username = user.username;
-			$('#user_navbar').text(username);
-		},
-		error:function(){
-			toastr["error"]("Došlo je do greške prilikom učitavanja korisnika!");
-		}
-	});
-	
-	
 	$('a#edit_profile').click(function(event){	
 		
-		$('#name').val(name);
-		$('#surname').val(surname);
-		if(gender == "MALE"){
-			$('#male').attr('checked', 'checked');
-		}else{
-			$('#female').attr('checked', 'checked');
-		}
-		$('#psw').val(password);
-		$('#psw-repeat').val(password);
-		
+		$.ajax({
+			type:"GET", 
+			url: "rest/get_loggedUser",
+			contentType: "application/json",
+			success:function(user){
+				$('#name').val(user.name);
+				$('#surname').val(user.surname);
+				if(user.gender == "MALE"){
+					$('#male').attr('checked', 'checked');
+				}else{
+					$('#female').attr('checked', 'checked');
+				}
+				$('#psw').val(user.password);
+				$('#psw-repeat').val(user.password);
+			},
+			error:function(){
+				console.log("Došlo je do greške prilikom učitavanja korisnika!");
+			}
+		});
 	});
 
 	$('form#edit').submit(function(event) {
-		event.preventDefault();
 		
+		event.preventDefault();
+			
 		let name = $('#name').val();
 		let surname = $('#surname').val();
 		let password = $('#psw').val();

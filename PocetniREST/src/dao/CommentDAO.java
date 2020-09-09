@@ -34,7 +34,12 @@ public class CommentDAO {
 	}*/
 	
 	public CommentDAO() {
-		path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "comments.json";
+		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
+		if(!dataDir.exists()) {
+			dataDir.mkdir();
+		}
+		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "comments.json";
+		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "comments.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
