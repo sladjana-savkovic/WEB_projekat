@@ -153,14 +153,6 @@ function newReservation(apartmentId){
 	//var month = ("0" + (now.getMonth() + 1)).slice(-2);
 	//var today = now.getFullYear() + "-" + (month) + "-" + (day);
 	
-	// $('#start_date').attr('min', "2020-09-09");
-	 //$('#start_date').attr('max', "2020-09-09");
-	 
-	 
-	// $('#start_date').attr('min', "2020-09-13");
-	 //$('#start_date').attr('max', "2020-09-13");
-	
-	
 	 $.ajax({
 			type:"GET", 
 			url: "rest/apartments/" + apartmentId,
@@ -175,8 +167,18 @@ function newReservation(apartmentId){
 					let optionDate = $('<option id="' + d +'">' + d + '</option>');
 					$('#start_date').append(optionDate);
 				}
-				//uzmi iz pretrage
-				$(dates[0]).prop("selected",true);
+				
+				let url_split = window.location.href.split("?")[1];
+				let parameters = url_split.split("&");
+				
+				let reservation_date = parameters[1].split("=")[1];
+				
+				if(reservation_date.localeCompare("")==0){
+					$(dates[0]).prop("selected",true);
+				}else{
+					$(reservation_date).prop("selected",true);
+				}
+		
 				$('#night_number').val(1);
 				
 				let selectDate = $("#start_date :selected").text();
@@ -202,14 +204,10 @@ function newReservation(apartmentId){
 			}
 		});
 	 
-	 
-	// $('#start_date').on('select', function() {
-	//$('#start_date option').each(function() {
+	
 	 $('#start_date').change(function () {
 		 
 	let selectDate = $("#start_date :selected").text();
-	//let numberOfNights = $('#night_number').val();
-	//alert(selectDate);
 	$('#night_number').val(1);
 		 
 	 $.ajax({
@@ -217,8 +215,6 @@ function newReservation(apartmentId){
 			url: "rest/reservations/max_num_night/" + selectDate + "/" + apartmentId,
 			contentType: "application/json",
 			success: function(maxNumber){	
-				
-				//alert(maxNumber);
 			
 			 	$('#night_number').attr('max', maxNumber);
 			 	
