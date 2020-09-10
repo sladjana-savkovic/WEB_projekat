@@ -16,12 +16,41 @@ $(document).ready(function() {
 	  }).addTo(map);
 		  
 	  var marker;
+	
+	
+	  //getting all images name
+	  $.ajax({
+			type:"GET", 
+			url: "rest/apartments/all_images/" + id,
+			contentType: "application/json",
+			success:function(images){
+				$('div#apartment_images').empty();
+				for(let i of images){
+					let image_div = $('<div class="column">'
+						 + '<img height="160px" width="190px" src="http://localhost:8800/PocetniREST/rest/apartments/one_image/' + i +'" onclick="myFunction(this);">'
+						 + '</div>');
+					$('div#apartment_images').append(image_div);
+				}
+			},
+			error:function(){
+				console.log('error getting images');
+			}
+		});
+	  
 	 
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments_comments/" + id,
 		contentType: "application/json",
 		success:function(comments){
+			
+			if(comments.length == 0){
+				let p = $('<p style="text-align:center; margin-top:30px;">Nema komentara</p>');
+				$('div#div_comments').append(p);
+				return;
+			}
+			
+			
 			for (let c of comments) {
 				addComment(c,typeOfUser);
 			}
@@ -132,7 +161,7 @@ function addInfoApartment(apartment,typeOfUser) {
 		 	   +'<table style="height: 220px; margin-left: 40px; width: 350px;">'
 		 	   +'<tr><td colspan="2"><h5>Podaci o objektu</h5></td>'
 		 	 +'</tr><tr><th>Tip smještaja:</th><td>'+ type +'</td>'
-		    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.street + " " + apartment.location.address.number + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
+		    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.streetAndNumber + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
 		     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 		     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
 		   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
@@ -150,7 +179,7 @@ function addInfoApartment(apartment,typeOfUser) {
 				 	   +'<table style="height: 220px; margin-left: 40px; width: 350px;">'
 				 	   +'<tr><td colspan="2"><h5>Podaci o objektu</h5></td>'
 				 	 +'</tr><tr><th>Tip smještaja:</th><td>'+ type +'</td>'
-				    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.street + " " + apartment.location.address.number + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
+				    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.streetAndNumber + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
 				     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 				     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
 				   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'

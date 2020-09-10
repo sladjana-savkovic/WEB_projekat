@@ -119,6 +119,18 @@ public class ApartmentDAO {
 		return filteredApartments;
 	}*/
 	
+	public void addImageToApartment(int apartmentId, String image) {
+		ArrayList<Apartment> apartments = readFromFile();
+		
+		for(Apartment a:apartments) {
+			if(a.getId() == apartmentId) {
+				a.getPictures().add(image);
+				break;
+			}
+		}
+		writeInFile(apartments);
+	}
+	
 	public ArrayList<Apartment> filterApartmentsByTypeAmenitiesAndStatus(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities,
 			ArrayList<String> status, ArrayList<Apartment> apartments){
 		

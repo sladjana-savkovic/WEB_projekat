@@ -87,7 +87,7 @@ public class UserDAO {
 		
 		return guestsOfHost;
 	}
-	
+
 	public ArrayList<User> getGuestsByUsernameAndGender(String guestUsername,Gender gender,ArrayList<User> users){
 		ArrayList<User> filtrated = new ArrayList<User>();
 		

@@ -1,6 +1,9 @@
 $(document).ready(function() {
 	
 	var all_amenities = [];
+	
+	$('#start_date').prop("min",new Date().toISOString().split("T")[0]);
+	$('#end_date').prop("min",new Date().toISOString().split("T")[0]);
 
 	//form - getting amenities
 	$.ajax({
@@ -110,21 +113,6 @@ $(document).ready(function() {
 	$('#add_apart').submit(function(event){
 		
 		event.preventDefault();
-		
-		/*var form = new FormData();
-		form.append("image",chosen_images[0]);
-		  
-		  
-		  $.ajax({
-	            url: 'rest/apartments/save_image',
-	            type: 'POST',
-	            processData:false,
-	            contentType: false,
-	            data: form,
-	            success: function(){
-	            	alert("uspjesno");
-	            },
-	        });*/
 				
 		let name = $('#name_apart').val();
 		let type = "WHOLE_APARTMENT";
@@ -135,16 +123,7 @@ $(document).ready(function() {
 		let price = $('#price').val();
 		let checkin = $('#checkin').val();
 		let checkout = $('#checkout').val();
-		let isActive = false;
-		
-		let split_address = address.split(",");
-		let street_number = split_address[0].split(" ");
-		let street = street_number[1];
-		let number = street_number[2];
-		let zipCode = split_address[1];
-		let city = split_address[split_address.length - 3];
-		let country = split_address[split_address.length - 1];
-		
+		let active = false;
 		let checked_amenities = [];
 		
 		if($('#room').is(":checked")){
@@ -188,22 +167,17 @@ $(document).ready(function() {
 		var from_end = $("#end_date").val().split("-");
 		var ds = new Date(from_start[0], from_start[1] - 1, from_start[2]);
 		var de = new Date(from_end[0], from_end[1] - 1, from_end[2]);
-		var today = new Date();
+		
+		let split_address = address.split(", ");
+		let street_number = split_address[0];
+		let zipCode = split_address[1];
+		let city = split_address[split_address.length - 3];
+		let country = split_address[split_address.length - 1];
+		
+		let curPos = marker.getLatLng();
+		let lat = curPos.lat;
+		let lng = curPos.lng;
 
-		if(ds < today){
-			$('#ap_error_map').attr("hidden",true);
-			$('#ap_error_dates').text('Početni datum ne smije biti manji od današnjeg');
-			$('#ap_error_dates').attr("hidden",false);
-			return;
-		}
-		
-		if(de < today){
-			$('#ap_error_map').attr("hidden",true);
-			$('#ap_error_dates').text('Krajnji datum ne smije biti manji od današnjeg');
-			$('#ap_error_dates').attr("hidden",false);
-			return;
-		}
-		
 		if(de < ds){
 			$('#ap_error_map').attr("hidden",true);
 			$('#ap_error_dates').text('Krajnji datum ne smije biti manji od početnog');
@@ -236,7 +210,7 @@ $(document).ready(function() {
 		$('#ap_error_checkout').attr("hidden",true);
 		
 		if($('#active').is(":checked")){
-			isActive = true;
+			active = true;
 		}
 		
 		for(let a of all_amenities){
@@ -245,24 +219,79 @@ $(document).ready(function() {
 			}
 		}
 		
-		
-		
-		/*for(let image of chosen_images){
-			
-		
-			$.ajax({
-				type: "POST",
-				url: "rest/apartments/save_image",
-				contentType: "application/json",
-				data : image,
-				success: function() {
-					alert("success");
-				},
-				error: function(result) {
-					console.log("error saving image");
-				}
-			});
-		  }*/
+		$.ajax({
+			type:"GET", 
+			url: "rest/apartments/new_id",
+			contentType: "application/json",
+			success:function(id){
+				new_id = id;
+				//ako je uspjesno dobavljanje id-a, slijedi dodavanje apartmana
+				$.ajax({
+					type: "POST",
+					url: "rest/apartments/add",
+					data: JSON.stringify({ 
+						id:new_id,
+						name:name,
+						type:type,
+						numberOfRooms:parseInt(rooms),
+						numberOfGuests:parseInt(guests),
+						location: {
+							latitude : lat,
+						    longitude : lng,
+						    address : {
+						      country : country,
+						      city : city,
+						      zipCode : zipCode,
+						      streetAndNumber : street_number,
+						    }
+						},
+						rentingDates: [],
+						availableDates: [],
+						comments: [],
+						pictures: [],
+						pricePerNight:price,
+						checkInTime:checkin,
+						checkOutTime:checkout,
+						active:active,
+						amenities:checked_amenities,
+						reservations: [],
+						deleted:false}),
+					contentType: "application/json",
+					success:function(){
+						toastr["success"]("Uspješno ste se dodali apartman");
+						window.location.href = 'host_apartments.html';
+						
+						for(var file of chosen_images){		
+							//var file = document.getElementById("files").files[0];
+				            var extension = file.name.split(".").pop();
+				            var type = "";
+				            
+				            if (extension === "jpg" || extension === "jpeg" ||
+				                extension === "JPG" || extension === "JPEG") {
+				                type = "image/jpeg";
+				            } else if (extension === "png" || extension === "PNG") {
+				                type = "image/png";
+				            } else {
+				                alert("Invalid file type");
+				                return;
+				            }  
+				            
+				            var request = new XMLHttpRequest();
+				            request.open("POST", "rest/apartments/" + new_id +"/image");
+				            request.setRequestHeader("Content-Type", type);
+				            request.setRequestHeader("Image-Name", name);
+				            request.send(file);
+						}
+					},
+					error: function(response){
+						console.log("greska prilikom dodavanja apartmana");
+					}
+				});
+			},
+			error:function(){
+				console.log('error getting last id');
+			}
+		});
 		
 	});
 	

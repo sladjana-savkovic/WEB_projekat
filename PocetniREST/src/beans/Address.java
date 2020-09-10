@@ -4,25 +4,22 @@ public class Address {
 	private String country;
 	private String city;
 	private int zipCode;
-	private String street;
-	private String number;
+	private String streetAndNumber;
 	
 	public Address() {}
 	
-	public Address(String country,String city, int zipCode, String street, String number) {
+	public Address(String country,String city, int zipCode, String streetAndNumber) {
 		this.country = country;
 		this.city = city;
 		this.zipCode = zipCode;
-		this.street = street;
-		this.number = number;
+		this.streetAndNumber = streetAndNumber;
 	}
 	
 	public Address(Address address) {
 		this.country = address.country;
 		this.city = address.city;
 		this.zipCode = address.zipCode;
-		this.street = address.street;
-		this.number = address.number;
+		this.streetAndNumber = address.streetAndNumber;
 	}
 	
 	public String getCountry() {
@@ -49,22 +46,11 @@ public class Address {
 		this.zipCode = zipCode;
 	}
 
-	public String getStreet() {
-		return street;
+	public String getStreetAndNumber() {
+		return streetAndNumber;
 	}
 
-	public void setStreet(String street) {
-		this.street = street;
+	public void setStreetAndNumber(String streetAndNumber) {
+		this.streetAndNumber = streetAndNumber;
 	}
-
-	public String getNumber() {
-		return number;
-	}
-
-	public void setNumber(String number) {
-		this.number = number;
-	}
-	
-	
-	
 }

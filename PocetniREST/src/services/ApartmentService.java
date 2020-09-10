@@ -1,21 +1,30 @@
 package services;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
-import java.util.Base64;
+import java.util.UUID;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
+import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.xml.bind.DatatypeConverter;
+import javax.ws.rs.core.Response;
+
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 
 import beans.Apartment;
 import beans.TypeOfUser;
@@ -75,6 +84,13 @@ public class ApartmentService {
 	}
 	
 	@GET
+	@Path("/apartments/new_id")
+	public int getNewId() {
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		return apartmentDAO.getLastId() + 1;
+	}
+	
+	@GET
 	@Path("/apartments/sort_ascending")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Apartment> sortApartmentsAscending(){
@@ -124,7 +140,7 @@ public class ApartmentService {
 	public ArrayList<Apartment> filterApartments(FilterApartmentsDTO filter){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+		if (loggedUser != null && loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 					filter.getStatus(),apartmentDAO.getAllApartments());
 		}
@@ -137,14 +153,11 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addApartment(Apartment apartment) {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		if (loggedUser != null && loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			apartment.setHostUsername(loggedUser.getUsername());
+		}
 		apartmentDAO.addApartment(apartment);
-	}
-	
-	@POST
-	@Path("/apartments/save_image")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public void saveImage(Object file) {
-		System.out.println("PRIMLJEN FAJL");
 	}
 	
 	@POST
@@ -155,16 +168,6 @@ public class ApartmentService {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
 		//unlogged user or guest
-		
-		/*System.out.println(searchApartments.getCity());
-		System.out.println(searchApartments.getStartDate());
-		System.out.println(searchApartments.getEndDate());
-		System.out.println(searchApartments.getMinPrice());
-		System.out.println(searchApartments.getMaxPrice());
-		System.out.println(searchApartments.getMinRooms());
-		System.out.println(searchApartments.getMaxRooms());
-		System.out.println(searchApartments.getPersons());*/
-		
 		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
 			//System.out.println("gost");
 			return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
@@ -181,7 +184,6 @@ public class ApartmentService {
 					apartmentDAO.getAllApartments());
 		}
 		//host
-	//	System.out.println("domacin");
 		return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
 				searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
 				searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),
@@ -195,5 +197,64 @@ public class ApartmentService {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		apartmentDAO.editApartment(apartment);
 	}
+	
+	@Path("/apartments/{id}/image")
+	@POST
+	public Response uploadImage(InputStream in, @HeaderParam("Content-Type") String fileType,
+			@HeaderParam("Content-Length") long fileSize, @PathParam("id") int apartmentId) throws IOException {
+		String fileName = UUID.randomUUID().toString();
+		if (fileType.equals("image/jpeg")) {
+			fileName += ".jpg";
+		} else {
+			fileName += ".png";
+		}
+		
+		java.nio.file.Path BASE_DIR = Paths.get(System.getProperty("catalina.base") + File.separator + "images");
+		File directory = new File(System.getProperty("catalina.base") + File.separator + "images");
+	    if (! directory.exists()){
+	        directory.mkdir();
+	    }
+		Files.copy(in, BASE_DIR.resolve(fileName), StandardCopyOption.REPLACE_EXISTING);
+		
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.addImageToApartment(apartmentId, fileName);
+		return Response.status(Response.Status.OK).entity(in).build();
+	}
+	
+	@Path("/apartments/all_images/{id}")
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<String> getAllImagesForApartment(@PathParam("id") int apartmentId){
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		return apartmentDAO.getApartment(apartmentId).getPictures();
+	}
+	
+	@Path("/apartments/first_image/{id}")
+	@GET
+	@Produces({ "image/jpeg" })
+	public FileInputStream getFirstImage(@PathParam("id") int apartmentId) throws JsonParseException, JsonMappingException, IOException {
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		
+		for(String image:apartmentDAO.getApartment(apartmentId).getPictures()) {
+			FileInputStream fileInputStream = new FileInputStream(
+					new File(System.getProperty("catalina.base") + File.separator + "images" + File.separator + image));
+			return fileInputStream;
+		}
+		return null;
+	}
+	
+	@Path("/apartments/one_image/{image}")
+	@GET
+	@Produces({ "image/jpeg" })
+	public FileInputStream getOneImage(@PathParam("image") String image) 
+			throws JsonParseException, JsonMappingException, IOException {
+		
+		FileInputStream fileInputStream = new FileInputStream(
+				new File(System.getProperty("catalina.base") + File.separator + "images" + File.separator + image));
+		
+		return fileInputStream;
+	}
+
+	
 	
 }

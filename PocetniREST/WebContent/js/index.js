@@ -243,7 +243,7 @@ function addApartmentTable(a){
 						status = "Neaktivan";
 					}
 					
-					let address = a.location.address.street + " " + a.location.address.number + ", " + a.location.address.city + " " + a.location.address.zipCode + ", " + a.location.address.country; 
+					let address = a.location.address.streetAndNumber + ", " + a.location.address.city + " " + a.location.address.zipCode + ", " + a.location.address.country; 
 					
 					let td_status = '<td style="color: green; font-weight: bolder;">' + status + '</td>';
 					if(status == "Neaktivan"){
@@ -253,7 +253,7 @@ function addApartmentTable(a){
 					let apartment = $('<div class="border_apartments">'
 					 				+ '<table class="table_apartments">'
 					 				+ '<tr><td><a id="' + a.id + '" onclick="viewApartment(this.id)">'
-				 					+ '<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>'
+				 					+ '<img class="img_apartment" src="http://localhost:8800/PocetniREST/rest/apartments/first_image/' + a.id +'" alt="thumbnail"/>'
 				 					+ '</a></td>'
 				 					+ '<td><table style="height: 220px; margin-left: 40px; width: 350px;">'
 				 					+ '<tr><td colspan="2"><a id="' + a.id + '" onclick="viewApartment(this.id)">'
