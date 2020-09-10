@@ -1,8 +1,10 @@
 $(document).ready(function() {
 	
+	//checkLoggedUser();
+	
 	$.ajax({
 		type:"GET", 
-		url: "rest/guests_reservations",
+		url: "rest/reservations",
 		contentType: "application/json",
 		success:function(reservations){
 			for (let r of reservations) {
@@ -18,7 +20,7 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type:"GET", 
-			url: "rest/guests_reservations/sort_ascending",
+			url: "rest/reservations/sort_ascending",
 			contentType: "application/json",
 			success:function(reservations){
 				$('div#div_reservation').empty();
@@ -38,7 +40,7 @@ $(document).ready(function() {
 			
 			$.ajax({
 				type:"GET", 
-				url: "rest/guests_reservations/sort_descending",
+				url: "rest/reservations/sort_descending",
 				contentType: "application/json",
 				success:function(reservations){
 					$('div#div_reservation').empty();
@@ -87,11 +89,11 @@ function addReservation(r) {
 			
 			let reservation = $('<div class="border_apartments">' 
 					   + '<table class="table_apartments">'
-					   + '<tr><td><a href="reserve_an-apartment.html">'
-					   + '<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/></a>'
+					   + '<tr><td>'
+					   + '<img class="img_apartment" src="https://apartmanialexandria.rs/wp-content/uploads/2015/03/Apartman-1-02.jpg" alt="thumbnail" class="img-thumbnail"/>'
 		 			 + '</td><td><table style="height: 220px; margin-left: 40px; width: 350px;">'
-			 	    + '<tr><td colspan="2"><a href="reserve_an-apartment.html">'
-			 	   	+	'<h5>'+ apartment.name + '</h5></a></td></tr>'
+			 	    + '<tr><td colspan="2">'
+			 	   	+	'<h5>'+ apartment.name + '</h5></td></tr>'
 			 	   	+ '<tr><th>Dana:</th><td>'+ r.startDate +'</td></tr>'
 			 	   	+ '<tr><th>Ukupno noćenja:</th><td>'+ r.numberOfNights +'</td></tr>'
 			     	+ '<tr><th>Ukupna cijena:</th><td>'+ r.totalPrice +'</td></tr>'
@@ -172,7 +174,7 @@ function commentApartment(apartmentId){
 					url: "rest/comments/add",
 					data: JSON.stringify({ 
 						id: new_id,
-						guestUsername : "pero123",
+						guestUsername : "",
 						apartmentId : apartmentId,
 						description: description,
 						rating : rating,
@@ -194,5 +196,19 @@ function commentApartment(apartmentId){
 			}
 		});
 		
+	});
+};
+
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/guest",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('body#guest_res').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
 	});
 };

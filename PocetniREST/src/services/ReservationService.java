@@ -17,6 +17,8 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Reservation;
 import beans.ReservationStatus;
+import beans.TypeOfUser;
+import beans.User;
 import dao.ApartmentDAO;
 import dao.ReservationDAO;
 
@@ -44,85 +46,6 @@ public class ReservationService {
 	public boolean checkIfApartmentHasReservation(@PathParam("id") int id) {
 		ReservationDAO reservationDAO = getReservationDAO();
 		return reservationDAO.checkIfApartmentHasReservation(id);
-	}
-	
-	@GET
-	@Path("/hosts_reservations/search/{username}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> searchReservations(@PathParam("username") String username){
-		ReservationDAO reservationDAO = getReservationDAO();
-		String u = username;
-		if(u.equals("null")) {
-			u = null;
-		}
-	
-		return reservationDAO.searchReservationsByGuestUsername(u, reservationDAO.getReservationByHostsApartments("gaga998"));
-	}
-	
-	@GET
-	@Path("/guests_reservations")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> getReservationsByGuest(){
-		//treba ime ulogovanog gosta
-		ReservationDAO reservationDAO =  getReservationDAO();
-		return reservationDAO.getReservationsByGuest("pero123");
-	}
-	
-	@GET
-	@Path("/guests_reservations/sort_ascending")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> sortGuestReservationsAscending(){
-		ReservationDAO reservationDAO = getReservationDAO();
-		//treba ime ulogovanog gosta
-		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationsByGuest("pero123"));
-	}
-	
-	@GET
-	@Path("/guests_reservations/sort_descending")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> sortGuestReservationsDescending(){
-		ReservationDAO reservationDAO = getReservationDAO();
-		//treba ime ulogovanog gosta
-		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationsByGuest("pero123"));
-	}
-	
-	@GET
-	@Path("/hosts_reservations")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> getReservationsByHost(){
-		//treba ime ulogovanog domacina
-		ReservationDAO reservationDAO = getReservationDAO();
-		return reservationDAO.getReservationByHostsApartments("gaga998");
-	}
-	
-	@POST
-	@Path("/hosts_reservations/filter")
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> filterReservations(ArrayList<ReservationStatus> status){
-		ReservationDAO reservationDAO = getReservationDAO();
-		//treba ime ulogovanog domacina
-		return reservationDAO.filterReservationsByStatus(status, reservationDAO.getReservationByHostsApartments("gaga998"));
-	}
-	
-	
-
-	@GET
-	@Path("/hosts_reservations/sort_ascending")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> sortHostReservationsAscending(){
-		ReservationDAO reservationDAO = getReservationDAO();
-		//treba ime ulogovanog domacina
-		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationByHostsApartments("gaga998"));
-	}
-	
-	@GET
-	@Path("/hosts_reservations/sort_descending")
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Reservation> sortHostReservationsDescending(){
-		ReservationDAO reservationDAO = getReservationDAO();;
-		//treba ime ulogovanog domacina
-		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
 	
 	@POST
@@ -170,8 +93,16 @@ public class ReservationService {
 	public void addReservation(Reservation reservation) {
 		ReservationDAO reservationDAO = getReservationDAO();
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
-		apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
-		reservationDAO.addNewReservation(reservation);
+	
+		
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser != null) {
+			reservation.setGuestUsername(loggedUser.getUsername());
+			reservationDAO.addNewReservation(reservation);
+			apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
+		}
+		
 	}
 	
 	@GET
@@ -190,6 +121,111 @@ public class ReservationService {
 		ReservationDAO reservationDAO = getReservationDAO();
 	
 		return reservationDAO.getMaxNumberNight(date, id);
+	}
+	
+	@GET
+	@Path("/reservations")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> getReservations(){
+		ReservationDAO reservationDAO = getReservationDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser == null) {
+			return new ArrayList<Reservation>();
+		}
+		else if(loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return reservationDAO.getReservationsByGuest(loggedUser.getUsername());
+		}
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return reservationDAO.getReservationByHostsApartments(loggedUser.getUsername());
+		}
+		
+		return reservationDAO.getAllReservations();
+		
+	}
+	
+	@GET
+	@Path("/reservations/search/{username}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> searchAllReservations(@PathParam("username") String username){
+		ReservationDAO reservationDAO = getReservationDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		String u = username;
+		if(u.equals("null")) {
+			u = null;
+		}
+		
+		
+		if(loggedUser == null) {
+			return new ArrayList<Reservation>();
+		}
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return reservationDAO.searchReservationsByGuestUsername(u, reservationDAO.getReservationByHostsApartments(loggedUser.getUsername()));
+		}
+		
+		return reservationDAO.searchReservationsByGuestUsername(u, reservationDAO.getAllReservations());
+		
+	}
+	
+	@POST
+	@Path("/reservations/filter")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> filterAllReservations(ArrayList<ReservationStatus> status){
+		ReservationDAO reservationDAO = getReservationDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser == null) {
+			return new ArrayList<Reservation>();
+		}
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return reservationDAO.filterReservationsByStatus(status, reservationDAO.getReservationByHostsApartments(loggedUser.getUsername()));
+		}
+		
+		return reservationDAO.filterReservationsByStatus(status, reservationDAO.getAllReservations());
+	}
+	
+	@GET
+	@Path("/reservations/sort_ascending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortReservationsAscending(){
+		ReservationDAO reservationDAO = getReservationDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser == null) {
+			return new ArrayList<Reservation>();
+		}
+		else if(loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return reservationDAO.sortReservationsAscending(reservationDAO.getReservationsByGuest(loggedUser.getUsername()));
+		}
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return reservationDAO.sortReservationsAscending(reservationDAO.getReservationByHostsApartments(loggedUser.getUsername()));
+		}
+		
+		return reservationDAO.sortReservationsAscending(reservationDAO.getAllReservations());	
+		
+	}
+	
+	@GET
+	@Path("/reservations/sort_descending")
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Reservation> sortReservationsDescending(){
+		ReservationDAO reservationDAO = getReservationDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser == null) {
+			return new ArrayList<Reservation>();
+		}
+		else if(loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return reservationDAO.sortReservationsDescending(reservationDAO.getReservationsByGuest(loggedUser.getUsername()));
+		}
+		else if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+			return reservationDAO.sortReservationsDescending(reservationDAO.getReservationByHostsApartments(loggedUser.getUsername()));
+		}
+		
+		return reservationDAO.sortReservationsDescending(reservationDAO.getAllReservations());	
+		
 	}
 	
 }

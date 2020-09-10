@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.UUID;
 
@@ -195,7 +196,25 @@ public class ApartmentService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void editApartment(Apartment apartment) {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
+		
+		ArrayList<Apartment> apartments = apartmentDAO.getAllApartments();
+		
+		ArrayList<LocalDate> oldDates = new ArrayList<LocalDate>();
+		for(Apartment a:apartments) {
+			if(a.getId() == apartment.getId()) {
+					for(String d : a.getRentingDates()) {
+							oldDates.add(LocalDate.parse(d));
+					}
+			}
+		}		
+		ArrayList<LocalDate> newDates = new ArrayList<LocalDate>();
+		for(String d : apartment.getRentingDates()) {
+			newDates.add(LocalDate.parse(d));
+		}
+		
 		apartmentDAO.editApartment(apartment);
+		apartmentDAO.changeAvailableAndRentingDates(apartment.getId(), newDates, oldDates);
+		apartmentDAO.sortAvailableDates(apartment.getId());
 	}
 	
 	@Path("/apartments/{id}/image")

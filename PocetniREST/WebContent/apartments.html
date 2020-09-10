@@ -15,21 +15,33 @@
   <!-- Material Design Bootstrap -->
   <link rel="stylesheet" href="mdb/css/mdb.min.css">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-  
   <!-- Your custom styles (optional) -->
-  <link rel="stylesheet" href="toastr.min.css">
   <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="style_host_page.css">
-  <link rel="stylesheet" href="style_admin_page.css">
   <link rel="icon" href="data:;base64,iVBORwOKGO=" />
   <script src="jquery-3.3.1.min.js"></script>
-  <script type="text/javascript" src="js/toastr.min.js"></script>
 </head>
 <body>
-   <script src="host_navbar.js"></script>
+   <script src="signin.js"></script>
+   <script src="register.js"></script>
+
+      <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top" style="height: 80px;" >
+	  <div class="container">
+	    <h4 class="navbar-brand" id="title">DSTOURS.COM</h4>
+	    <div class="collapse navbar-collapse" id="navbarResponsive">
+	      <ul class="navbar-nav ml-auto">
+	        <li class="nav-item">
+	          <a class="nav-link" id="register" href="" data-toggle="modal" data-target="#modalRegisterForm">Registruj se</a>
+	        </li>
+	        <li class="nav-item">
+	          <a class="nav-link" id="sign_in" href="" data-toggle="modal" data-target="#modalLoginForm">Prijavi se</a>
+	        </li>
+	      </ul>
+	    </div>
+	  </div>
+  </nav>
   
-  <div id="border" style="margin-top: 30px;">
-  <h3 style="text-align: center;">Pretražite apartmane</h3>
+  <div id="border">
+  <h3 style="text-align: center;">Pretražite smještaj</h3>
   <form class="form-inline">
   	<div>
       <label class="help">Država/Grad</label>
@@ -66,22 +78,11 @@
     	<button class="btn btn-default" type="submit" id="first_highest"><i class="fas fa-sort-down"></i>Prvo najviša</button>   
    </div>
   
-  <div class="container container_colored" id="filters" style="margin-top: 180px; height: 590px;">
-  <div id="border_filter" class="column" style="height: 590px;">
+  <div class="container container_colored" id="filters" style="margin-top: 180px;">
+  <div id="border_filter" class="column">
   <h5 style="text-align: center; font-weight: bolder; margin-bottom: 20px;" >Filteri</h5>
   
-    <h5 style="text-align: left; margin-left: 10px">Status apartmana:</h5>
-  	<div class="form-check">
-    <input type="checkbox" class="form-check-input" id="activeFilter">
-    <label class="form-check-label" for="apartmentFilter">Aktivan</label>
-	</div>
-	<div class="form-check">
-    <input type="checkbox" class="form-check-input" id="inactiveFilter">
-    <label class="form-check-label" for="roomFilter">Neaktivan</label>
-	</div>
-	<hr/>
-  
-    <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
+  <h5 style="text-align: left; margin-left: 10px">Tip smještaja:</h5>
   	<div class="form-check">
     <input type="checkbox" class="form-check-input" id="apartmentFilter">
     <label class="form-check-label" for="apartmentFilter">Apartman</label>
@@ -163,8 +164,7 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button class="btn btn-orange edit_delete" type="submit" >Izmijeni</button>
-	       <button class="btn btn-red edit_delete" type="submit" >Obriši</button>
+	       <button class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>
 	    </td>
      	</tr>
  	</table>	
@@ -204,8 +204,7 @@
 		 	 </table>
 	    </td>
 	    <td>
-	       <button class="btn btn-orange edit_delete" type="submit" >Izmijeni</button>
-	       <button class="btn btn-red edit_delete" type="submit" >Obriši</button>
+	       <button class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>
 	    </td>
      	</tr>
  	</table>	

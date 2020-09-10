@@ -80,6 +80,7 @@ $(document).ready(function() {
 	var reservations=[];
 	var is_deleted;
 	var loc;
+	var pics = [];
 
 	$.ajax({
 		type:"GET", 
@@ -109,6 +110,7 @@ $(document).ready(function() {
 		comments = apartment.comments;
 		reservations = apartment.reservations;
 		is_deleted = apartment.deleted;
+		pics =  apartment.pictures;
 		
 		room_number = apartment.numberOfRooms;
 		guest_number = apartment.numberOfGuests;
@@ -319,7 +321,7 @@ $(document).ready(function() {
 		while(true){		
 			date_s.setDate(date_s.getDate() + 1)
 			
-			if(date_s.getDate() > date_e.getDate()){
+			if(date_s > date_e){
 				break;
 			}
 			else{
@@ -343,7 +345,7 @@ $(document).ready(function() {
 				availableDates: available_days,
 				hostUsername: host_name,
 				comments: comments,
-				pictures: [],
+				pictures: pics,
 				pricePerNight: price,
 				checkInTime: check_in,
 				checkOutTime : check_out,

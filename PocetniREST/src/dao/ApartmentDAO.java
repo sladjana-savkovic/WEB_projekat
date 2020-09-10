@@ -397,12 +397,40 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
-	public void changeAvailableAndRentingDates(int apartmentId, ArrayList<LocalDate> newRentingDates) {
+	public void sortAvailableDates(int id) {
+		ArrayList<Apartment> apartments = readFromFile();
+		ArrayList<LocalDate> dates = new ArrayList<LocalDate>();
+		ArrayList<String> datesStr = new ArrayList<String>();
+		
+		for(Apartment a:apartments) {
+			if(a.getId() == id) {
+				for(String d : a.getAvailableDates()) {
+					dates.add(LocalDate.parse(d));
+				}
+			}
+		}
+		Collections.sort(dates);
+		
+		for(LocalDate d : dates) {
+			datesStr.add(d.toString());
+		}
+		
+		for(Apartment a:apartments) {
+			if(a.getId() == id) {
+				a.setAvailableDates(datesStr);
+			}
+		}
+		
+		writeInFile(apartments);
+		
+	}
+	
+	public void changeAvailableAndRentingDates(int apartmentId, ArrayList<LocalDate> newRentingDates, ArrayList<LocalDate> oldRentingDates) {
 		ArrayList<Apartment> apartments = readFromFile();
 		for(Apartment a:apartments) {
 			if(a.getId() == apartmentId) {
-				ArrayList<LocalDate> newDates = findDifferencesBetweenDates(newRentingDates,parseStringToDate(a.getRentingDates()));
-				ArrayList<LocalDate> deletedDates = findDifferencesBetweenDates(parseStringToDate(a.getRentingDates()), newRentingDates);
+				ArrayList<LocalDate> newDates = findDifferencesBetweenDates(newRentingDates, oldRentingDates);
+				ArrayList<LocalDate> deletedDates = findDifferencesBetweenDates(oldRentingDates, newRentingDates);	
 				
 				ArrayList<String> availableDates = a.getAvailableDates();
 				availableDates.addAll(parseDateToString(newDates));

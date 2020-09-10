@@ -38,7 +38,7 @@ $(document).ready(function() {
 					let reservations = response;
 					
 									
-					$('div#div_host_reservation').empty();
+					$('div#div_admin_reservation').empty();
 					for(let r of reservations){
 						addReservation(r);
 					}
@@ -79,7 +79,7 @@ $('#filter').click(function() {
 			data:JSON.stringify(status),
 			contentType: "application/json",
 			success:function(reservations){
-				$('div#div_host_reservation').empty();
+				$('div#div_admin_reservation').empty();
 				for (let r of reservations) {
 					addReservation(r);
 				}
@@ -101,7 +101,7 @@ $('#filter').click(function() {
 		url: "rest/reservations/sort_ascending",
 		contentType: "application/json",
 		success:function(reservations){
-			$('div#div_host_reservation').empty();
+			$('div#div_admin_reservation').empty();
 			for (let r of reservations) {
 				addReservation(r);
 			}
@@ -121,7 +121,7 @@ $('#filter').click(function() {
 			url: "rest/reservations/sort_descending",
 			contentType: "application/json",
 			success:function(reservations){
-				$('div#div_host_reservation').empty();
+				$('div#div_admin_reservation').empty();
 				for (let r of reservations) {
 					addReservation(r);
 				}
@@ -136,6 +136,7 @@ $('#filter').click(function() {
 		
 	
 });
+
 
 function addReservation(r) {
 	
@@ -164,13 +165,7 @@ function addReservation(r) {
 			if(r.status == "CREATED"){
 				status="KREIRANA";
 			}
-			let btn_type='';
-			if(status == "KREIRANA"){
-			btn_type = '<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmAccept" id="' + r.id +'" onclick="acceptReservation(this.id)">Prihvati</button><button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
-			}
-			if(status == "PRIHVAĆENA"){
-			btn_type ='<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmFinish" id="' + r.id +'" onclick="finishReservation(this.id)">Završi</button><button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
-			}
+			
 			
 			let reservation = $('<div class="border_apartments">' 
 					   + '<table class="table_apartments">'
@@ -187,9 +182,9 @@ function addReservation(r) {
 			     	+ '<tr><th>Poruka:</th><td>' + r.message + '</td></tr>'
 			     	+ '<tr><th>Gost:</th><td>' + r.guestUsername + '</td></tr>'
 			 	    + '</table></td><td style="vertical-align: bottom;">'
-		            + btn_type + '</td></tr></table></div>');
+		            + '</td></tr></table></div>');
 		
-		$('div#div_host_reservation').append(reservation);
+		$('div#div_admin_reservation').append(reservation);
 		},
 		error:function(){
 			console.log('error getting reservation');
@@ -198,81 +193,6 @@ function addReservation(r) {
 		
 };
 
-function acceptReservation(id){
-	
-	$('a#yes_accept').click(function(event){
-		
-		event.preventDefault();
-		
-		$.ajax({
-			type: "POST",
-			url: "rest/accept_reservation",
-			contentType: "application/json",
-			data: id,
-			success: function(){
-				$('a#no_accept').click();
-				toastr["success"]("Uspješno ste prihvatili rezervaciju!");
-				setTimeout(function(){
-					location.reload(); }, 500); 
-			},
-			error:  function()  {
-				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
-			}
-		});
-		
-	});
-};
-
-function finishReservation(id){
-	
-	$('a#yes_finish').click(function(event){
-		
-		event.preventDefault();
-		
-		$.ajax({
-			type: "POST",
-			url: "rest/finish_reservation",
-			contentType: "application/json",
-			data: id,
-			success: function(){
-				$('a#no_finish').click();
-				toastr["success"]("Uspješno ste završili rezervaciju!");
-				setTimeout(function(){
-					location.reload(); }, 500); 
-			},
-			error:  function()  {
-				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
-			}
-		});
-		
-	});
-};
-
-
-function refuseReservation(id){
-	
-	$('a#yes_refuse').click(function(event){
-		
-		event.preventDefault();
-		
-		$.ajax({
-			type: "POST",
-			url: "rest/refuse_reservation",
-			contentType: "application/json",
-			data: id,
-			success: function(){
-				$('a#no_refuse').click();
-				toastr["success"]("Uspješno ste odbili rezervaciju!");
-				setTimeout(function(){
-					location.reload(); }, 500); 
-			},
-			error:  function()  {
-				toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
-			}
-		});
-		
-	});
-};
 
 function checkLoggedUser(){
 	

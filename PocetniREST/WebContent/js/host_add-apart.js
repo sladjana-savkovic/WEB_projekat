@@ -219,6 +219,24 @@ $(document).ready(function() {
 			}
 		}
 		
+		var date_s = new Date(start_date);
+		var date_e = new Date(end_date);
+		
+		var rent_days = [];
+		
+		rent_days.push(date_s.getFullYear() + "-" + ("0" + (date_s.getMonth() + 1)).slice(-2) + "-" + ("0" + date_s.getDate()).slice(-2));
+
+		while(true){		
+			date_s.setDate(date_s.getDate() + 1)
+			
+			if(date_s > date_e){
+				break;
+			}
+			else{
+				rent_days.push(date_s.getFullYear() + "-" + ("0" + (date_s.getMonth() + 1)).slice(-2) + "-" + ("0" + date_s.getDate()).slice(-2));	
+			}
+		}
+		
 		$.ajax({
 			type:"GET", 
 			url: "rest/apartments/new_id",
@@ -245,8 +263,8 @@ $(document).ready(function() {
 						      streetAndNumber : street_number,
 						    }
 						},
-						rentingDates: [],
-						availableDates: [],
+						rentingDates: rent_days,
+						availableDates: rent_days,
 						comments: [],
 						pictures: [],
 						pricePerNight:price,

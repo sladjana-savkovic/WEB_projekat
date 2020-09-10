@@ -90,7 +90,12 @@ public class CommentService {
 	@Path("/comments/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addComment(Comment comment) {
-		CommentDAO commentDAO = getCommentDAO();	
-		commentDAO.addCommentForApartment(comment);
+		CommentDAO commentDAO = getCommentDAO();
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if(loggedUser != null) {
+			comment.setGuestUsername(loggedUser.getUsername());
+			commentDAO.addCommentForApartment(comment);
+		}
 	}
 }

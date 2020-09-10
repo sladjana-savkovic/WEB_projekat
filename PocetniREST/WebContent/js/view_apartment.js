@@ -150,10 +150,17 @@ function addComment(c,typeOfUser) {
 
 function addInfoApartment(apartment,typeOfUser) {
 	
-	let type = "Soba";
-	if(apartment.type == "WHOLE_APARTMENT"){
+	$.ajax({
+		type:"GET", 
+		url: "rest/users/" + apartment.hostUsername,
+		contentType: "application/json",
+		success:function(h){
+			host = h.name + " " + h.surname;
+	
+		let type = "Soba";
+		if(apartment.type == "WHOLE_APARTMENT"){
 		type="Apartman";
-	}
+		}
 	
 	let a = $(' <div class="border_apartments" style="width: 680px; ">'
  		+'<table class="table_apartments">'
@@ -165,7 +172,7 @@ function addInfoApartment(apartment,typeOfUser) {
 		     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 		     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
 		   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
-		  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
+		  + '</tr><tr><th>Domaćin:</th><td>' + host +'</td>'
 		  + '</tr></table>'
 		  + '<td style="vertical-align:bottom;">'
 	     + '<div><button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="newReservation(this.id)">Rezervišite</button></div>'
@@ -183,7 +190,7 @@ function addInfoApartment(apartment,typeOfUser) {
 				     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 				     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
 				   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
-				  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
+				  + '</tr><tr><th>Domaćin:</th><td>' + host +'</td>'
 				  + '</tr></table></td>'
 				  + '<td style="vertical-align: bottom; "><button class="btn btn-orange edit_delete" type="submit" id="' + apartment.id +'" onclick="editApartment(this.id)">Izmijeni</button>'
 				  + '<button class="btn btn-red edit_delete" type="submit"  data-toggle="modal" data-target="#modalConfirmDelete" id="' + apartment.id +'" onclick="deleteApartment(this.id)">Obriši</button>'
@@ -192,18 +199,23 @@ function addInfoApartment(apartment,typeOfUser) {
 
     $('div#div_about_apartment').append(a);
 
-
+		},
+		error:function(){
+			console.log('error getting host');
+			return;
+		}
+	});
 
 };
 
 
 function addAmenities(a) {
 	
-	let amenities = $('<ul class="list-group list-group-flush"><ul class="list-group"><li class="list-group-item">'
-			   +'<div class="md-v-line"></div>' + a.name +'</li></ul>'
-			   +'</ul>');
+	let amenities = $('<tr>'
+			+ '<td> <i class="fas fa-check"></i></td><td><strong style="font-size: 20px; color: dark-grey;"><b>' + a.name + '</b></strong></td>'
+			+ '</tr>');
 
-$('div#div_amenities').append(amenities);
+$('#table_amenities').append(amenities);
 
 };
 
@@ -360,7 +372,7 @@ function newReservation(apartmentId){
 						numberOfNights : numberOfNights,
 						totalPrice : total_price,
 						message : message,
-						guestUsername : "pero123",
+						guestUsername : "",
 						status : "CREATED"}),
 					contentType: "application/json",
 					success:function(){
