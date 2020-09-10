@@ -1,6 +1,8 @@
 $(document).ready(function() {
 	
-var id = window.location.href.split("=")[1];
+	checkLoggedUser();
+	
+	var id = window.location.href.split("=")[1];
 	
 	//map
 	var map = L.map('map_edit').setView([44.815071, 20.460480], 6);
@@ -78,10 +80,7 @@ var id = window.location.href.split("=")[1];
 	var reservations=[];
 	var is_deleted;
 	var loc;
-	
-	var id=1;
 
-	
 	$.ajax({
 		type:"GET", 
 		url: "rest/apartments/" + id,
@@ -364,6 +363,41 @@ var id = window.location.href.split("=")[1];
 	});
 	
 });
+
+function checkLoggedUser(){
+	
+	let retVal = "";
+	
+	$.ajax({
+		type:"GET", 
+		url: "rest/verification/is_logged",
+		contentType: "application/json",
+		async: false,
+		success:function(user){
+			if(user == null){
+				$('#reserve_apartment').hide(function() {
+					alert(jqXHR.responseText);
+					window.history.back();
+				});
+			}else{
+				if(user.typeOfUser == "HOST"){
+					$('#host_navbar').attr("hidden",false);
+					$('#admin_navbar').attr("hidden",true);
+				}
+				else{
+					$('#admin_navbar').attr("hidden",false);
+					$('#host_navbar').attr("hidden",true);
+				}
+			}
+			retVal = user.typeOfUser;
+		},
+		error:function(){
+			console.log('error getting user');
+		}
+	});
+	
+	return retVal;
+}
 
 function transliterate(word){
     var answer = ""

@@ -280,7 +280,8 @@ $(document).ready(function() {
 });
 
 function viewApartment(id){
-	window.location.href = "reserve_an-apartment.html?id=" + id;
+	let start_date = $('#st_date').val();
+	window.location.href = "reserve_an-apartment.html?id=" + id + '&start_date=' + start_date;
 };
 
 function addApartmentTable(a){
@@ -362,12 +363,15 @@ function addApartmentTable(a){
 	});
 };
 
+function editApartment(id){
+	window.location.href = "admin_host_edit-apart.html?id=" + id;
+}
+
 function deleteApartment(id){
 	
 	$('a#yes_delete').click(function(event){
 		
 		event.preventDefault();
-		alert(id);
 		
 		$.ajax({
 			type: "GET",
@@ -381,31 +385,19 @@ function deleteApartment(id){
 				}else{
 					$.ajax({
 						type: "DELETE",
-						url: "rest/host_guest/delete_apartman",
+						url: "rest/apartments/delete",
 						contentType: "application/json",
 						data:id,
 						success: function(){
-							$.ajax({
-								type: "DELETE",
-								url: "rest/apartments/delete",
-								contentType: "application/json",
-								data:id,
-								success: function(){
-									$('a#no_delete').click();
-									toastr["success"]("Uspješno ste dodali obrisali apartman");
-									setTimeout(function(){
-										location.reload(); }, 500); 
-								},
-								error:  function()  {
-									console.log('Došlo je do greške prilikom brisanja apartmana');
-								}
-							});
+							$('a#no_delete').click();
+							toastr["success"]("Uspješno ste obrisali apartman");
+							setTimeout(function(){
+								location.reload(); }, 500); 
 						},
 						error:  function()  {
-							console.log('Došlo je do greške prilikom brisanja apartmana kod gosta i domacina');
+							console.log('Došlo je do greške prilikom brisanja apartmana');
 						}
 					});
-					
 				}
 			},
 			error:  function()  {

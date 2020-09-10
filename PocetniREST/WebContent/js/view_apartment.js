@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	var typeOfUser = checkLoggedUser();
+	
 	let url_split = window.location.href.split("?")[1];
 	let parameters = url_split.split("&");
 	
@@ -21,7 +23,7 @@ $(document).ready(function() {
 		contentType: "application/json",
 		success:function(comments){
 			for (let c of comments) {
-				addComment(c);
+				addComment(c,typeOfUser);
 			}
 		},
 		error:function(){
@@ -42,7 +44,7 @@ $(document).ready(function() {
 		    map.setView([lat,lng], 12);
 			
 			$('#apartman_name').text(apartment.name);
-			addInfoApartment(apartment);
+			addInfoApartment(apartment,typeOfUser);
 		},
 		error:function(){
 			console.log('error search reservations');
@@ -71,39 +73,53 @@ $(document).ready(function() {
 	
 });
 
-function addComment(c) {
+function addComment(c,typeOfUser) {
+		
+	let stars = '<i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
 	
-			let stars = '<i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
-			
-			if(c.rating == 2){
-				stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
-			}
-			if(c.rating == 3){
-				stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
-			}
-			if(c.rating == 4){
-				stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>';
-			}
-			if(c.rating == 5){
-				stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
-			}
-			
-			
-			let comment = $('<div class="testimonial">'
-				     +'<h5 class="font-weight-bold dark-grey-text mt-4">' + c.guestUsername +'</h5>'
-			        +'<p class="font-weight-normal dark-grey-text">'
-			         +' <i class="fas fa-quote-left pr-2"></i>'+ c.description +'</p>'
-			        +'<div class="orange-text">' 
-			        + stars +
-			        +'</div></div>');
-		
-		$('div#div_comments').append(comment);
-		
+	if(c.rating == 2){
+		stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+	}
+	if(c.rating == 3){
+		stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i><i class="far fa-star"></i>';
+	}
+	if(c.rating == 4){
+		stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="far fa-star"></i>';
+	}
+	if(c.rating == 5){
+		stars = '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+	}
 	
+	
+	let comment = $('<div class="testimonial">'
+		     +'<h5 class="font-weight-bold dark-grey-text mt-4">' + c.guestUsername +'</h5>'
+	        +'<p class="font-weight-normal dark-grey-text">'
+	        +' <i class="fas fa-quote-left pr-2"></i>'+ c.description +'</p>'
+	        +'<div class="orange-text">' 
+	        + stars +
+	        +'</div></div>');
+	
+	if(typeOfUser == "ADMIN"){
+		let status_tag = '<h6 style="color: green; margin-top: 15px;">Odobren</h6>';
 		
+		if(c.status == "DISAPPROVED"){
+			status_tag = '<h6 style="color: red; margin-top: 15px;">Odbijen</h6>';
+		}
+		
+		comment = $('<div class="testimonial">'
+			     +'<h5 class="font-weight-bold dark-grey-text mt-4">' + c.guestUsername +'</h5>'
+		        + status_tag + '<p class="font-weight-normal dark-grey-text">'
+		        +' <i class="fas fa-quote-left pr-2"></i>'+ c.description +'</p>'
+		        +'<div class="orange-text">' 
+		        + stars +
+		        +'</div></div>');
+	}
+
+    $('div#div_comments').append(comment);
+	
 };
 
-function addInfoApartment(apartment) {
+function addInfoApartment(apartment,typeOfUser) {
 	
 	let type = "Soba";
 	if(apartment.type == "WHOLE_APARTMENT"){
@@ -125,8 +141,27 @@ function addInfoApartment(apartment) {
 		  + '<td style="vertical-align:bottom;">'
 	     + '<div><button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="newReservation(this.id)">Rezervišite</button></div>'
 	    + '</td></tr></table></div>');
+	
+	if(typeOfUser == "ADMIN" || typeOfUser == "HOST"){
+		
+		a = $(' <div class="border_apartments" style="width: 680px; ">'
+		 		+'<table class="table_apartments">'
+		 			+'<tr><td>'
+				 	   +'<table style="height: 220px; margin-left: 40px; width: 350px;">'
+				 	   +'<tr><td colspan="2"><h5>Podaci o objektu</h5></td>'
+				 	 +'</tr><tr><th>Tip smještaja:</th><td>'+ type +'</td>'
+				    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.street + " " + apartment.location.address.number + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
+				     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
+				     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
+				   + '</tr><tr><th>Broj soba:</th><td>' + apartment.numberOfRooms +'</td>'
+				  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
+				  + '</tr></table></td>'
+				  + '<td style="vertical-align: bottom; "><button class="btn btn-orange edit_delete" type="submit" id="' + apartment.id +'" onclick="editApartment(this.id)">Izmijeni</button>'
+				  + '<button class="btn btn-red edit_delete" type="submit"  data-toggle="modal" data-target="#modalConfirmDelete" id="' + apartment.id +'" onclick="deleteApartment(this.id)">Obriši</button>'
+ 			      + '</td></tr></table></div>');
+	}
 
-$('div#div_about_apartment').append(a);
+    $('div#div_about_apartment').append(a);
 
 
 
@@ -140,8 +175,6 @@ function addAmenities(a) {
 			   +'</ul>');
 
 $('div#div_amenities').append(amenities);
-
-
 
 };
 
@@ -319,4 +352,120 @@ function newReservation(apartmentId){
 		});
 		
 	});
+};
+
+function editApartment(id){
+	window.location.href = "admin_host_edit-apart.html?id=" + id;
+}
+
+
+function deleteApartment(id){
+	
+	$('a#yes_delete').click(function(event){
+		
+		event.preventDefault();
+		
+		$.ajax({
+			type: "GET",
+			url: "rest/reservations/apartment_delete/" + id,
+			contentType: "application/json",
+			success: function(result){
+				if(result){
+					toastr["error"]("Za apartman koji želite obrisati postoje rezervacije");
+					$('a#no_delete').click();
+					return;
+				}else{
+					$.ajax({
+						type: "DELETE",
+						url: "rest/apartments/delete",
+						contentType: "application/json",
+						data:id,
+						success: function(){
+							$('a#no_delete').click();
+							toastr["success"]("Uspješno ste obrisali apartman");
+							
+							let typeOfUser = checkLoggedUser();
+							if(typeOfUser == "HOST"){
+								window.location.href = "host_apartments.html";
+							}else{
+								window.location.href = "admin_apartments.html";
+							}
+						},
+						error:  function()  {
+							console.log('Došlo je do greške prilikom brisanja apartmana');
+						}
+					});
+					
+				}
+			},
+			error:  function()  {
+				console.log('Došlo je do greške prilikom provjere da li apartman ima rezervacije');
+			}
+		});
+		
+	});
+};
+
+function checkLoggedUser(){
+	
+	let retVal = "";
+	
+	$.ajax({
+		type:"GET", 
+		url: "rest/verification/is_logged",
+		contentType: "application/json",
+		async: false,
+		success:function(user){
+			if(user == null){
+				$('#reserve_apartment').hide(function() {
+					alert(jqXHR.responseText);
+					window.history.back();
+				});
+			}else{
+				if(user.typeOfUser == "GUEST"){
+					$('#guest_navbar').attr("hidden",false);
+					$('#host_navbar').attr("hidden",true);
+					$('#admin_navbar').attr("hidden",true);
+				}
+				else if(user.typeOfUser == "HOST"){
+					$('#host_navbar').attr("hidden",false);
+					$('#guest_navbar').attr("hidden",true);
+					$('#admin_navbar').attr("hidden",true);
+				}
+				else{
+					$('#admin_navbar').attr("hidden",false);
+					$('#guest_navbar').attr("hidden",true);
+					$('#host_navbar').attr("hidden",true);
+				}
+			}
+			retVal = user.typeOfUser;
+		},
+		error:function(){
+			console.log('error getting user');
+		}
+	});
+	
+	return retVal;
+}
+
+function transliterate(word){
+    var answer = ""
+      , a = {};
+    
+    a["А"]="A";a["а"]="a";a["Б"]="B";a["б"]="b";a["В"]="V";a["в"]="v";a["Г"]="G";a["г"]="g";a["Д"]="D";a["д"]="d";a["Ђ"]="Đ";a["ђ"]="đ";
+    a["E"]="E";a["е"]="e";a["Ж"]="Ž";a["ж"]="ž";a["З"]="Z";a["з"]="z";a["И"]="I";a["и"]="i";a["Ј"]="J";a["ј"]="j";a["К"]="K";a["к"]="k";
+    a["Л"]="L";a["л"]="l";a["Љ"]="Lj";a["љ"]="lj";a["М"]="M";a["м"]="m";a["Н"]="N";a["н"]="n";a["Њ"]="Nj";a["њ"]="nj";a["О"]="O";a["о"]="o";
+    a["П"]="P";a["п"]="p";a["Р"]="R";a["р"]="r";a["С"]="S";a["с"]="s";a["Т"]="T";a["т"]="t";a["Ћ"]="Ć";a["ћ"]="ć";a["У"]="U";a["у"]="u";
+    a["Ф"]="F"; a["ф"]="f";a["Х"]="H";a["х"]="h";a["Ц"]="C";a["ц"]="c";a["Ч"]="Č";a["ч"]="č";a["Џ"]="dž";a["џ"]="dž";a["Ш"]="Š";a["ш"]="š";
+
+   for (i in word){
+     if (word.hasOwnProperty(i)) {
+       if (a[word[i]] === undefined){
+         answer += word[i];
+       } else {
+         answer += a[word[i]];
+       }
+     }
+   }
+   return answer;
 };

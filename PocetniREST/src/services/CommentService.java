@@ -14,9 +14,12 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 import beans.Amenities;
 import beans.Comment;
+import beans.TypeOfUser;
+import beans.User;
 import dao.AmenitiesDAO;
 import dao.CommentDAO;
 
@@ -65,7 +68,15 @@ public class CommentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Comment> getCommentsForApartment(@PathParam("id") int id){
 		CommentDAO commentDAO = getCommentDAO();
-		return commentDAO.getAllCommentsByApartment(id);
+		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
+		if (loggedUser == null) {
+			return new ArrayList<Comment>();
+		} else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+			return commentDAO.getAllCommentsByApartment(id);
+		}
+		
+		return commentDAO.getApprovedCommentsByApartment(id);
 	}
 	
 	@GET
