@@ -188,4 +188,12 @@ public class ApartmentService {
 				apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
 	
+	@POST
+	@Path("/apartments/edit")
+	@Consumes(MediaType.APPLICATION_JSON)
+	public void editApartment(Apartment apartment) {
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.editApartment(apartment);
+	}
+	
 }

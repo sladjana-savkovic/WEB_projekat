@@ -61,12 +61,11 @@ public class CommentService {
 	}
 	
 	@GET
-	@Path("/apartments_comments")
+	@Path("/apartments_comments/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Comment> getCommentsForApartment(){
+	public ArrayList<Comment> getCommentsForApartment(@PathParam("id") int id){
 		CommentDAO commentDAO = getCommentDAO();
-		//treba id odabranog apartmana
-		return commentDAO.getAllCommentsByApartment(1);
+		return commentDAO.getAllCommentsByApartment(id);
 	}
 	
 	@GET

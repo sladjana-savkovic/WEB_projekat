@@ -17,7 +17,7 @@ $(document).ready(function() {
 	 
 	$.ajax({
 		type:"GET", 
-		url: "rest/apartments_comments",
+		url: "rest/apartments_comments/" + id,
 		contentType: "application/json",
 		success:function(comments){
 			for (let c of comments) {
@@ -123,7 +123,7 @@ function addInfoApartment(apartment) {
 		  + '</tr><tr><th>Domaćin:</th><td>' + apartment.hostUsername +'</td>'
 		  + '</tr></table>'
 		  + '<td style="vertical-align:bottom;">'
-	     + '<button  data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" >Rezervišite</button>'
+	     + '<div><button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="newReservation(this.id)">Rezervišite</button></div>'
 	    + '</td></tr></table></div>');
 
 $('div#div_about_apartment').append(a);
@@ -176,7 +176,7 @@ function newReservation(apartmentId){
 					$('#start_date').append(optionDate);
 				}
 				//uzmi iz pretrage
-				$("#2020-09-09").prop("selected",true);
+				$(dates[0]).prop("selected",true);
 				$('#night_number').val(1);
 				
 				let selectDate = $("#start_date :selected").text();
@@ -209,12 +209,16 @@ function newReservation(apartmentId){
 		 
 	let selectDate = $("#start_date :selected").text();
 	//let numberOfNights = $('#night_number').val();
+	//alert(selectDate);
+	$('#night_number').val(1);
 		 
 	 $.ajax({
 			type:"GET", 
 			url: "rest/reservations/max_num_night/" + selectDate + "/" + apartmentId,
 			contentType: "application/json",
-			success: function(maxNumber){		
+			success: function(maxNumber){	
+				
+				//alert(maxNumber);
 			
 			 	$('#night_number').attr('max', maxNumber);
 			 	

@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	//checkLoggedUser();
+	
 	$('input[type="checkbox"]').each(function(){
 	  	$(this).prop('checked', false);
 	});
@@ -28,6 +30,8 @@ $(document).ready(function() {
 			username = "null";
 		}
 		
+		//treba ime ulogovanog domacina
+	
 			$.ajax({
 				type:"GET", 
 				url: "rest/hosts_reservations/search/" + username,
@@ -269,5 +273,19 @@ function refuseReservation(id){
 			}
 		});
 		
+	});
+};
+
+function checkLoggedUser(){
+	
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/host",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('body#host_res').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
 	});
 };

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+<title>Izmjena apartmana</title>
+<link rel = "stylesheet" href = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css"/>
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Google Fonts Roboto -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap">
+  <!-- Bootstrap core CSS -->
+  <link rel="stylesheet" href="mdb/css/bootstrap.min.css">
+  <!-- Material Design Bootstrap -->
+  <link rel="stylesheet" href="mdb/css/mdb.min.css">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  
+  <link rel="shortcut icon" href="#">
+  <!-- Your custom styles (optional) -->
+  <link rel="stylesheet" href="toastr.min.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="style_host_page.css">
+ 
+  <script src="jquery-3.3.1.min.js"></script>
+  <script type="text/javascript" src="js/toastr.min.js"></script>
+  <script  type="text/javascript" src="js/host_edit-apart.js"></script>
+  <script  type="text/javascript" src="js/edit_profile.js"></script>
+  <script  type="text/javascript" src="js/sign_out.js"></script>
+  <script src = "http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  
+  <!-- Load Leaflet from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css"
+    integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+    crossorigin=""/>
+  <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"
+    integrity="sha512-gZwIG9x3wUXg2hdXF6+rVkLF/0Vi9U8D2Ntg4Ga5I5BZpVkVxlJWbSQtXPSiUTtC0TjtGOmxa1AJPuV0CPthew=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet from CDN -->
+  <script src="https://unpkg.com/esri-leaflet@2.5.0/dist/esri-leaflet.js"
+    integrity="sha512-ucw7Grpc+iEQZa711gcjgMBnmd9qju1CICsRaryvX7HJklK0pGl/prxKvtHwpgm5ZHdvAil7YPxI1oWPOWK3UQ=="
+    crossorigin=""></script>
+
+  <!-- Load Esri Leaflet Geocoder from CDN -->
+  <link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.css"
+    integrity="sha512-IM3Hs+feyi40yZhDH6kV8vQMg4Fh20s9OzInIIAc4nx7aMYMfo+IenRUekoYsHZqGkREUgx0VvlEsgm7nCDW9g=="
+    crossorigin="">
+  <script src="https://unpkg.com/esri-leaflet-geocoder@2.3.3/dist/esri-leaflet-geocoder.js"
+    integrity="sha512-HrFUyCEtIpxZloTgEKKMq4RFYhxjJkCiF5sDxuAokklOeZ68U2NPfh4MFtyIVWlsKtVbK5GD2/JzFyAfvT5ejA=="
+    crossorigin=""></script> 
+</head>
+</head>
+<body id="edit_apart">
+
+ <script src="host_navbar.js"></script>
+	
+  <div class="container container_colored">
+  <form id="edit_apart_form">
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Naziv apartmana</label>
+      </div>
+      <div class="col-75">
+        <input type="text" id="name_apart_edit" name="name_apart" placeholder="Unesite naziv apartmana">
+        <p style="color:red; float:right;" id="edit_error_name" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname" class="form">Tip apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: 15px;">
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="whole_apart_edit" name="type" checked="checked">
+		  <label class="custom-control-label" for="whole_apart">Cijeli apartman</label>
+		</div>
+		
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="room_edit" name="type">
+		  <label class="custom-control-label" for="room">Soba</label>
+		</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Broj soba</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="nmb_rooms_edit" name="nmb_rooms" placeholder="Unesite broj soba" min="1">
+        <p style="color:red; float:right;" id="error_rooms_edit" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Broj gostiju</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="nmb_guests_edit" name="nmb_guests" placeholder="Unesite broj gostiju" min="1">
+        <p style="color:red; float:right;" id="error_guests_edit" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="country" class="form">Lokacija</label>
+      </div>
+      <div class="col-75" style="margin-bottom: 8px;">
+        <div id="map_edit" style="height: 210px;"></div>
+        <p style="color:red; float:right;" id="ap_error_map" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Datumi za izdavanje</label>
+      </div>
+      <div class="col-75">
+      <div class="row">
+	      <div class="col-md-6">
+	        <input type="text" name="start_date" width="100px" class="is-datepick textbox-n" placeholder="Početni datum" 
+	      		   onfocus="(this.type='date')" onblur="(this.type='text')" id="start_date_edit">
+			</div>
+			<div class="col-md-6">
+	        <input type="text" name="end_date" width="100px" class="is-datepick textbox-n" placeholder="Krajnji datum" 
+	      		   onfocus="(this.type='date')" onblur="(this.type='text')" id="end_date_edit">
+	      		   <p style="color:red; float:right;" id="error_dates_edit" hidden="true"></p>
+	        </div>
+	      </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Cijena po noći</label>
+      </div>
+      <div class="col-75">
+        <input type="number" id="price_edit" name="price" placeholder="Unesite cijenu" min="1">
+        <p style="color:red; float:right;" id="error_price_edit" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Vrijeme za prijavu</label>
+      </div>
+      <div class="col-75">
+        <input type="time" id="checkin_edit" name="checkin" placeholder="Odaberite vrijeme">
+        <p style="color:red; float:right;" id="error_checkin_edit" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Vrijeme za odjavu</label>
+      </div>
+      <div class="col-75">
+        <input type="time" id="checkout_edit" name="checkout" placeholder="Odaberite vrijeme">
+        <p style="color:red; float:right;" id="error_checkout_edit" hidden="true"></p>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Sadržaji apartmana</label>
+      </div>
+      <div class="col-75" id="div_amenities_edit">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="fname" class="form">Status apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: 15px;">
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="inactive_edit" name="status">
+		  <label class="custom-control-label" for="inactive">Neaktivan</label>
+		</div>
+		
+		<div class="custom-control custom-radio custom-control-inline">
+		  <input type="radio" class="custom-control-input" id="active_edit" name="status">
+		  <label class="custom-control-label" for="active">Aktivan</label>
+		</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Slike apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: -20px;"> 
+	      <div id="post-form" class="post-form">
+			<label for="files"></label>
+			<input id="files" type="file" name="image" id="file" title="" multiple/>
+			<div class="row" id="div_row"></div>
+			<output id="result"></output>
+		  </div>
+	  </div>
+    </div>
+    <div class="row" id="edit_apart_submit" style="margin-top: 30px; margin-left: 500px;">
+      <input type="submit" value="Izmijeni apartman">
+    </div>
+  </form>
+</div>
+
+
+
+  <!-- jQuery -->
+  <script type="text/javascript" src="mdb/js/jquery.min.js"></script>
+  <!-- Bootstrap tooltips -->
+  <script type="text/javascript" src="mdb/js/popper.min.js"></script>
+  <!-- Bootstrap core JavaScript -->
+  <script type="text/javascript" src="mdb/js/bootstrap.min.js"></script>
+  <!-- MDB core JavaScript -->
+  <script type="text/javascript" src="mdb/js/mdb.min.js"></script>
+
+
+</body>
+</html>

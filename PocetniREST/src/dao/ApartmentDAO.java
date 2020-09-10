@@ -171,6 +171,7 @@ public class ApartmentDAO {
 				a.setPricePerNight(apartment.getPricePerNight());
 				a.setRentingDates(apartment.getRentingDates());
 				a.setType(apartment.getType());
+				a.setAvailableDates(apartment.getAvailableDates());
 			}
 		}
 		writeInFile(apartments);

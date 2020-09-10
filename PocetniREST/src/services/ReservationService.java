@@ -1,5 +1,7 @@
 package services;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 
 import javax.servlet.ServletContext;
@@ -15,6 +17,7 @@ import javax.ws.rs.core.MediaType;
 
 import beans.Reservation;
 import beans.ReservationStatus;
+import dao.ApartmentDAO;
 import dao.ReservationDAO;
 
 @Path("")
@@ -47,7 +50,7 @@ public class ReservationService {
 	@Path("/hosts_reservations/search/{username}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> searchReservations(@PathParam("username") String username){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		String u = username;
 		if(u.equals("null")) {
 			u = null;
@@ -61,7 +64,7 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> getReservationsByGuest(){
 		//treba ime ulogovanog gosta
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO =  getReservationDAO();
 		return reservationDAO.getReservationsByGuest("pero123");
 	}
 	
@@ -69,7 +72,7 @@ public class ReservationService {
 	@Path("/guests_reservations/sort_ascending")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> sortGuestReservationsAscending(){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		//treba ime ulogovanog gosta
 		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationsByGuest("pero123"));
 	}
@@ -78,7 +81,7 @@ public class ReservationService {
 	@Path("/guests_reservations/sort_descending")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> sortGuestReservationsDescending(){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		//treba ime ulogovanog gosta
 		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationsByGuest("pero123"));
 	}
@@ -88,7 +91,7 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> getReservationsByHost(){
 		//treba ime ulogovanog domacina
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		return reservationDAO.getReservationByHostsApartments("gaga998");
 	}
 	
@@ -97,17 +100,18 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> filterReservations(ArrayList<ReservationStatus> status){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		//treba ime ulogovanog domacina
 		return reservationDAO.filterReservationsByStatus(status, reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
+	
 	
 
 	@GET
 	@Path("/hosts_reservations/sort_ascending")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> sortHostReservationsAscending(){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		//treba ime ulogovanog domacina
 		return reservationDAO.sortReservationsAscending(reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
@@ -116,7 +120,7 @@ public class ReservationService {
 	@Path("/hosts_reservations/sort_descending")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Reservation> sortHostReservationsDescending(){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();;
 		//treba ime ulogovanog domacina
 		return reservationDAO.sortReservationsDescending(reservationDAO.getReservationByHostsApartments("gaga998"));
 	}
@@ -125,7 +129,7 @@ public class ReservationService {
 	@Path("/accept_reservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void acceptReservation(int id) {
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		reservationDAO.acceptReservationByHost(reservationDAO.getReservationById(id));
 	}
 	
@@ -133,7 +137,7 @@ public class ReservationService {
 	@Path("/finish_reservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void finishReservation(int id) {
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		reservationDAO.finishReservationByHost(reservationDAO.getReservationById(id));
 	}
 	
@@ -141,7 +145,7 @@ public class ReservationService {
 	@Path("/refuse_reservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void refuseReservation(int id) {
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();;
 		reservationDAO.refuseReservationByHost(reservationDAO.getReservationById(id));
 	}
 	
@@ -149,14 +153,14 @@ public class ReservationService {
 	@Path("/cancel_reservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void cancelReservation(int id) {
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		reservationDAO.cancelReservationByGuest(reservationDAO.getReservationById(id));
 	}
 	
 	@GET
 	@Path("/reservations/new_id")
 	public int getNewId() {
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 		return reservationDAO.getLastId()+1;
 	}
 	
@@ -164,7 +168,9 @@ public class ReservationService {
 	@Path("/reservations/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addReservation(Reservation reservation) {
-		ReservationDAO reservationDAO = new ReservationDAO();	
+		ReservationDAO reservationDAO = getReservationDAO();
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
 		reservationDAO.addNewReservation(reservation);
 	}
 	
@@ -172,7 +178,7 @@ public class ReservationService {
 	@Path("/reservations/total_price/{date}/{numberNight}/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public double getTotalPrice(@PathParam("date") String date, @PathParam("numberNight") int numberNight, @PathParam("id")  int id){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 	
 		return reservationDAO.getTotalPrice(date, numberNight, id);
 	}
@@ -181,7 +187,7 @@ public class ReservationService {
 	@Path("/reservations/max_num_night/{date}/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public int getMaxNumNight(@PathParam("date") String date, @PathParam("id")  int id){
-		ReservationDAO reservationDAO = new ReservationDAO();
+		ReservationDAO reservationDAO = getReservationDAO();
 	
 		return reservationDAO.getMaxNumberNight(date, id);
 	}
