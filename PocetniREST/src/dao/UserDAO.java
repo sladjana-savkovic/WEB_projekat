@@ -84,7 +84,6 @@ public class UserDAO {
 				guestsOfHost.add(getUser(r.getGuestUsername()));
 			}
 		}
-		
 		return guestsOfHost;
 	}
 

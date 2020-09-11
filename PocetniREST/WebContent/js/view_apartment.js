@@ -185,7 +185,7 @@ function addInfoApartment(apartment,typeOfUser) {
 		 			+'<tr><td>'
 				 	   +'<table style="height: 220px; margin-left: 40px; width: 350px;">'
 				 	   +'<tr><td colspan="2"><h5>Podaci o objektu</h5></td>'
-				 	 +'</tr><tr><th>Tip smještaja:</th><td>'+ type +'</td>'
+				 	 +'</tr><tr><th width="35%">Tip smještaja:</th><td>'+ type +'</td>'
 				    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.streetAndNumber + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
 				     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 				     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'

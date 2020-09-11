@@ -1,8 +1,30 @@
 $(document).ready(function() {
 	
-	checkLoggedUser();
+	var userType = checkLoggedUser();
 	
 	var id = window.location.href.split("=")[1];
+	
+	$('#start_date_edit').prop("min",new Date().toISOString().split("T")[0]);
+	$('#end_date_edit').prop("min",new Date().toISOString().split("T")[0]);
+	
+	//getting all images name
+	  $.ajax({
+			type:"GET", 
+			url: "rest/apartments/all_images/" + id,
+			contentType: "application/json",
+			success:function(images){
+				$('#div_row').empty();
+				for(let i of images){
+					var column = $('<div class="col-md-3">'
+				           +  '<img  class="imageThumb" style="width:100%; height:90%; margin-top:10px;" src="http://localhost:8800/PocetniREST/rest/apartments/one_image/' + i + '">' 
+				            + '</div>');
+				    $('#div_row').append(column);
+				}
+			},
+			error:function(){
+				console.log('error getting images');
+			}
+		});
 	
 	//map
 	var map = L.map('map_edit').setView([44.815071, 20.460480], 6);
@@ -11,7 +33,7 @@ $(document).ready(function() {
 	    attribution: '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
 	  }).addTo(map);
 		  
- var geocodeService = L.esri.Geocoding.geocodeService();
+    var geocodeService = L.esri.Geocoding.geocodeService();
 	  
 	  var marker;
 	  var address = "";
@@ -38,6 +60,42 @@ $(document).ready(function() {
 	      
 	    });
 	  });
+	  
+	//choose images
+	  var chosen_images = [];
+	  
+	  if (window.File && window.FileList && window.FileReader) {
+		  
+		    $("#files").on("change", function(e) {
+		      
+		      var files = e.target.files,
+		        filesLength = files.length;
+		      
+		      for (var i = 0; i < filesLength; i++) {
+		        var f = files[i];
+		        chosen_images.push(f);
+		        var fileReader = new FileReader();
+		        fileReader.onload = (function(e) {
+		          var file = e.target;
+		          var column = $("<div  class=\"col-md-3\"><span class=\"pip\">" +
+		            "<img class=\"imageThumb\" style='width:100%; height:90%; margin-top:10px;' src=\"" + e.target.result + "\" title=\"" + f.name + "\"/>" 
+		            + "</span></div>");
+		          $('#div_row').append(column);
+		          
+		          
+		        });
+		        fileReader.readAsDataURL(f);
+		      }
+		    });
+		  } else {
+		    alert("Your browser doesn't support to File API")
+		  }
+		  
+		  $("input#files").click(function() {
+			  $('#files').val('');
+			  $('#div_row').empty();
+		  });
+
 	
 	var all_amenities = [];
 
@@ -253,6 +311,13 @@ $(document).ready(function() {
 			return;
 		}
 		
+		if(!marker){
+			$('#error_rooms_edit').attr("hidden",true);
+			$('#error_map_edit').text('Odabir lokacije obavezan');
+			$('#error_map_edit').attr("hidden",false);
+			return;
+		}
+		
 		if(!start_date || !end_date){
 			$('#error_guests_edit').attr("hidden",true);
 			$('#error_dates_edit').text('Unos početnog i krajnjeg datuma je obavezan');
@@ -264,21 +329,6 @@ $(document).ready(function() {
 		var from_end = $("#end_date_edit").val().split("-");
 		var ds = new Date(from_start[0], from_start[1] - 1, from_start[2]);
 		var de = new Date(from_end[0], from_end[1] - 1, from_end[2]);
-		var today = new Date();
-
-		if(ds < today){
-			$('#error_guests_edit').attr("hidden",true);
-			$('#error_dates_edit').text('Početni datum ne smije biti manji od današnjeg');
-			$('#error_dates_edit').attr("hidden",false);
-			return;
-		}
-		
-		if(de < today){
-			$('#error_guests_edit').attr("hidden",true);
-			$('#error_dates_edit').text('Krajnji datum ne smije biti manji od današnjeg');
-			$('#error_dates_edit').attr("hidden",false);
-			return;
-		}
 		
 		if(de < ds){
 			$('#error_guests_edit').attr("hidden",true);
@@ -328,8 +378,6 @@ $(document).ready(function() {
 				rent_days.push(date_s.getFullYear() + "-" + ("0" + (date_s.getMonth() + 1)).slice(-2) + "-" + ("0" + date_s.getDate()).slice(-2));	
 			}
 		}
-		
-	
 	
 		$.ajax({
 			type: "POST",
@@ -356,7 +404,58 @@ $(document).ready(function() {
 			contentType: "application/json",
 			success:function(data){
 				
-				toastr["success"]("Uspješno ste izmijenili apartman.");
+				if(chosen_images.length > 0){
+					
+					$.ajax({
+						type: "DELETE",
+						url: "rest/apartments/delete_images",
+						contentType: "application/json",
+						data:id,
+						success: function(){
+							if(chosen_images.length > 0){
+								for(var file of chosen_images){		
+						            var extension = file.name.split(".").pop();
+						            var type = "";
+						            
+						            if (extension === "jpg" || extension === "jpeg" ||
+						                extension === "JPG" || extension === "JPEG") {
+						                type = "image/jpeg";
+						            } else if (extension === "png" || extension === "PNG") {
+						                type = "image/png";
+						            } else {
+						                alert("Invalid file type");
+						                return;
+						            }  
+						            
+						            var request = new XMLHttpRequest();
+						            request.open("POST", "rest/apartments/" + id +"/image");
+						            request.setRequestHeader("Content-Type", type);
+						            request.setRequestHeader("Image-Name", name);
+						            request.send(file);
+								}
+							}
+							
+							toastr["success"]("Uspješno ste izmijenili apartman.");
+							if(userType == "HOST"){
+								window.location.href = "host_apartments.html";
+							}else{
+								window.location.href = "admin_apartments.html";
+							}
+						},
+						error:  function()  {
+							console.log('Došlo je do greške prilikom brisanja slika apartmana');
+						}
+					});
+				}
+				else{
+					toastr["success"]("Uspješno ste izmijenili apartman.");
+					if(userType == "HOST"){
+						window.location.href = "host_apartments.html";
+					}else{
+						window.location.href = "admin_apartments.html";
+					}
+				}
+				
 			},
 			error: function(response){
 				toastr["error"]("Došlo je do greške!");
@@ -377,9 +476,10 @@ function checkLoggedUser(){
 		async: false,
 		success:function(user){
 			if(user == null){
-				$('#reserve_apartment').hide(function() {
+				$('#edit_apart').hide(function() {
 					alert(jqXHR.responseText);
 					window.history.back();
+					return;
 				});
 			}else{
 				if(user.typeOfUser == "HOST"){
@@ -392,6 +492,7 @@ function checkLoggedUser(){
 				}
 			}
 			retVal = user.typeOfUser;
+			
 		},
 		error:function(){
 			console.log('error getting user');
@@ -399,7 +500,7 @@ function checkLoggedUser(){
 	});
 	
 	return retVal;
-}
+};
 
 function transliterate(word){
     var answer = ""

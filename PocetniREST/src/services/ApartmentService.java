@@ -262,6 +262,13 @@ public class ApartmentService {
 		return null;
 	}
 	
+	@Path("/apartments/delete_images")
+	@DELETE
+	public void deleteApartmentImages(int apartmentId) {
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.deleteApartmentImages(apartmentId);
+	}
+	
 	@Path("/apartments/one_image/{image}")
 	@GET
 	@Produces({ "image/jpeg" })

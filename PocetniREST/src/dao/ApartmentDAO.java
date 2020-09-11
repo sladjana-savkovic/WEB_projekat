@@ -47,6 +47,15 @@ public class ApartmentDAO {
 		return apartments.get(apartments.size() - 1).getId();
 	}
 	
+	public void deleteApartmentImages(int id) {
+		ArrayList<Apartment> apartments = readFromFile();
+		for(Apartment apartment:apartments) {
+			if(apartment.getId() == id)
+				apartment.getPictures().clear();
+		}
+		writeInFile(apartments);
+	}
+	
 	public Apartment getApartment(int id) {
 		ArrayList<Apartment> apartments = readFromFile();
 		for(Apartment apartment:apartments) {

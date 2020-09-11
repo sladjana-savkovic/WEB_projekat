@@ -76,10 +76,11 @@ $(document).ready(function() {
 	  
   //choose images
   var chosen_images = [];
-  
   if (window.File && window.FileList && window.FileReader) {
 	  
-	    $("#files").on("change", function(e) {
+	    $("#add_images").on("change", function(e) {
+	    	
+	      chosen_images = [];	
 	      
 	      var files = e.target.files,
 	        filesLength = files.length;
@@ -276,30 +277,31 @@ $(document).ready(function() {
 						deleted:false}),
 					contentType: "application/json",
 					success:function(){
+						if(chosen_images.length > 0){
+							for(var file of chosen_images){	
+								alert(file.name);
+					            var extension = file.name.split(".").pop();
+					            var type = "";
+					            
+					            if (extension === "jpg" || extension === "jpeg" ||
+					                extension === "JPG" || extension === "JPEG") {
+					                type = "image/jpeg";
+					            } else if (extension === "png" || extension === "PNG") {
+					                type = "image/png";
+					            } else {
+					                alert("Invalid file type");
+					                return;
+					            }  
+					            
+					            var request = new XMLHttpRequest();
+					            request.open("POST", "rest/apartments/" + new_id +"/image");
+					            request.setRequestHeader("Content-Type", type);
+					            request.setRequestHeader("Image-Name", name);
+					            request.send(file);
+							}
+						}
 						toastr["success"]("Uspješno ste se dodali apartman");
 						window.location.href = 'host_apartments.html';
-						
-						for(var file of chosen_images){		
-							//var file = document.getElementById("files").files[0];
-				            var extension = file.name.split(".").pop();
-				            var type = "";
-				            
-				            if (extension === "jpg" || extension === "jpeg" ||
-				                extension === "JPG" || extension === "JPEG") {
-				                type = "image/jpeg";
-				            } else if (extension === "png" || extension === "PNG") {
-				                type = "image/png";
-				            } else {
-				                alert("Invalid file type");
-				                return;
-				            }  
-				            
-				            var request = new XMLHttpRequest();
-				            request.open("POST", "rest/apartments/" + new_id +"/image");
-				            request.setRequestHeader("Content-Type", type);
-				            request.setRequestHeader("Image-Name", name);
-				            request.send(file);
-						}
 					},
 					error: function(response){
 						console.log("greska prilikom dodavanja apartmana");

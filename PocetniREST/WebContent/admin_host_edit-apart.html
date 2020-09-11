@@ -181,7 +181,7 @@
       </div>
       <div class="col-75" style="margin-bottom: 8px;">
         <div id="map_edit" style="height: 210px;"></div>
-        <p style="color:red; float:right;" id="ap_error_map" hidden="true"></p>
+        <p style="color:red; float:right;" id="error_map_edit" hidden="true"></p>
       </div>
     </div>
     <div class="row">
@@ -236,7 +236,7 @@
       <div class="col-75" id="div_amenities_edit">
       </div>
     </div>
-    <div class="row">
+    <div class="row" style="margin-top: 15px;">
       <div class="col-25">
         <label for="fname" class="form">Status apartmana</label>
       </div>
@@ -251,6 +251,20 @@
 		  <label class="custom-control-label" for="active">Aktivan</label>
 		</div>
       </div>
+    </div>
+    
+     <div class="row">
+      <div class="col-25">
+        <label for="lname" class="form">Slike apartmana</label>
+      </div>
+      <div class="col-75" style="margin-top: -20px;"> 
+	      <div id="post-form" class="post-form">
+			<label for="files"></label>
+			<input id="files" type="file" name="image" title="" placeholder="Odaberite slike" multiple/>
+			<div class="row" id="div_row"></div>
+			<output id="result"></output>
+		  </div>
+	  </div>
     </div>
  
     <div class="row" id="edit_apart_submit" style="margin-top: 30px; margin-left: 500px;">
