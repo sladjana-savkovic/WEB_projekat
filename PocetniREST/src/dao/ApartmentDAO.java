@@ -396,6 +396,17 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
+	public void backAvailableDates(int apartmentId, String startDate, int numberNight) {
+		Apartment apartment = getApartment(apartmentId);
+		ArrayList<String> dates = apartment.getAvailableDates();
+		for(int i=0; i<numberNight; i++) {
+			dates.add(LocalDate.parse(startDate).plusDays(i).toString());
+		}
+		
+		setAvailable(apartmentId, dates);
+		sortAvailableDates(apartmentId);
+	}
+	
 	public void setAvailable(int id,ArrayList<String> available) {
 		ArrayList<Apartment> apartments = readFromFile();
 		for(Apartment a:apartments) {

@@ -121,7 +121,7 @@ $(document).ready(function() {
 	});
 	
 	var name="";
-	var type="WHOLE_APARTMENT";
+	var type;
 	var room_number="";
 	var guest_number="";
 	var start_date="";
@@ -129,7 +129,7 @@ $(document).ready(function() {
 	var price="";
 	var check_in="";
 	var check_out="";
-	var status="INACTIVE";
+	var status;
 	var amenities=[];
 	
 	var host_name="";
@@ -178,6 +178,8 @@ $(document).ready(function() {
 		check_in = apartment.checkInTime;
 		check_out = apartment.checkOutTime;
 		amenities = apartment.amenities;
+		type = apartment.type;
+		status = apartment.active;
 	
 		
 		$('input[type="checkbox"]').each(function(){
@@ -196,9 +198,12 @@ $(document).ready(function() {
 		$('#name_apart_edit').val(name);
 		
 		if(type == "WHOLE_APARTMENT"){
-			$('#whole_apart_edit').attr('checked', 'checked');
+			$('#whole_apart_edit').prop("checked",true);
+			$('#room_edit').prop("checked",false);
+			
 		}else{
-			$('#room_edit').attr('checked', 'checked');
+			$('#whole_apart_edit').prop("checked",false);
+			$('#room_edit').prop("checked",true);
 		}
 		
 		$('#nmb_rooms_edit').val(room_number);
@@ -215,10 +220,12 @@ $(document).ready(function() {
 		
 		$('#checkout_edit').val(check_out);
 		
-		if(status == "ACTIVE"){
-			$('#active_edit').attr('checked', 'checked');
+		if(status == true){
+			$('#active_edit').prop("checked",true);
+			$('#inactive_edit').prop("checked",false);
 		}else{
-			$('#inactive_edit').attr('checked', 'checked');
+			$('#active_edit').prop("checked",false);
+			$('#inactive_edit').prop("checked",true);
 		}
 		
 			
@@ -246,30 +253,19 @@ $(document).ready(function() {
 		
 		if(address){
 			
-			let split_address = address.split(",");
-			let whole_street_one = split_address[0];
-			let whole_street = whole_street_one.split(" ");
-			let number_one = whole_street[whole_street.length - 1];
-			let street_one="";
-			for(let i =0; i<whole_street.length -1; i++){
-				street_one += whole_street[i] + " ";
-			}
-			
-			let street_number = split_address[0].split(" ");
-		
+
+			let split_address = address.split(", ");
+			let street_number = split_address[0];
 			let zipCode = split_address[1];
+			let city = split_address[split_address.length - 3];
 			let country = split_address[split_address.length - 1];
-			
-			let city1 = split_address[split_address.length - 3];
-			city = city1.substring(1, city1.length);
 			
 			loc.latitude = lat_select;
 			loc.longitude = lng_select;
 			loc.address.country = country;
 			loc.address.city = city;
 			loc.address.zipCode = zipCode;
-			loc.address.street = street_one;
-			loc.address.number = number_one;
+			loc.address.streetAndNumber =street_number;
 			
 		}
 		
@@ -279,15 +275,15 @@ $(document).ready(function() {
 			}
 		}
 		
-		let type = 0;
+		let type_sel = "WHOLE_APARTMENT";
 		
 		if($('#room_edit').is(":checked")){
-			type = 1;
+			type_sel="ROOM";
 		}
 		
-		let status = true;
-		if($('#inactive_edit').is(":checked")){
-			status = false;
+		let status_sel = false;
+		if($('#active_edit').is(":checked")){
+			status_sel = true;
 		}
 		
 		
@@ -385,7 +381,7 @@ $(document).ready(function() {
 			data: JSON.stringify({ 
 				id : id,
 				name: name, 
-				type: type, 
+				type: type_sel, 
 				numberOfRooms: room_number,
 				numberOfGuests: guest_number,
 				location: loc,
@@ -399,7 +395,7 @@ $(document).ready(function() {
 				checkOutTime : check_out,
 				amenities: checked_amenities,
 				reservations: reservations,
-				active: status,
+				active: status_sel,
 				deleted: is_deleted}),
 			contentType: "application/json",
 			success:function(data){

@@ -81,9 +81,17 @@ public class UserDAO {
 		
 		for(Reservation r: reservationDAO.getAllReservations()) {
 			if(apartmentDAO.getApartment(r.getApartmentId()).getHostUsername().equals(hostUsername)) {
-				guestsOfHost.add(getUser(r.getGuestUsername()));
+				if(guestsOfHost.stream().map(User :: getUsername).filter(r.getGuestUsername()::equals).findFirst().isPresent() == false) {
+					guestsOfHost.add(getUser(r.getGuestUsername()));
+				}
+	
 			}
 		}
+		
+		if(guestsOfHost.contains(getUser("darka"))){
+			System.out.println("uslo");
+		}
+		
 		return guestsOfHost;
 	}
 

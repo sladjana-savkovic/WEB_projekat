@@ -248,9 +248,10 @@ function newReservation(apartmentId){
 				let reservation_date = parameters[1].split("=")[1];
 				
 				if(reservation_date.localeCompare("")==0){
-					$(dates[0]).prop("selected",true);
+					document.getElementById('start_date').value=dates[0];
+
 				}else{
-					$(reservation_date).prop("selected",true);
+					document.getElementById('start_date').value=reservation_date;
 				}
 		
 				$('#night_number').val(1);

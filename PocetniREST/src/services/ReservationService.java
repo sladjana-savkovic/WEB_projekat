@@ -53,7 +53,13 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void acceptReservation(int id) {
 		ReservationDAO reservationDAO = getReservationDAO();
-		reservationDAO.acceptReservationByHost(reservationDAO.getReservationById(id));
+		ApartmentDAO apartmentDAO = new ApartmentDAO();	
+		Reservation r = reservationDAO.getReservationById(id);
+		
+		reservationDAO.acceptReservationByHost(r);
+		
+		apartmentDAO.reduceAvailableDates(r.getApartmentId(), LocalDate.parse(r.getStartDate()), r.getNumberOfNights());
+		
 	}
 	
 	@POST
@@ -68,7 +74,14 @@ public class ReservationService {
 	@Path("/refuse_reservation")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void refuseReservation(int id) {
-		ReservationDAO reservationDAO = getReservationDAO();;
+		ReservationDAO reservationDAO = getReservationDAO();
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		Reservation r = reservationDAO.getReservationById(id);
+		
+		if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+			apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
+		}
+		
 		reservationDAO.refuseReservationByHost(reservationDAO.getReservationById(id));
 	}
 	
@@ -77,7 +90,14 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void cancelReservation(int id) {
 		ReservationDAO reservationDAO = getReservationDAO();
-		reservationDAO.cancelReservationByGuest(reservationDAO.getReservationById(id));
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
+		
+		Reservation r = reservationDAO.getReservationById(id);
+		reservationDAO.cancelReservationByGuest(r);
+		
+		if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+		apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
+		}
 	}
 	
 	@GET
@@ -100,7 +120,7 @@ public class ReservationService {
 		if(loggedUser != null) {
 			reservation.setGuestUsername(loggedUser.getUsername());
 			reservationDAO.addNewReservation(reservation);
-			apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
+			//apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
 		}
 		
 	}
