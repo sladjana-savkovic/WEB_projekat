@@ -193,9 +193,8 @@ $(document).ready(function() {
 			let city = "null";
 			
 			if(address){
-				let split_address = address.split(",");
-				let city1 = split_address[split_address.length - 3];
-				city = city1.substring(1, city1.length);
+				let split_address = address.split(", ");
+				city = split_address[split_address.length - 3];
 			}
 						
 			if(end_date && (end_date < start_date)){

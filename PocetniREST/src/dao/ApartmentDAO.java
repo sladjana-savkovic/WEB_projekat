@@ -61,7 +61,6 @@ public class ApartmentDAO {
 		for(Apartment apartment:apartments) {
 			if(apartment.getAmenities().contains(amenitiesId)) {
 				int index = apartment.getAmenities().indexOf(amenitiesId);
-				System.out.println(index);
 				apartment.getAmenities().remove(index);
 			}
 		}
@@ -251,8 +250,9 @@ public class ApartmentDAO {
 		
 		for(Apartment a:apartments) {
 			//System.out.println("------------------------------------------");
+			//System.out.println(a.getLocation().getAddress().getCity() + " vs " + city);
 			if(!city.equals("null") && a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
-				//	System.out.println("dodalo grad " + a.getName());
+					//System.out.println("dodalo grad " + a.getName());
 					filtratedApartments.add(a);
 			}
 			else if(!city.equals("null") && !a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
@@ -288,7 +288,7 @@ public class ApartmentDAO {
 				for(int i=1; i<difference; i++) {
 					LocalDate date = LocalDate.parse(startDate).plusDays(i);
 					if(!a.getAvailableDates().contains(date.toString())) {
-						System.out.println("uklonilo oba datuma "+ a.getName());
+						//System.out.println("uklonilo oba datuma "+ a.getName());
 						if(filtratedApartments.contains(a))
 							filtratedApartments.remove(a);
 						continue;

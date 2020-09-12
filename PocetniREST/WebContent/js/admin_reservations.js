@@ -178,7 +178,7 @@ function addReservation(r) {
 			 	   	+ '<tr><th>Dana:</th><td>'+ r.startDate +'</td></tr>'
 			 	   	+ '<tr><th>Ukupno noćenja:</th><td>'+ r.numberOfNights +'</td></tr>'
 			     	+ '<tr><th>Ukupna cijena:</th><td>'+ r.totalPrice +'</td></tr>'
-			     	+ '<tr><th>Staus rezervacije:</th><td>' + status + '</td></tr>'
+			     	+ '<tr><th>Status rezervacije:</th><td>' + status + '</td></tr>'
 			     	+ '<tr><th>Poruka:</th><td>' + r.message + '</td></tr>'
 			     	+ '<tr><th>Gost:</th><td>' + r.guestUsername + '</td></tr>'
 			 	    + '</table></td><td style="vertical-align: bottom;">'
