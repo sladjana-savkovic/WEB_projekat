@@ -88,9 +88,6 @@ public class UserDAO {
 			}
 		}
 		
-		if(guestsOfHost.contains(getUser("darka"))){
-			System.out.println("uslo");
-		}
 		
 		return guestsOfHost;
 	}

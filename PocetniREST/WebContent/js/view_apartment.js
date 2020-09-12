@@ -161,6 +161,13 @@ function addInfoApartment(apartment,typeOfUser) {
 		if(apartment.type == "WHOLE_APARTMENT"){
 		type="Apartman";
 		}
+		
+		let btn;
+		if(typeOfUser == "null"){
+			btn='<button class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="notLogInUser(this.id)">Rezervišite</button>';
+		}else{
+			btn='<button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="newReservation(this.id)">Rezervišite</button>';
+		}
 	
 	let a = $(' <div class="border_apartments" style="width: 680px; ">'
  		+'<table class="table_apartments">'
@@ -175,7 +182,7 @@ function addInfoApartment(apartment,typeOfUser) {
 		  + '</tr><tr><th>Domaćin:</th><td>' + host +'</td>'
 		  + '</tr></table>'
 		  + '<td style="vertical-align:bottom;">'
-	     + '<div><button data-toggle="modal" data-target="#modalReservationForm" class="btn btn-dark-green reservation" type="submit" id="' + apartment.id +'" onclick="newReservation(this.id)">Rezervišite</button></div>'
+	     + '<div>' + btn +'</div>'
 	    + '</td></tr></table></div>');
 	
 	if(typeOfUser == "ADMIN" || typeOfUser == "HOST"){
@@ -220,15 +227,12 @@ $('#table_amenities').append(amenities);
 };
 
 
+function notLogInUser(apartmentId){
+	toastr["error"]("Registrujte se ili prijavite da biste rezervisali apartman");
+	return;
+};
+
 function newReservation(apartmentId){
-	
-	let typeOfUser = checkLoggedUser();
-	
-	if(typeOfUser == "null"){
-		toastr["error"]("Registrujte se ili prijavite da biste rezervisali apartman");
-		return;
-	}
-	else{
 	
 	 $.ajax({
 			type:"GET", 
@@ -395,7 +399,6 @@ function newReservation(apartmentId){
 		});
 		
 	});
-	}
 };
 
 function editApartment(id){

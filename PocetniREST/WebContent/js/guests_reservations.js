@@ -83,7 +83,7 @@ function addReservation(r) {
 			if(status == "KREIRANA" || status == "PRIHVAĆENA"){
 			btn_type = '<button class="btn btn-danger reservation" data-toggle="modal" data-target="#modalConfirmCancel" id="' + r.id +'" onclick="cancelReservation(this.id)">Odustanite</button>';
 			}
-			if(status == "ZAVŠENA"){
+			if(status == "ZAVŠENA" || status == "ODBIJENA"){
 			btn_type ='<button data-toggle="modal" data-target="#modalFeedbackForm" class="btn btn-brown reservation" type="submit" id="' + r.apartmentId +'" onclick="commentApartment(this.id)">Komentarišite</button>';
 			}
 			

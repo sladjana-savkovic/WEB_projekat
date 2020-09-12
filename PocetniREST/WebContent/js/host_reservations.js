@@ -168,8 +168,17 @@ function addReservation(r) {
 			if(status == "KREIRANA"){
 			btn_type = '<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmAccept" id="' + r.id +'" onclick="acceptReservation(this.id)">Prihvati</button><button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
 			}
-			if(status == "PRIHVAĆENA"){
-			btn_type ='<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmFinish" id="' + r.id +'" onclick="finishReservation(this.id)">Završi</button><button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
+			
+			var today = new Date();
+			today.setHours(0,0,0,0);
+			var startDay = new Date(r.startDate);			
+			
+			if(status == "PRIHVAĆENA" && startDay < today){
+				btn_type ='<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmFinish" id="' + r.id +'" onclick="finishReservation(this.id)">Završi</button>';
+			}
+			
+			if(status == "PRIHVAĆENA" && startDay >= today){
+				btn_type = '<button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
 			}
 			
 			let reservation = $('<div class="border_apartments">' 

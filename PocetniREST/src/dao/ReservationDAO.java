@@ -197,7 +197,7 @@ public class ReservationDAO {
 			
 		for(Reservation r : reservationsFromFile) {
 			if(r.getId() == reservation.getId()) {
-				if(reservation.getStatus().equals(ReservationStatus.ACCEPTED) && LocalDate.parse(reservation.getStartDate()).isBefore(LocalDate.now())) {
+				if(reservation.getStatus().equals(ReservationStatus.ACCEPTED)) {
 					r.setStatus(ReservationStatus.FINISHED);
 					break;
 				}
