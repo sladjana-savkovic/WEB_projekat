@@ -33,11 +33,10 @@ $(document).ready(function() {
 		
 		$.ajax({
 			type:"GET", 
-			url: "rest/holidays/contains",
-			contentType: "application/json",
+			url: "rest/holidays/contains/" + name,
 			success:function(result){
 
-				if(result){
+				if(result == '0'){
 					$.ajax({
 						type:"POST", 
 						url: "rest/holidays/add",
@@ -46,7 +45,7 @@ $(document).ready(function() {
 							toastr["success"]("Uspješno ste dodali novi datum");
 							setTimeout(function(){
 						           location.reload(); 
-						      }, 50); 
+						      }, 500); 
 						},
 						error:function(){
 							toastr["error"]("Došlo je do greške prilikom dodavanja datuma!");
@@ -54,6 +53,7 @@ $(document).ready(function() {
 					});
 				}else{
 					toastr["error"]("Uneseni datum već postoji!");
+					return;
 				}
 			},
 			error:function(){

@@ -279,7 +279,6 @@ $(document).ready(function() {
 					success:function(){
 						if(chosen_images.length > 0){
 							for(var file of chosen_images){	
-								alert(file.name);
 					            var extension = file.name.split(".").pop();
 					            var type = "";
 					            

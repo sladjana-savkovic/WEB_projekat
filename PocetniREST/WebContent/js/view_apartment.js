@@ -167,7 +167,7 @@ function addInfoApartment(apartment,typeOfUser) {
  			+'<tr><td>'
 		 	   +'<table style="height: 220px; margin-left: 40px; width: 350px;">'
 		 	   +'<tr><td colspan="2"><h5>Podaci o objektu</h5></td>'
-		 	 +'</tr><tr><th>Tip smještaja:</th><td>'+ type +'</td>'
+		 	 +'</tr><tr><th width="35%">Tip smještaja:</th><td>'+ type +'</td>'
 		    +'</tr><tr><th>Adresa:</th><td>' + apartment.location.address.streetAndNumber + ", " + apartment.location.address.city + " "+ apartment.location.address.zipCode +'</td>'
 		     + '</tr><tr><th>Cijena po noći:</th><td>' + apartment.pricePerNight + 'RSD</td>'
 		     +	'</tr><tr><th>Broj gostiju:</th><td>'+ apartment.numberOfGuests +'</td>'
@@ -222,10 +222,13 @@ $('#table_amenities').append(amenities);
 
 function newReservation(apartmentId){
 	
-	//var now = new Date();
-	//var day = ("0" + now.getDate()).slice(-2);
-	//var month = ("0" + (now.getMonth() + 1)).slice(-2);
-	//var today = now.getFullYear() + "-" + (month) + "-" + (day);
+	let typeOfUser = checkLoggedUser();
+	
+	if(typeOfUser == "null"){
+		toastr["error"]("Registrujte se ili prijavite da biste rezervisali apartman");
+		return;
+	}
+	else{
 	
 	 $.ajax({
 			type:"GET", 
@@ -392,6 +395,7 @@ function newReservation(apartmentId){
 		});
 		
 	});
+	}
 };
 
 function editApartment(id){
@@ -448,7 +452,7 @@ function deleteApartment(id){
 
 function checkLoggedUser(){
 	
-	let retVal = "";
+	let retVal = "null";
 	
 	$.ajax({
 		type:"GET", 
@@ -457,28 +461,35 @@ function checkLoggedUser(){
 		async: false,
 		success:function(user){
 			if(user == null){
-				$('#reserve_apartment').hide(function() {
+				/*$('#reserve_apartment').hide(function() {
 					alert(jqXHR.responseText);
 					window.history.back();
-				});
+				});*/
+				$('#unlogged_navbar').attr("hidden",false);
+				$('#guest_navbar').attr("hidden",true);
+				$('#host_navbar').attr("hidden",true);
+				$('#admin_navbar').attr("hidden",true);
 			}else{
 				if(user.typeOfUser == "GUEST"){
 					$('#guest_navbar').attr("hidden",false);
 					$('#host_navbar').attr("hidden",true);
 					$('#admin_navbar').attr("hidden",true);
+					$('#unlogged_navbar').attr("hidden",true);
 				}
 				else if(user.typeOfUser == "HOST"){
 					$('#host_navbar').attr("hidden",false);
 					$('#guest_navbar').attr("hidden",true);
 					$('#admin_navbar').attr("hidden",true);
+					$('#unlogged_navbar').attr("hidden",true);
 				}
 				else{
 					$('#admin_navbar').attr("hidden",false);
 					$('#guest_navbar').attr("hidden",true);
 					$('#host_navbar').attr("hidden",true);
+					$('#unlogged_navbar').attr("hidden",true);
 				}
+				retVal = user.typeOfUser;
 			}
-			retVal = user.typeOfUser;
 		},
 		error:function(){
 			console.log('error getting user');

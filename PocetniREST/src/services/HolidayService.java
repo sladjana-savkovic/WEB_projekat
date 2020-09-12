@@ -6,6 +6,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -47,10 +48,13 @@ public class HolidayService {
 	}
 	
 	@GET
-	@Path("/holidays/contains")
-	public boolean checkIfContain(String date) {
+	@Path("/holidays/contains/{date}")
+	public int checkIfContain(@PathParam("date") String date) {
 		HolidayDAO holidayDAO = getHolidayDAO();
-		return holidayDAO.isHoliday(date);
+		if(holidayDAO.isHoliday(date)) {
+			return 1;
+		}
+		return 0;
 	}
 	
 	@POST
