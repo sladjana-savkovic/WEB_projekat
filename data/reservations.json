@@ -1,1 +1,28 @@
-[ ]
+[ {
+  "id" : 1,
+  "apartmentId" : 1,
+  "startDate" : "2020-09-22",
+  "numberOfNights" : 3,
+  "totalPrice" : 7625.0,
+  "message" : "",
+  "guestUsername" : "maraa",
+  "status" : "ACCEPTED"
+}, {
+  "id" : 2,
+  "apartmentId" : 3,
+  "startDate" : "2020-09-13",
+  "numberOfNights" : 2,
+  "totalPrice" : 6650.0,
+  "message" : "",
+  "guestUsername" : "maraa",
+  "status" : "REFUSED"
+}, {
+  "id" : 3,
+  "apartmentId" : 3,
+  "startDate" : "2020-09-18",
+  "numberOfNights" : 3,
+  "totalPrice" : 9450.0,
+  "message" : "",
+  "guestUsername" : "maraa",
+  "status" : "ACCEPTED"
+} ]

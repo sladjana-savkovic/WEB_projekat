@@ -14,7 +14,6 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
 
 import beans.Amenities;
 import dao.AmenitiesDAO;
@@ -36,6 +35,15 @@ public class AmenitiesService {
 			ctx.setAttribute("amenitiesDAO",amenitiesDAO);
 		}
 		return amenitiesDAO;
+	}
+	
+	private ApartmentDAO getApartmentDAO() {
+		ApartmentDAO apartmentDAO = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
+		if(apartmentDAO == null) {
+			apartmentDAO = new ApartmentDAO();
+			ctx.setAttribute("apartmentDAO", apartmentDAO);
+		}
+		return apartmentDAO;
 	}
 	
 	@GET
@@ -73,6 +81,8 @@ public class AmenitiesService {
 	@Path("/amenities/delete")
 	public void deleteAmenities(int id) {
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.deleteAmenitiesFromAllApartments(id);
 		amenitiesDAO.deleteAmenities(id);
 	}
 	

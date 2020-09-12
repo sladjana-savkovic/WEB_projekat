@@ -102,20 +102,15 @@ public class AmenitiesDAO {
 	
 	public ArrayList<Amenities> getApartmentAmenities(int idApartment){
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
-		Apartment apartment = apartmentDAO.getApartment(idApartment);
-		ArrayList<Integer> amenitiesId = apartment.getAmenities();
+		AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
 		
-		ArrayList<Amenities> amenitiesFromFile = readFromFile();
+		Apartment apartment = apartmentDAO.getApartment(idApartment);
 		ArrayList<Amenities> retVal = new ArrayList<Amenities>();
 		
-		for(Amenities a:amenitiesFromFile) {
-			for(int i=0; i<amenitiesId.size(); i++) {
-				if(a.getId() == amenitiesId.get(i)) {
-					retVal.add(a);
-				}
-			}
-				
+		for(int a:apartment.getAmenities()) {
+			retVal.add(amenitiesDAO.getAmenitiesById(a));
 		}
+		
 		return retVal;
 	}
 	

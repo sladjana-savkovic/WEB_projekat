@@ -1,4 +1,6 @@
 $(document).ready(function() {
+	
+	var username = "";
 		
 	$('a#edit_profile').click(function(event){	
 		
@@ -16,6 +18,7 @@ $(document).ready(function() {
 				}
 				$('#psw').val(user.password);
 				$('#psw-repeat').val(user.password);
+				username = user.username;
 			},
 			error:function(){
 				console.log("Došlo je do greške prilikom učitavanja korisnika!");
@@ -87,6 +90,12 @@ $(document).ready(function() {
 				$('#error_surname').attr("hidden",true);
 				$('#error_psw').attr("hidden",true);
 				$('#error_psw-repeat').attr("hidden",true);
+				
+				$('#name').val('');
+				$('#surname').val('');
+				$('#psw').val('');
+				$('#psw-repeat').val('');
+				
 				$("#close_btn").click();
 				toastr["success"]("Uspješno ste izmijenili svoje informacije.");
 			},

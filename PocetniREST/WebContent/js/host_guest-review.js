@@ -10,9 +10,18 @@ $(document).ready(function() {
 		url: "rest/hosts_guests",
 		contentType: "application/json",
 		success:function(hosts_guests){
-			for (let g of hosts_guests) {
-				adduserTr(g);
-			}
+			$('#guests_of_host tbody').empty();
+			if(hosts_guests.length == 0){
+				$('#guests_of_host').attr("hidden",true);
+				$('#no_guests').attr("hidden",false);
+				return;
+			}else{
+				$('#guests_of_host').attr("hidden",false);
+				$('#no_guests').attr("hidden",true);
+				for (let g of hosts_guests) {
+					adduserTr(g);
+				}
+			}	
 		},
 		error:function(){
 			console.log('error getting guests');

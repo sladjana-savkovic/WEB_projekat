@@ -56,6 +56,18 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
+	public void deleteAmenitiesFromAllApartments(int amenitiesId) {
+		ArrayList<Apartment> apartments = readFromFile();
+		for(Apartment apartment:apartments) {
+			if(apartment.getAmenities().contains(amenitiesId)) {
+				int index = apartment.getAmenities().indexOf(amenitiesId);
+				System.out.println(index);
+				apartment.getAmenities().remove(index);
+			}
+		}
+		writeInFile(apartments);
+	}
+	
 	public Apartment getApartment(int id) {
 		ArrayList<Apartment> apartments = readFromFile();
 		for(Apartment apartment:apartments) {
@@ -227,17 +239,6 @@ public class ApartmentDAO {
 				ArrayList<Integer> reservations = a.getReservations();
 				reservations.add(reservation.getId());
 				a.setReservations(reservations);
-			}
-		}
-		writeInFile(apartments);
-	}
-	
-	public void deleteAmenitiesFromAllApartments(int amenitiesId) {
-		ArrayList<Apartment> apartments = readFromFile();
-		for(Apartment a:apartments) {
-			ArrayList<Integer> amenities = a.getAmenities();
-			if(amenities.contains(amenitiesId)) {
-				amenities.remove(amenitiesId);
 			}
 		}
 		writeInFile(apartments);

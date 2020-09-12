@@ -2,6 +2,7 @@ $(document).ready(function() {
 	
 	//checkLoggedUser();
 	
+	$('#name_amen').val("");
 	$('#edit_name').prop("disabled",true);
 	$('#edit_name').val("");
 	
@@ -51,7 +52,7 @@ $(document).ready(function() {
 						toastr["success"]("Uspješno ste dodali novi sadržaj");
 						setTimeout(function(){
 					           location.reload(); 
-					      }, 50); 
+					      }, 500); 
 					},
 					error:function(){
 						toastr["error"]("Došlo je do greške prilikom dodavanja sadržaja!");

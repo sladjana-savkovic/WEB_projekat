@@ -379,9 +379,7 @@ function newReservation(apartmentId){
 					success:function(){
 						$('#modalReservationForm').modal('toggle');
 						toastr["success"]("Uspješno ste rezervisali apartman!");
-						setTimeout(function(){
-					           location.reload(); 
-					      }, 50); 
+						window.location.href = "guest_my-reservations.html";
 					},
 					error:function(){
 						toastr["error"]("Došlo je do greške prilikom rezervisanja apartmana!");

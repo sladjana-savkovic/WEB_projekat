@@ -44,7 +44,7 @@ public class ApartmentService {
 	
 	@Context
 	HttpServletRequest request;
-	
+		
 	private ApartmentDAO getApartmentDAO() {
 		ApartmentDAO apartmentDAO = (ApartmentDAO) ctx.getAttribute("apartmentDAO");
 		if(apartmentDAO == null) {
@@ -68,9 +68,6 @@ public class ApartmentService {
 	public ArrayList<Apartment> getAllApartments(){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		
-		//byte[] decodedBytes = Base64.getDecoder().decode("ZGFjYTE5OTY=");
-		//String lozinka = new String(decodedBytes);
 		
 		//unlogged user or guest
 		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {

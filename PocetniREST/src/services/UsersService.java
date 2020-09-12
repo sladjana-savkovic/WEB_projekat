@@ -53,18 +53,6 @@ public class UsersService {
 		return Response.ok().build();
 	}
 	
-	/*@POST
-	@Path("/host_add")
-	@Consumes(MediaType.APPLICATION_JSON)
-	public Response addHost(Host host) {
-		HostDAO hostDAO = getHostDAO();
-		if(hostDAO.getHost(host.getUsername()) != null)
-			return Response.status(Response.Status.BAD_REQUEST)
-					.entity("Korisničko ime je zauzeto. Odaberite drugo korisničko ime").build();
-		hostDAO.addHost(host);
-		return Response.ok().build();
-	}*/
-	
 	@POST
 	@Path("/edit_profile")
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -200,6 +188,10 @@ public class UsersService {
 		UserDAO userDAO = getUserDAO();
 		
 		if(userDAO.getUser(username) != null) {
+			if(userDAO.getUser(username).isBlocked()) {
+				return Response.status(Response.Status.FORBIDDEN)
+						.entity("Upozorenje! Vaš nalog je blokiran.").build();
+			}
 			if(!userDAO.checkPassword(username, password)) {
 					return Response.status(Response.Status.BAD_REQUEST)
 									.entity("Pogrešna lozinka! Pokušajte ponovo.").build();

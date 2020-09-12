@@ -37,15 +37,7 @@
   "surname" : "Daric",
   "gender" : "FEMALE",
   "typeOfUser" : "HOST",
-  "blocked" : true
-}, {
-  "username" : "55",
-  "password" : "22",
-  "name" : "bhbj",
-  "surname" : "hkjhk",
-  "gender" : "MALE",
-  "typeOfUser" : "HOST",
-  "blocked" : true
+  "blocked" : false
 }, {
   "username" : "gaga998",
   "password" : "gaga",
@@ -117,5 +109,37 @@
   "surname" : "Nikolić",
   "gender" : "FEMALE",
   "typeOfUser" : "GUEST",
+  "blocked" : false
+}, {
+  "username" : "mmarijana",
+  "password" : "mara",
+  "name" : "Marijana",
+  "surname" : "Mateus",
+  "gender" : "FEMALE",
+  "typeOfUser" : "GUEST",
+  "blocked" : false
+}, {
+  "username" : "luka988",
+  "password" : "luka",
+  "name" : "Luka",
+  "surname" : "Kanacki",
+  "gender" : "MALE",
+  "typeOfUser" : "GUEST",
+  "blocked" : false
+}, {
+  "username" : "maraa",
+  "password" : "123",
+  "name" : "Mara",
+  "surname" : "Maric",
+  "gender" : "FEMALE",
+  "typeOfUser" : "GUEST",
+  "blocked" : false
+}, {
+  "username" : "aleksa991",
+  "password" : "milaa",
+  "name" : "Aleksa",
+  "surname" : "Ozegovic",
+  "gender" : "MALE",
+  "typeOfUser" : "HOST",
   "blocked" : false
 } ]

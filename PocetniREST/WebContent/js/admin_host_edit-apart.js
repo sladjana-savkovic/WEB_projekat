@@ -153,8 +153,7 @@ $(document).ready(function() {
 		}
 		
 		loc = apartment.location;
-		
-		
+	
 		var lat = (apartment.location.latitude);
 	    var lng = (apartment.location.longitude);
 	   
@@ -189,11 +188,6 @@ $(document).ready(function() {
 			}
 		  
 		});
-
-		
-		if(apartment.active == true){
-			status = "ACTIVE";
-		}
 		
 		$('#name_apart_edit').val(name);
 		
