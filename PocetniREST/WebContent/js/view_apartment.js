@@ -27,7 +27,7 @@ $(document).ready(function() {
 				$('div#apartment_images').empty();
 				for(let i of images){
 					let image_div = $('<div class="column">'
-						 + '<img height="160px" width="190px" src="http://localhost:8800/PocetniREST/rest/apartments/one_image/' + i +'" onclick="myFunction(this);">'
+						 + '<img height="160px" width="190px" src="http://localhost:' + location.port +'/PocetniREST/rest/apartments/one_image/' + i +'" onclick="myFunction(this);">'
 						 + '</div>');
 					$('div#apartment_images').append(image_div);
 				}
@@ -464,32 +464,64 @@ function checkLoggedUser(){
 		async: false,
 		success:function(user){
 			if(user == null){
-				/*$('#reserve_apartment').hide(function() {
-					alert(jqXHR.responseText);
-					window.history.back();
-				});*/
 				$('#unlogged_navbar').attr("hidden",false);
 				$('#guest_navbar').attr("hidden",true);
 				$('#host_navbar').attr("hidden",true);
 				$('#admin_navbar').attr("hidden",true);
 			}else{
 				if(user.typeOfUser == "GUEST"){
-					$('#guest_navbar').attr("hidden",false);
-					$('#host_navbar').attr("hidden",true);
-					$('#admin_navbar').attr("hidden",true);
-					$('#unlogged_navbar').attr("hidden",true);
+					$.ajax({
+						type: "GET",
+						url: "rest/verification/guest",
+						success: function(){
+							$('#guest_navbar').attr("hidden",false);
+							$('#host_navbar').attr("hidden",true);
+							$('#admin_navbar').attr("hidden",true);
+							$('#unlogged_navbar').attr("hidden",true);
+						},
+						error:  function(jqXHR, textStatus, errorThrown)  {
+							$('#reserve_apartment').hide(function() {
+								alert(jqXHR.responseText);
+								window.history.back();
+							});
+						}
+					});
 				}
 				else if(user.typeOfUser == "HOST"){
-					$('#host_navbar').attr("hidden",false);
-					$('#guest_navbar').attr("hidden",true);
-					$('#admin_navbar').attr("hidden",true);
-					$('#unlogged_navbar').attr("hidden",true);
+					$.ajax({
+						type: "GET",
+						url: "rest/verification/host",
+						success: function(){
+							$('#host_navbar').attr("hidden",false);
+							$('#guest_navbar').attr("hidden",true);
+							$('#admin_navbar').attr("hidden",true);
+							$('#unlogged_navbar').attr("hidden",true);
+						},
+						error:  function(jqXHR, textStatus, errorThrown)  {
+							$('#reserve_apartment').hide(function() {
+								alert(jqXHR.responseText);
+								window.history.back();
+							});
+						}
+					});			
 				}
 				else{
-					$('#admin_navbar').attr("hidden",false);
-					$('#guest_navbar').attr("hidden",true);
-					$('#host_navbar').attr("hidden",true);
-					$('#unlogged_navbar').attr("hidden",true);
+					$.ajax({
+						type: "GET",
+						url: "rest/verification/admin",
+						success: function(){
+							$('#admin_navbar').attr("hidden",false);
+							$('#guest_navbar').attr("hidden",true);
+							$('#host_navbar').attr("hidden",true);
+							$('#unlogged_navbar').attr("hidden",true);
+						},
+						error:  function(jqXHR, textStatus, errorThrown)  {
+							$('#reserve_apartment').hide(function() {
+								alert(jqXHR.responseText);
+								window.history.back();
+							});
+						}
+					});					
 				}
 				retVal = user.typeOfUser;
 			}

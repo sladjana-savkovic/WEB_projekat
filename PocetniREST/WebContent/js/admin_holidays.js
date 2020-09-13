@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$('#name_holiday').val('');
 	
@@ -96,7 +96,7 @@ function checkLoggedUser(){
 		type: "GET",
 		url: "rest/verification/admin",
 		error:  function(jqXHR, textStatus, errorThrown)  {
-			$('#users-review').hide(function() {
+			$('#holidays').hide(function() {
 				alert(jqXHR.responseText);
 				window.history.back();
 			});

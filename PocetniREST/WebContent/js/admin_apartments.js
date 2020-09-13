@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 });
 
@@ -10,7 +10,7 @@ function checkLoggedUser(){
 		type: "GET",
 		url: "rest/verification/admin",
 		error:  function(jqXHR, textStatus, errorThrown)  {
-			$('#admin_amenities').hide(function() {
+			$('#admin_apartments').hide(function() {
 				alert(jqXHR.responseText);
 				window.history.back();
 			});

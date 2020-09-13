@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$.ajax({
 		type:"GET", 
@@ -90,7 +90,7 @@ function addReservation(r) {
 			let reservation = $('<div class="border_apartments">' 
 					   + '<table class="table_apartments">'
 					   + '<tr><td>'
-					   + '<img class="img_apartment" src="http://localhost:8800/PocetniREST/rest/apartments/first_image/' + apartment.id +'" alt="thumbnail"/>'
+					   + '<img class="img_apartment" src="http://localhost:' + location.port +'/PocetniREST/rest/apartments/first_image/' + apartment.id +'" alt="thumbnail"/>'
 		 			 + '</td><td><table style="height: 220px; margin-left: 40px; width: 350px;">'
 			 	    + '<tr><td colspan="2">'
 			 	   	+	'<h5>'+ apartment.name + '</h5></td></tr>'
@@ -205,7 +205,7 @@ function checkLoggedUser(){
 		type: "GET",
 		url: "rest/verification/guest",
 		error:  function(jqXHR, textStatus, errorThrown)  {
-			$('body#guest_res').hide(function() {
+			$('body#my_reservation').hide(function() {
 				alert(jqXHR.responseText);
 				window.history.back();
 			});

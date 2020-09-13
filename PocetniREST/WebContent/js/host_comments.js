@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$.ajax({
 		type:"GET", 

@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -39,7 +38,6 @@ public class CommentDAO {
 			dataDir.mkdir();
 		}
 		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "comments.json";
-		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "comments.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){

@@ -27,7 +27,6 @@ public class ApartmentDAO {
 			dataDir.mkdir();
 		}
 		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "apartments.json";
-		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "apartments.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
@@ -120,24 +119,6 @@ public class ApartmentDAO {
 		}
 		return filteredApartments;
 	}
-	
-	/*public ArrayList<Apartment> filterApartmentsByTypeAndAmenities(ArrayList<TypeOfApartment> types, ArrayList<Integer> amenities){
-		ArrayList<Apartment> apartments = readFromFile();
-		ArrayList<Apartment> filteredApartments = new ArrayList<Apartment>();
-		
-		for(Apartment a:apartments) {
-			if(types.contains(a.getType())) {
-				filteredApartments.add(a);
-			}
-			for(int id:a.getAmenities()) {
-				if(amenities.contains(id) && !filteredApartments.contains(a)) {
-					filteredApartments.add(a);
-				}
-			}
-		}
-		
-		return filteredApartments;
-	}*/
 	
 	public void addImageToApartment(int apartmentId, String image) {
 		ArrayList<Apartment> apartments = readFromFile();
@@ -249,10 +230,7 @@ public class ApartmentDAO {
 		ArrayList<Apartment> filtratedApartments = new ArrayList<Apartment>();
 		
 		for(Apartment a:apartments) {
-			//System.out.println("------------------------------------------");
-			//System.out.println(a.getLocation().getAddress().getCity() + " vs " + city);
 			if(!city.equals("null") && a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
-					//System.out.println("dodalo grad " + a.getName());
 					filtratedApartments.add(a);
 			}
 			else if(!city.equals("null") && !a.getLocation().getAddress().getCity().toLowerCase().equals(city.toLowerCase())) {
@@ -262,22 +240,18 @@ public class ApartmentDAO {
 			}
 					
 			if (!startDate.equals("null") && a.getAvailableDates().contains(startDate) && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo pocetni datum "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if (!startDate.equals("null") && !a.getAvailableDates().contains(startDate)) {
-				//System.out.println("uklonilo pocetni datum "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
 			}
 				
 			if (!endDate.equals("null") && a.getAvailableDates().contains(endDate.toString()) && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo kranji datum "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if(!endDate.equals("null") && !a.getAvailableDates().contains(endDate.toString())) {
-				//System.out.println("uklonilo krajnji datum "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
@@ -288,7 +262,6 @@ public class ApartmentDAO {
 				for(int i=1; i<difference; i++) {
 					LocalDate date = LocalDate.parse(startDate).plusDays(i);
 					if(!a.getAvailableDates().contains(date.toString())) {
-						//System.out.println("uklonilo oba datuma "+ a.getName());
 						if(filtratedApartments.contains(a))
 							filtratedApartments.remove(a);
 						continue;
@@ -297,55 +270,45 @@ public class ApartmentDAO {
 			}
 				
 			if (minPrice != 0 && a.getPricePerNight() >= minPrice && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo min cijenu "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if(minPrice != 0 && a.getPricePerNight() < minPrice) {
-				//System.out.println("uklonilo min cijenu "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
 			}
 				
 			if (maxPrice != 0 && a.getPricePerNight() <= maxPrice && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo maks cijenu "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if(maxPrice != 0 && a.getPricePerNight() > maxPrice) {
-				//System.out.println("uklonilo maks cijenu "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
 			}
 				
 			if (minRooms != 0 && a.getNumberOfRooms() >= minRooms && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo min br soba "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if(minRooms !=0 && a.getNumberOfRooms() < minRooms) {
-				//System.out.println("uklonilo min br soba "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
 			}
 			
 			if (maxRooms != 0 && a.getNumberOfRooms() <= maxRooms && !filtratedApartments.contains(a)) {
-				//System.out.println("dodalo maks br soba "+ a.getName());
 				filtratedApartments.add(a);
 			}
 			else if(maxRooms !=0 && a.getNumberOfRooms() > maxRooms) {
-				//System.out.println("uklonilo maks br soba "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
 			}
 			
 		    if (persons != 0 && a.getNumberOfGuests() == persons && !filtratedApartments.contains(a)) {
-		    	//System.out.println("dodalo osobe "+ a.getName());
 				filtratedApartments.add(a);
 		    }
 			else if(persons !=0 && a.getNumberOfGuests() != persons) {
-				//System.out.println("uklonilo osobe "+ a.getName());
 				if(filtratedApartments.contains(a))
 					filtratedApartments.remove(a);
 				continue;
@@ -364,14 +327,6 @@ public class ApartmentDAO {
 			}
 		}
 		writeInFile(apartments);
-	}
-	
-	private ArrayList<LocalDate> parseStringToDate(ArrayList<String> dates){
-		ArrayList<LocalDate> result = new ArrayList<LocalDate>();
-		for(String date:dates) {
-			result.add(LocalDate.parse(date));
-		}
-		return result;
 	}
 	
 	private ArrayList<String> parseDateToString(ArrayList<LocalDate> dates){

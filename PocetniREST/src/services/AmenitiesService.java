@@ -98,7 +98,6 @@ public class AmenitiesService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Amenities> getApartmentsAmenities(@PathParam("id") int id){
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
-		//treba id odabranog apartmana
 		return amenitiesDAO.getApartmentAmenities(id);
 	}
 	

@@ -1,6 +1,5 @@
 package services;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 
@@ -111,9 +110,7 @@ public class ReservationService {
 	@Path("/reservations/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addReservation(Reservation reservation) {
-		ReservationDAO reservationDAO = getReservationDAO();
-		ApartmentDAO apartmentDAO = new ApartmentDAO();
-	
+		ReservationDAO reservationDAO = getReservationDAO();	
 		
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
 		
@@ -129,8 +126,7 @@ public class ReservationService {
 	@Path("/reservations/total_price/{date}/{numberNight}/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public double getTotalPrice(@PathParam("date") String date, @PathParam("numberNight") int numberNight, @PathParam("id")  int id){
-		ReservationDAO reservationDAO = getReservationDAO();
-	
+		ReservationDAO reservationDAO = getReservationDAO();	
 		return reservationDAO.getTotalPrice(date, numberNight, id);
 	}
 	
@@ -139,7 +135,6 @@ public class ReservationService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public int getMaxNumNight(@PathParam("date") String date, @PathParam("id")  int id){
 		ReservationDAO reservationDAO = getReservationDAO();
-	
 		return reservationDAO.getMaxNumberNight(date, id);
 	}
 	
@@ -175,7 +170,6 @@ public class ReservationService {
 		if(u.equals("null")) {
 			u = null;
 		}
-		
 		
 		if(loggedUser == null) {
 			return new ArrayList<Reservation>();

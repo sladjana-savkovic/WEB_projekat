@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$('#username_search').val('');
 	$('#no_type').prop("selected",true);

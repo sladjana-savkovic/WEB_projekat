@@ -138,7 +138,12 @@ public class ApartmentService {
 	public ArrayList<Apartment> filterApartments(FilterApartmentsDTO filter){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser != null && loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+		
+		if(loggedUser == null) {
+			return new ArrayList<Apartment>();
+		}
+		
+		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 					filter.getStatus(),apartmentDAO.getAllApartments());
 		}
@@ -152,7 +157,12 @@ public class ApartmentService {
 	public void addApartment(Apartment apartment) {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
-		if (loggedUser != null && loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
+		
+		if(loggedUser == null) {
+			return;
+		}
+		
+		if (loggedUser.getTypeOfUser() == TypeOfUser.HOST) {
 			apartment.setHostUsername(loggedUser.getUsername());
 		}
 		apartmentDAO.addApartment(apartment);
@@ -165,9 +175,9 @@ public class ApartmentService {
 	public ArrayList<Apartment> searchApartments(SearchApartments searchApartments){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
+		
 		//unlogged user or guest
 		if(loggedUser == null || loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
-			//System.out.println("gost");
 			return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
 					searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
 					searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),
@@ -175,7 +185,6 @@ public class ApartmentService {
 		}
 		//admin
 		else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
-			//System.out.println("admin");
 			return apartmentDAO.searchApartments(searchApartments.getCity(), searchApartments.getStartDate(), 
 					searchApartments.getEndDate(), searchApartments.getMinPrice(), searchApartments.getMaxPrice(), 
 					searchApartments.getMinRooms(), searchApartments.getMaxRooms(), searchApartments.getPersons(),

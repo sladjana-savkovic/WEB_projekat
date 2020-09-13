@@ -2,7 +2,6 @@ package dao;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -40,7 +39,6 @@ public class AmenitiesDAO {
 			dataDir.mkdir();
 		}
 		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "amenities.json";
-		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "amenities.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){
@@ -138,7 +136,6 @@ public class AmenitiesDAO {
 		for(Amenities a: amenitiesFromFile) {
 			if(a.getId() == id) {
 				a.setDeleted(true);
-				//TODO ovde treba pozvati metodu iz ApartmentDAO koja brise sadrzaj iz apartmana
 				break;
 			}
 		}

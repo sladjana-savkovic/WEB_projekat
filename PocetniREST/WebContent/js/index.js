@@ -3,7 +3,7 @@ $(document).ready(function() {
 	let split_href = window.location.href.split('/');
 	
 	if(split_href[split_href.length - 1] == "guest_new-reservation.html"){
-		//checkLoggedUser();
+		checkLoggedUser();
 	}
 	
 	//map
@@ -253,7 +253,7 @@ function addApartmentTable(a){
 					let apartment = $('<div class="border_apartments">'
 					 				+ '<table class="table_apartments">'
 					 				+ '<tr><td><a id="' + a.id + '" onclick="viewApartment(this.id)">'
-				 					+ '<img class="img_apartment" src="http://localhost:8800/PocetniREST/rest/apartments/first_image/' + a.id +'" alt="thumbnail"/>'
+				 					+ '<img class="img_apartment" src="http://localhost:' + location.port +'/PocetniREST/rest/apartments/first_image/' + a.id +'" alt="thumbnail"/>'
 				 					+ '</a></td>'
 				 					+ '<td><table style="height: 220px; margin-left: 40px; width: 350px;">'
 				 					+ '<tr><td colspan="2"><a id="' + a.id + '" onclick="viewApartment(this.id)">'
@@ -338,7 +338,7 @@ function checkLoggedUser(){
 		type: "GET",
 		url: "rest/verification/guest",
 		error:  function(jqXHR, textStatus, errorThrown)  {
-			$('#admin_amenities').hide(function() {
+			$('#new_reservation').hide(function() {
 				alert(jqXHR.responseText);
 				window.history.back();
 			});

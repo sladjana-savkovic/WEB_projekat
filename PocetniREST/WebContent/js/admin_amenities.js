@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$('#name_amen').val("");
 	$('#edit_name').prop("disabled",true);

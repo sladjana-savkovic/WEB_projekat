@@ -1,5 +1,7 @@
 $(document).ready(function() {
 	
+	checkLoggedUser();
+	
 	var all_amenities = [];
 	
 	$('#start_date').prop("min",new Date().toISOString().split("T")[0]);
@@ -336,4 +338,18 @@ function transliterate(word){
      }
    }
    return answer;
+};
+
+function checkLoggedUser(){
+
+	$.ajax({
+		type: "GET",
+		url: "rest/verification/host",
+		error:  function(jqXHR, textStatus, errorThrown)  {
+			$('#add-apart').hide(function() {
+				alert(jqXHR.responseText);
+				window.history.back();
+			});
+		}
+	});
 };

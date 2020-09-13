@@ -42,8 +42,6 @@ public class ReservationDAO {
 			dataDir.mkdir();
 		}
 		this.path = System.getProperty("catalina.base") + File.separator + "data" + File.separator + "reservations.json";
-		
-		//path = Paths.get("WEB projekat\\PocetniREST\\WebContent\\data").toAbsolutePath().toString() + File.separator + "reservations.json";
 		file = new File(path);
 		 try {
 		   if (file.createNewFile()){

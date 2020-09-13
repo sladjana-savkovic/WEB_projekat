@@ -1,6 +1,6 @@
 $(document).ready(function() {
 	
-	//checkLoggedUser();
+	checkLoggedUser();
 	
 	$('#name_for_search').val('');
 	$('#no_gender').prop("selected",true);

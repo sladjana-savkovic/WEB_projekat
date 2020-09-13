@@ -16,7 +16,7 @@ $(document).ready(function() {
 				$('#div_row').empty();
 				for(let i of images){
 					var column = $('<div class="col-md-3">'
-				           +  '<img  class="imageThumb" style="width:100%; height:90%; margin-top:10px;" src="http://localhost:8800/PocetniREST/rest/apartments/one_image/' + i + '">' 
+				           +  '<img  class="imageThumb" style="width:100%; height:90%; margin-top:10px;" src="http://localhost:' + location.port + '/PocetniREST/rest/apartments/one_image/' + i + '">' 
 				            + '</div>');
 				    $('#div_row').append(column);
 				}
@@ -467,18 +467,42 @@ function checkLoggedUser(){
 		success:function(user){
 			if(user == null){
 				$('#edit_apart').hide(function() {
-					alert(jqXHR.responseText);
+					alert("Prijavite se kao domaćin/administrator da biste pristupili ovoj stranici.");
 					window.history.back();
 					return;
 				});
 			}else{
 				if(user.typeOfUser == "HOST"){
-					$('#host_navbar').attr("hidden",false);
-					$('#admin_navbar').attr("hidden",true);
+					$.ajax({
+						type: "GET",
+						url: "rest/verification/host",
+						success: function(){
+							$('#host_navbar').attr("hidden",false);
+							$('#admin_navbar').attr("hidden",true);
+						},
+						error:  function(jqXHR, textStatus, errorThrown)  {
+							$('#edit_apart').hide(function() {
+								alert(jqXHR.responseText);
+								window.history.back();
+							});
+						}
+					});
 				}
 				else{
-					$('#admin_navbar').attr("hidden",false);
-					$('#host_navbar').attr("hidden",true);
+					$.ajax({
+						type: "GET",
+						url: "rest/verification/admin",
+						success: function(){
+							$('#admin_navbar').attr("hidden",false);
+							$('#host_navbar').attr("hidden",true);
+						},
+						error:  function(jqXHR, textStatus, errorThrown)  {
+							$('#edit_apart').hide(function() {
+								alert(jqXHR.responseText);
+								window.history.back();
+							});
+						}
+					});
 				}
 			}
 			retVal = user.typeOfUser;
