@@ -170,14 +170,14 @@ function addReservation(r) {
 			}
 			
 			var today = new Date();
-			today.setHours(0,0,0,0);
 			var startDay = new Date(r.startDate);			
+			var finallyDay = startDay.setDate(startDay.getDate() + r.numberOfNights);
 			
-			if(status == "PRIHVAĆENA" && startDay < today){
+			if(status == "PRIHVAĆENA" && finallyDay <= today){
 				btn_type ='<button class="btn btn-green edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmFinish" id="' + r.id +'" onclick="finishReservation(this.id)">Završi</button>';
 			}
 			
-			if(status == "PRIHVAĆENA" && startDay >= today){
+			if(status == "PRIHVAĆENA" && finallyDay > today){
 				btn_type = '<button class="btn btn-red edit_delete" type="submit" data-toggle="modal" data-target="#modalConfirmRefuse" id="' + r.id +'" onclick="refuseReservation(this.id)">Odbij</button>';
 			}
 			

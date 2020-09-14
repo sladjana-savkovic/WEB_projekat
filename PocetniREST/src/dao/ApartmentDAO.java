@@ -7,6 +7,8 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import org.apache.tomcat.jni.Local;
+
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -368,9 +370,21 @@ public class ApartmentDAO {
 		for(Apartment a:apartments) {
 			if(a.getId() == id) {
 				a.setAvailableDates(available);
+				break;
 			}
 		}
 		writeInFile(apartments);
+	}
+	
+	public void reduceAvailableDatesOlderThenToday(int id) {
+		ArrayList<String> reduceDates = new ArrayList<String>();
+		ArrayList<String> available = getApartment(id).getAvailableDates();
+		for(String s : available) {
+			if(!LocalDate.parse(s).isBefore(LocalDate.now())) {
+				reduceDates.add(s);
+			}
+		}
+		setAvailable(id, reduceDates);
 	}
 	
 	public void sortAvailableDates(int id) {

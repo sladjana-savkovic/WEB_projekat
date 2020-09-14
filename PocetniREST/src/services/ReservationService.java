@@ -117,7 +117,6 @@ public class ReservationService {
 		if(loggedUser != null) {
 			reservation.setGuestUsername(loggedUser.getUsername());
 			reservationDAO.addNewReservation(reservation);
-			//apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
 		}
 		
 	}
