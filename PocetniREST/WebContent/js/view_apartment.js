@@ -77,6 +77,13 @@ $(document).ready(function() {
 		url: "rest/apartments/" + id,
 		contentType: "application/json",
 		success: function(apartment){	
+			
+			if(apartment==null){
+				alert('Postovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije.');
+				window.history.back();
+				return;
+			}
+			
 			var lat = (apartment.location.latitude);
 		    var lng = (apartment.location.longitude);
 		    var newLatLng = new L.LatLng(lat, lng);
@@ -251,6 +258,12 @@ function newReservation(apartmentId){
 			url: "rest/apartments/" + apartmentId,
 			contentType: "application/json",
 			success: function(apartment){	
+				apartment=null;
+				if(apartment==null){
+					alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
+					window.history.back();
+					return;
+				}
 				
 				$("#name_of_apartment").append('<strong>' + apartment.name + '</strong>')
 				
@@ -290,7 +303,12 @@ function newReservation(apartmentId){
 					url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
 					contentType: "application/json",
 					success: function(total){									
-						
+						total=0;
+						if(total == 0){
+							alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
+							window.history.back();
+							 return;
+						}
 						$("#total_price").val(total);
 						
 					},
@@ -316,6 +334,12 @@ function newReservation(apartmentId){
 			url: "rest/reservations/max_num_night/" + selectDate + "/" + apartmentId,
 			contentType: "application/json",
 			success: function(maxNumber){	
+				
+				if(maxNumber == 0){
+					alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
+					window.history.back();
+					return;
+				}
 			
 			 	$('#night_number').attr('max', maxNumber);
 			 	
@@ -325,6 +349,12 @@ function newReservation(apartmentId){
 					url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
 					contentType: "application/json",
 					success: function(total){									
+						
+						if(total == 0){
+							alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
+							window.history.back();
+							return;
+						}
 						
 						$("#total_price").val(total);
 						
@@ -354,6 +384,11 @@ function newReservation(apartmentId){
 			contentType: "application/json",
 			success: function(total){									
 				
+				if(total == 0){
+					alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
+					window.history.back();
+					return;
+				}
 				$("#total_price").val(total);
 				
 			},

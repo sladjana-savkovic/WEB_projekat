@@ -247,6 +247,9 @@ public class ReservationDAO {
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		HolidayDAO holidayDAO = new HolidayDAO();
 		Apartment apartment = apartmentDAO.getApartment(idApartment);
+		if(apartment == null) {
+			return 0;
+		}
 		double priceForNight = apartment.getPricePerNight();
 		
 		ArrayList<String> holidays = holidayDAO.getAllHolidays().getHolidays();
@@ -285,6 +288,9 @@ public class ReservationDAO {
 	public int getMaxNumberNight(String selectedDateStr, int apartmentId) {
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		Apartment apartment = apartmentDAO.getApartment(apartmentId);
+		if(apartment==null) {
+			return 0;
+		}
 		ArrayList<String> dates = apartment.getAvailableDates();
 		
 		int i = 1;
