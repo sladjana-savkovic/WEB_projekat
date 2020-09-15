@@ -15,24 +15,6 @@ public class AmenitiesDAO {
 	private File file;
 	private String path;
 	
-	/*public static void main(String[] args) {
-	Amenities a1 = new Amenities(0, "Klima", false);
-	Amenities a2 = new Amenities(1, "TV", false);
-	Amenities a3 = new Amenities(2, "Kada", false);
-	
-	ArrayList<Amenities> amenities = new ArrayList<>();
-	amenities.add(a1);
-	amenities.add(a2);
-	amenities.add(a3);
-	
-	AmenitiesDAO aDAO = new AmenitiesDAO();
-	aDAO.writeInFile(amenities);
-	//Amenities a4 = new Amenities(3, "Veš mašina", false);
-	//aDAO.addNewAmenities(a4);
-	//aDAO.deleteAmenities(3);
-	
-	}*/
-	
 	public AmenitiesDAO() {
 		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
 		if(!dataDir.exists()) {
@@ -103,10 +85,15 @@ public class AmenitiesDAO {
 		AmenitiesDAO amenitiesDAO = new AmenitiesDAO();
 		
 		Apartment apartment = apartmentDAO.getApartment(idApartment);
+		
+		if(apartment == null) {
+			return new ArrayList<Amenities>();
+		}
 		ArrayList<Amenities> retVal = new ArrayList<Amenities>();
 		
 		for(int a:apartment.getAmenities()) {
-			retVal.add(amenitiesDAO.getAmenitiesById(a));
+			if(amenitiesDAO.getAmenitiesById(a) != null)
+				retVal.add(amenitiesDAO.getAmenitiesById(a));
 		}
 		
 		return retVal;

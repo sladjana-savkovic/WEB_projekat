@@ -16,22 +16,6 @@ public class CommentDAO {
 	private File file;
 	private String path;
 	
-	/*public static void main(String[] args) {
-	
-		Comment c1 = new Comment(0, "ana967", 0, "Zadovoljna sam!", 5, CommentStatus.CREATED);
-		Comment c2 = new Comment(1, "tara88", 1, "Prosječan apartman", 3, CommentStatus.CREATED);
-		Comment c3 = new Comment(2, "milica967", 1, "Jako loše!!!", 1, CommentStatus.CREATED);
-		
-		ArrayList<Comment> comments = new ArrayList<>();
-		comments.add(c1);
-		comments.add(c2);
-		
-		CommentDAO cDAO = new CommentDAO();
-		//cDAO.addCommentForApartment(c3);
-		//cDAO.writeInFile(comments);
-		//cDAO.addCommentForApartment(c1);
-	}*/
-	
 	public CommentDAO() {
 		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");
 		if(!dataDir.exists()) {

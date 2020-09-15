@@ -90,7 +90,9 @@ public class AmenitiesService {
 	@Path("/amenities/{id}")
 	public String getNameOfAmenities(@PathParam("id") int id) {
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
-		return amenitiesDAO.getAmenitiesById(id).getName();
+		if(amenitiesDAO.getAmenitiesById(id) != null)
+			return amenitiesDAO.getAmenitiesById(id).getName();
+		return "";
 	}
 	
 	@GET

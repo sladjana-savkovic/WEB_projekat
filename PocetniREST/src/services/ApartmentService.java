@@ -252,7 +252,9 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<String> getAllImagesForApartment(@PathParam("id") int apartmentId){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
-		return apartmentDAO.getApartment(apartmentId).getPictures();
+		if(apartmentDAO.getApartment(apartmentId) != null)
+			return apartmentDAO.getApartment(apartmentId).getPictures();
+		return new ArrayList<String>();
 	}
 	
 	@GET
@@ -261,11 +263,16 @@ public class ApartmentService {
 	public FileInputStream getFirstImage(@PathParam("id") int apartmentId) throws JsonParseException, JsonMappingException, IOException {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		
+		if(apartmentDAO.getApartment(apartmentId) == null) {
+			return null;
+		}
+		
 		for(String image:apartmentDAO.getApartment(apartmentId).getPictures()) {
 			FileInputStream fileInputStream = new FileInputStream(
 					new File(System.getProperty("catalina.base") + File.separator + "images" + File.separator + image));
 			return fileInputStream;
 		}
+		
 		return null;
 	}
 	

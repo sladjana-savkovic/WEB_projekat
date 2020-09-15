@@ -73,12 +73,5 @@ public class HolidayDAO {
             e.printStackTrace();
         }
 	}
-	
-	/*public static void main(String[] args) {
-		HolidayDAO holidayDao = new HolidayDAO();
-		ArrayList<String> dates = new ArrayList<String>();
-		dates.add("2020-09-07");
-		
-		holidayDao.writeInFile(new Holiday(dates));
-	}*/
+
 }

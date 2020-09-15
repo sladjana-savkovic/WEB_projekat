@@ -352,6 +352,8 @@ public class ApartmentDAO {
 	
 	public void backAvailableDates(int apartmentId, String startDate, int numberNight) {
 		Apartment apartment = getApartment(apartmentId);
+		if(apartment == null)
+			return;
 		ArrayList<String> dates = apartment.getAvailableDates();
 		for(int i=0; i<numberNight; i++) {
 			dates.add(LocalDate.parse(startDate).plusDays(i).toString());
@@ -459,107 +461,4 @@ public class ApartmentDAO {
         }
 	}
 	
-	/*public static void main(String[] args) {
-		
-		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
-		apartments.add(new Apartment(1,"Sunce",TypeOfApartment.WHOLE_APARTMENT,2,4,
-				new Location(100,200,new Address("Srbija","Beograd",22000,"Pašićeva",50)),
-				"gaga998",1500,
-				LocalTime.of(10, 0).toString(),LocalTime.of(14, 0).toString(),true,false));
-		
-		ApartmentDAO apartmentDAO = new ApartmentDAO();
-		
-		apartmentDAO.writeInFile(apartments);
-		
-		ArrayList<Apartment> apartmentFromFile = apartmentDAO.getAllApartments();
-		
-		for(Apartment a:apartmentFromFile) {
-			System.out.println(a.getName() + " " + a.getHostUsername());
-		}
-		
-		apartmentDAO.addApartment(new Apartment(2,"Mjesec",TypeOfApartment.ROOM,2,4,
-				new Location(100,200,new Address("Srbija","Beograd",22000,"Pašićeva",50)),
-				"gaga998",2000,
-				LocalTime.of(10, 0).toString(),LocalTime.of(14, 0).toString(),false,false));
-		
-		apartmentFromFile = apartmentDAO.getApartmentsByHost("sladja997");
-		System.out.println(apartmentFromFile.size());
-		
-		//apartmentDAO.addCommentToApartment(new Comment(400,"gaga998",1,"opis",5,true));
-		
-		ArrayList<String> initializing = new ArrayList<String>();
-		initializing.add(LocalDate.of(2020, 05, 01).toString());
-		initializing.add(LocalDate.of(2020, 05, 02).toString());
-		initializing.add(LocalDate.of(2020, 05, 03).toString());
-		initializing.add(LocalDate.of(2020, 05, 05).toString());
-		initializing.add(LocalDate.of(2020, 05, 10).toString());
-		initializing.add(LocalDate.of(2020, 05, 12).toString());
-		
-		apartmentDAO.initializeAvailableAndRentingDates(1, initializing);
-		
-		ArrayList<String> available = new ArrayList<String>();
-		available.add(LocalDate.of(2020, 05, 01).toString());
-		available.add(LocalDate.of(2020, 05, 05).toString());
-		available.add(LocalDate.of(2020, 05, 10).toString());
-		available.add(LocalDate.of(2020, 05, 12).toString());
-		
-		apartmentDAO.setAvailable(1, available);
-		
-		ArrayList<LocalDate> newDates = new ArrayList<LocalDate>();
-		newDates.add(LocalDate.of(2020, 05, 01));
-		newDates.add(LocalDate.of(2020, 05, 02));
-		newDates.add(LocalDate.of(2020, 05, 03));
-		newDates.add(LocalDate.of(2020, 05, 04));
-		newDates.add(LocalDate.of(2020, 05, 06));
-		newDates.add(LocalDate.of(2020, 05, 10));
-		newDates.add(LocalDate.of(2020, 05, 11));
-		newDates.add(LocalDate.of(2020, 05, 12));
-		newDates.add(LocalDate.of(2020, 05, 13));
-		
-	    apartmentDAO.changeAvailableAndRentingDates(1, newDates);
-	    
-	    apartmentDAO.reduceAvailableDates(1, LocalDate.of(2020, 05, 10), 4);
-	    
-	    ArrayList<Apartment> filter = apartmentDAO.searchApartments("Beograd", LocalDate.of(2020,05,01), LocalDate.of(2020,05,04), 1000, 1500, 1, 5, 4,
-	    		apartmentDAO.getAllApartments());
-	    
-	    for(Apartment f:filter) {
-	    	System.out.println(f.getId() + " " + f.getName());
-	    }
-	    
-	    System.out.println("-------------------------------------------------------------");
-	    
-	    ArrayList<Apartment> rastuce = apartmentDAO.sortApartmentsAscending();
-	    for(Apartment a:rastuce) {
-	    	System.out.println(a.getId() + " " + a.getPricePerNight());
-	    }
-	    
-	    System.out.println("-------------------------------------------------------------");
-	    
-	    ArrayList<Apartment> opadajuce = apartmentDAO.sortApartmentsDescending();
-	    for(Apartment a:opadajuce) {
-	    	System.out.println(a.getId() + " " + a.getPricePerNight());
-	    }
-	    
-	    System.out.println("-------------------------------------------------------------");
-	    
-	    System.out.println(apartmentDAO.getActiveApartments().get(0).getName());
-	    System.out.println(apartmentDAO.getInactiveApartments().get(0).getName());
-	    
-	    System.out.println("-------------------------------------------------------------");
-	    ArrayList<TypeOfApartment> types = new ArrayList<TypeOfApartment>();
-	    types.add(TypeOfApartment.ROOM);
-	    types.add(TypeOfApartment.WHOLE_APARTMENT);
-	    ArrayList<Integer> amenities = new ArrayList<Integer>();
-	    amenities.add(400);
-	    
-	    ArrayList<Apartment> filteri = apartmentDAO.filterApartmentsByTypeAndAmenities(types, amenities);
-	    
-	    System.out.println(filteri.size());
-	    
-	    System.out.println("-------------------------------------------------------------");
-	   
-		
-	}*/
-
 }
