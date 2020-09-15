@@ -36,7 +36,19 @@ $(document).ready(function() {
 				console.log('error getting images');
 			}
 		});
-	  
+	 
+	/*  $.ajax({
+			type:"POST", 
+			url: "rest/apartments/set_available",
+			data: id,
+			contentType: "application/json",
+			success:function(){
+			
+			},
+			error:function(){
+				console.log('error seting available dates');
+			}
+		});*/
 	 
 	$.ajax({
 		type:"GET", 
@@ -243,10 +255,17 @@ function newReservation(apartmentId){
 				$("#name_of_apartment").append('<strong>' + apartment.name + '</strong>')
 				
 				let dates = apartment.availableDates;
+			
+				let today = new Date();
+				let date = new Date(dates[0]);
 				
 				for(let d of dates){
-					let optionDate = $('<option id="' + d +'">' + d + '</option>');
-					$('#start_date').append(optionDate);
+					var dd = new Date(d);
+					dd.setHours(23,59,59);
+					if(today <= dd){
+						let optionDate = $('<option id="' + d +'">' + d + '</option>');
+						$('#start_date').append(optionDate);
+					}
 				}
 				
 				let url_split = window.location.href.split("?")[1];
@@ -255,7 +274,7 @@ function newReservation(apartmentId){
 				let reservation_date = parameters[1].split("=")[1];
 				
 				if(reservation_date.localeCompare("")==0){
-					document.getElementById('start_date').value=dates[0];
+					$("#start_date").val($("#start_date option:first").val());
 
 				}else{
 					document.getElementById('start_date').value=reservation_date;

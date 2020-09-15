@@ -59,7 +59,6 @@ public class ApartmentService {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Apartment getApartment(@PathParam("id") int id) {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
-		apartmentDAO.reduceAvailableDatesOlderThenToday(id);
 		return apartmentDAO.getApartment(id);
 	}
 	

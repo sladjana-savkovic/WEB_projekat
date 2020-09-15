@@ -376,17 +376,6 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
-	public void reduceAvailableDatesOlderThenToday(int id) {
-		ArrayList<String> reduceDates = new ArrayList<String>();
-		ArrayList<String> available = getApartment(id).getAvailableDates();
-		for(String s : available) {
-			if(!LocalDate.parse(s).isBefore(LocalDate.now())) {
-				reduceDates.add(s);
-			}
-		}
-		setAvailable(id, reduceDates);
-	}
-	
 	public void sortAvailableDates(int id) {
 		ArrayList<Apartment> apartments = readFromFile();
 		ArrayList<LocalDate> dates = new ArrayList<LocalDate>();
