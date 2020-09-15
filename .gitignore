@@ -16,9 +16,7 @@
 *.class
 
 # Package Files
-*.jar
 *.ear
-*.zip
 *.tar.gz
 *.rar
 
