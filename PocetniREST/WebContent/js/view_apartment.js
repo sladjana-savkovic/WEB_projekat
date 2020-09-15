@@ -37,18 +37,6 @@ $(document).ready(function() {
 			}
 		});
 	 
-	/*  $.ajax({
-			type:"POST", 
-			url: "rest/apartments/set_available",
-			data: id,
-			contentType: "application/json",
-			success:function(){
-			
-			},
-			error:function(){
-				console.log('error seting available dates');
-			}
-		});*/
 	 
 	$.ajax({
 		type:"GET", 
@@ -258,7 +246,7 @@ function newReservation(apartmentId){
 			url: "rest/apartments/" + apartmentId,
 			contentType: "application/json",
 			success: function(apartment){	
-				apartment=null;
+				
 				if(apartment==null){
 					alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
 					window.history.back();
@@ -303,7 +291,7 @@ function newReservation(apartmentId){
 					url: "rest/reservations/total_price/" + selectDate + "/" + numberOfNights + "/" + apartmentId,
 					contentType: "application/json",
 					success: function(total){									
-						total=0;
+						
 						if(total == 0){
 							alert('Poštovani, apartman trenutno nije moguće rezervisati. Molimo pokušajte kasnije');
 							window.history.back();

@@ -17,24 +17,6 @@ import beans.ReservationStatus;
 public class ReservationDAO {
 	private String path;
 	private File file;
-	
-	/*public static void main(String[] args) {
-	
-		Reservation r2 = new Reservation(1, 1, "2019-12-01", 2, 3000,
-				"", "milica967", ReservationStatus.ACCEPTED);
-		
-		ReservationDAO reservationDAO = new ReservationDAO();
-			/*ArrayList<Reservation> res = reservationDAO.readFromFile();
-			ArrayList<Reservation> res11 = reservationDAO.filterReservationsByStatus(rsrarus);
-	
-			System.out.println(res11.get(0).getId());
-			System.out.println(res11.get(1).getId());
-		
-		double d = reservationDAO.getTotalPrice("2020-09-10", 4, 1);
-		int z = reservationDAO.getMaxNumberNight("2020-09-12", 1);
-		System.out.println(z);
-		
-	}*/
 		
 	public ReservationDAO() {
 		File dataDir = new File(System.getProperty("catalina.base") + File.separator + "data");

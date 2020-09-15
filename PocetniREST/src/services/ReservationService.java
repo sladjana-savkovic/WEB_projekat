@@ -55,10 +55,10 @@ public class ReservationService {
 		ApartmentDAO apartmentDAO = new ApartmentDAO();	
 		Reservation r = reservationDAO.getReservationById(id);
 		
-		reservationDAO.acceptReservationByHost(r);
-		
-		apartmentDAO.reduceAvailableDates(r.getApartmentId(), LocalDate.parse(r.getStartDate()), r.getNumberOfNights());
-		
+		if(r != null) {
+			reservationDAO.acceptReservationByHost(r);
+			apartmentDAO.reduceAvailableDates(r.getApartmentId(), LocalDate.parse(r.getStartDate()), r.getNumberOfNights());
+		}
 	}
 	
 	@POST
@@ -66,8 +66,13 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void finishReservation(int id) {
 		ReservationDAO reservationDAO = getReservationDAO();
-		reservationDAO.finishReservationByHost(reservationDAO.getReservationById(id));
+		Reservation r = reservationDAO.getReservationById(id);
+		
+		if(r != null) {
+		reservationDAO.finishReservationByHost(r);
+		}
 	}
+		
 	
 	@POST
 	@Path("/refuse_reservation")
@@ -77,11 +82,13 @@ public class ReservationService {
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		Reservation r = reservationDAO.getReservationById(id);
 		
-		if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
-			apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
-		}
+		if(r != null) {
+			if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+				apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
+			}
 		
-		reservationDAO.refuseReservationByHost(reservationDAO.getReservationById(id));
+			reservationDAO.refuseReservationByHost(r);
+		}
 	}
 	
 	@POST
@@ -92,10 +99,13 @@ public class ReservationService {
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		
 		Reservation r = reservationDAO.getReservationById(id);
-		reservationDAO.cancelReservationByGuest(r);
 		
-		if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
-		apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
+		if(r != null) {
+			reservationDAO.cancelReservationByGuest(r);
+		
+			if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+					apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
+			}
 		}
 	}
 	
