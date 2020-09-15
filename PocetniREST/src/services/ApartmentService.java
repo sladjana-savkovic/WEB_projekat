@@ -18,6 +18,7 @@ import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
@@ -223,8 +224,8 @@ public class ApartmentService {
 		apartmentDAO.sortAvailableDates(apartment.getId());
 	}
 	
-	@Path("/apartments/{id}/image")
 	@POST
+	@Path("/apartments/{id}/image")
 	public Response uploadImage(InputStream in, @HeaderParam("Content-Type") String fileType,
 			@HeaderParam("Content-Length") long fileSize, @PathParam("id") int apartmentId) throws IOException {
 		String fileName = UUID.randomUUID().toString();
@@ -246,16 +247,16 @@ public class ApartmentService {
 		return Response.status(Response.Status.OK).entity(in).build();
 	}
 	
-	@Path("/apartments/all_images/{id}")
 	@GET
+	@Path("/apartments/all_images/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<String> getAllImagesForApartment(@PathParam("id") int apartmentId){
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		return apartmentDAO.getApartment(apartmentId).getPictures();
 	}
 	
-	@Path("/apartments/first_image/{id}")
 	@GET
+	@Path("/apartments/first_image/{id}")
 	@Produces({ "image/jpeg" })
 	public FileInputStream getFirstImage(@PathParam("id") int apartmentId) throws JsonParseException, JsonMappingException, IOException {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
@@ -268,15 +269,15 @@ public class ApartmentService {
 		return null;
 	}
 	
-	@Path("/apartments/delete_images")
 	@DELETE
+	@Path("/apartments/delete_images")
 	public void deleteApartmentImages(int apartmentId) {
 		ApartmentDAO apartmentDAO = getApartmentDAO();
 		apartmentDAO.deleteApartmentImages(apartmentId);
 	}
 	
-	@Path("/apartments/one_image/{image}")
 	@GET
+	@Path("/apartments/one_image/{image}")
 	@Produces({ "image/jpeg" })
 	public FileInputStream getOneImage(@PathParam("image") String image) 
 			throws JsonParseException, JsonMappingException, IOException {
@@ -287,6 +288,13 @@ public class ApartmentService {
 		return fileInputStream;
 	}
 
-	
+	@PUT
+	@Path("/apartments/add_comment/{apartment_id}/{comment_id}")
+	public void appCommentToApartment(@PathParam("apartment_id") int apartment_id,
+										@PathParam("comment_id") int comment_id) {
+		
+		ApartmentDAO apartmentDAO = getApartmentDAO();
+		apartmentDAO.addCommentToApartment(apartment_id, comment_id);
+	}
 	
 }

@@ -75,19 +75,22 @@ public class UserDAO {
 	
 	public ArrayList<User> getGuestsByHost(String hostUsername){
 		ArrayList<User> guestsOfHost = new ArrayList<User>();
+		ArrayList<String> guestsByUsername = new ArrayList<String>();
 		
 		ReservationDAO reservationDAO = new ReservationDAO();
 		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		
 		for(Reservation r: reservationDAO.getAllReservations()) {
-			if(apartmentDAO.getApartment(r.getApartmentId()).getHostUsername().equals(hostUsername)) {
-				if(guestsOfHost.stream().map(User :: getUsername).filter(r.getGuestUsername()::equals).findFirst().isPresent() == false) {
-					guestsOfHost.add(getUser(r.getGuestUsername()));
-				}
-	
+			if(apartmentDAO.getApartment(r.getApartmentId()) != null &&
+			   apartmentDAO.getApartment(r.getApartmentId()).getHostUsername().equals(hostUsername) &&
+			   !guestsByUsername.contains(r.getGuestUsername())) {
+					guestsByUsername.add(r.getGuestUsername());
 			}
 		}
 		
+		for(String gu:guestsByUsername) {
+			guestsOfHost.add(getUser(gu));
+		}
 		
 		return guestsOfHost;
 	}

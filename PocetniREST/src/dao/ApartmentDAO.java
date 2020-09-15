@@ -7,14 +7,11 @@ import java.time.Period;
 import java.util.ArrayList;
 import java.util.Collections;
 
-import org.apache.tomcat.jni.Local;
-
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Apartment;
-import beans.Comment;
 import beans.Reservation;
 import beans.TypeOfApartment;
 
@@ -202,13 +199,12 @@ public class ApartmentDAO {
 		writeInFile(apartments);
 	}
 	
-	public void addCommentToApartment(Comment comment) {
+	public void addCommentToApartment(int apartmentId,int commentId) {
 		ArrayList<Apartment> apartments = readFromFile();
 		for(Apartment a:apartments) {
-			if(a.getId() == comment.getApartmentId()) {
-				ArrayList<Integer> comments = a.getComments();
-				comments.add(comment.getId());
-				a.setComments(comments);
+			if(a.getId() == apartmentId) {
+				a.getComments().add(commentId);
+				break;
 			}
 		}
 		writeInFile(apartments);

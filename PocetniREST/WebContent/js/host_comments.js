@@ -30,7 +30,7 @@ function addCommentTable(c) {
 			if(apartment.type == "WHOLE_APARTMENT"){
 				type="Apartman";
 			}
-			
+						
 			let comment = $('<div class="border_comment">' 
 					   + '<table class="table_comment">'
 					   + '<tr><th style="width:350px;">Naziv apartmana:</th><td>' + apartment.name +'</td></tr>'
@@ -53,20 +53,47 @@ function addCommentTable(c) {
 }
 
 function approveComment(id){
+	
 	$.ajax({
-		type:"PUT", 
-		url: "rest/comments/approve",
-		data:id,
-		contentType: "application/json",
-		success:function(){
-			toastr["success"]("Uspješno ste dodali odobrili komentar");
-			setTimeout(function(){
-				location.reload(); }, 500); 
+		type:"GET", 
+		url: "rest/comments/apartment_id/" + id,
+		success:function(apartmentId){
+			if(apartmentId == "0"){
+				console.log("Doslo je do greske");
+				return;
+			}else{
+				$.ajax({
+					type:"PUT", 
+					url: "rest/comments/approve",
+					data:id,
+					contentType: "application/json",
+					success:function(){
+						$.ajax({
+							type:"PUT", 
+							url: "rest/apartments/add_comment/" + apartmentId + "/" + id ,
+							contentType: "application/json",
+							success:function(){
+								toastr["success"]("Uspješno ste odobrili komentar");
+								setTimeout(function(){
+									location.reload(); }, 500); 
+							},
+							error:function(){
+								toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
+							}
+						});
+						
+					},
+					error:function(){
+						console.log("error approving comment");
+					}
+				});
+			}		
 		},
 		error:function(){
-			toastr["error"]("Došlo je do greške. Pokušajte ponovo.");
+			console.log("error approving comment");
 		}
 	});
+	
 }
 
 function disapproveComment(id){

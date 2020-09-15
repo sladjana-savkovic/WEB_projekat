@@ -75,6 +75,16 @@ public class CommentDAO {
 		return commentsFromFile;
 	}
 	
+	public Comment getComment(int id) {
+		ArrayList<Comment> commentsFromFile = readFromFile();
+		for(Comment c:commentsFromFile) {
+			if(c.getId() == id) {
+				return c;
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Comment> getAllCommentsByApartment(int idApartment){
 		ArrayList<Comment> commentsFromFile = readFromFile();
 		ArrayList<Comment> comments = new ArrayList<>();

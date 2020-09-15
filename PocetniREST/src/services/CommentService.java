@@ -94,4 +94,14 @@ public class CommentService {
 			commentDAO.addCommentForApartment(comment);
 		}
 	}
+	
+	@GET
+	@Path("/comments/apartment_id/{id}")
+	public int getAppartmentIdByComment(@PathParam("id") int id){
+		CommentDAO commentDAO = getCommentDAO();
+		if(commentDAO.getComment(id) != null) {
+			return commentDAO.getComment(id).getApartmentId();
+		}
+		return 0;
+	}
 }
