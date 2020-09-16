@@ -57,7 +57,6 @@ public class ReservationService {
 		
 		if(r != null) {
 			reservationDAO.acceptReservationByHost(r);
-			//apartmentDAO.reduceAvailableDates(r.getApartmentId(), LocalDate.parse(r.getStartDate()), r.getNumberOfNights());
 		}
 	}
 	
