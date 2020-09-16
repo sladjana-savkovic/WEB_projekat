@@ -59,6 +59,7 @@ public class CommentService {
 		commentDAO.disapproveComment(id);
 	}
 	
+
 	@GET
 	@Path("/apartments_comments/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
@@ -66,14 +67,17 @@ public class CommentService {
 		CommentDAO commentDAO = getCommentDAO();
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
 		
-		if (loggedUser == null) {
-			return new ArrayList<Comment>();
-		} else if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
+		if(loggedUser == null) {
+			return commentDAO.getApprovedCommentsByApartment(id);
+		}
+		
+		if (loggedUser.getTypeOfUser() == TypeOfUser.ADMIN) {
 			return commentDAO.getAllCommentsByApartment(id);
 		}
 		
 		return commentDAO.getApprovedCommentsByApartment(id);
 	}
+	
 	
 	@GET
 	@Path("/comments/new_id")

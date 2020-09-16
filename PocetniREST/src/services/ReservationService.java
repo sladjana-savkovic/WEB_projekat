@@ -57,7 +57,6 @@ public class ReservationService {
 		
 		if(r != null) {
 			reservationDAO.acceptReservationByHost(r);
-			apartmentDAO.reduceAvailableDates(r.getApartmentId(), LocalDate.parse(r.getStartDate()), r.getNumberOfNights());
 		}
 	}
 	
@@ -83,7 +82,7 @@ public class ReservationService {
 		Reservation r = reservationDAO.getReservationById(id);
 		
 		if(r != null) {
-			if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+			if(r.getStatus().equals(ReservationStatus.ACCEPTED) || r.getStatus().equals(ReservationStatus.CREATED)) {
 				apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
 			}
 		
@@ -120,13 +119,16 @@ public class ReservationService {
 	@Path("/reservations/add")
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void addReservation(Reservation reservation) {
-		ReservationDAO reservationDAO = getReservationDAO();	
+		ReservationDAO reservationDAO = getReservationDAO();
+		ApartmentDAO apartmentDAO = new ApartmentDAO();
 		
 		User loggedUser = (User) request.getSession().getAttribute("loggedUser");
 		
 		if(loggedUser != null) {
 			reservation.setGuestUsername(loggedUser.getUsername());
 			reservationDAO.addNewReservation(reservation);
+			apartmentDAO.reduceAvailableDates(reservation.getApartmentId(), LocalDate.parse(reservation.getStartDate()), reservation.getNumberOfNights());
+			apartmentDAO.addReservationToApartment(reservation);
 		}
 		
 	}

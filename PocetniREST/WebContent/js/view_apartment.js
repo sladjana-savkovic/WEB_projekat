@@ -141,6 +141,9 @@ function addComment(c,typeOfUser) {
 		if(c.status == "DISAPPROVED"){
 			status_tag = '<h6 style="color: red; margin-top: 15px;">Odbijen</h6>';
 		}
+		if(c.status == "CREATED"){
+			status_tag = '<h6 style="color: grey; margin-top: 15px;">Kreiran</h6>';
+		}
 		
 		comment = $('<div class="testimonial">'
 			     +'<h5 class="font-weight-bold dark-grey-text mt-4">' + c.guestUsername +'</h5>'
