@@ -101,7 +101,7 @@ public class ReservationService {
 		if(r != null) {
 			reservationDAO.cancelReservationByGuest(r);
 		
-			if(r.getStatus().equals(ReservationStatus.ACCEPTED)) {
+			if(r.getStatus().equals(ReservationStatus.ACCEPTED) || r.getStatus().equals(ReservationStatus.CREATED)) {
 					apartmentDAO.backAvailableDates(r.getApartmentId(), r.getStartDate(), r.getNumberOfNights());
 			}
 		}
