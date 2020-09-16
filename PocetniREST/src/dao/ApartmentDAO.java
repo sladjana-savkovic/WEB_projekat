@@ -447,12 +447,13 @@ public class ApartmentDAO {
 	
 	private ArrayList<Apartment> readFromFile() {
 		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
-		ObjectMapper mapper = new ObjectMapper();	
+		ObjectMapper mapper = new ObjectMapper();
 		try {
 			apartments = mapper.readValue(Paths.get(path).toFile(), new TypeReference<ArrayList<Apartment>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
+				
 		return apartments;
 	}
 	

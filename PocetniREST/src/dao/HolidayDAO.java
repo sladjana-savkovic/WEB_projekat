@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.OutputStreamWriter;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -28,6 +29,7 @@ public class HolidayDAO {
 		try { 
 		   if (file.createNewFile()){
 		    Holiday holiday = new Holiday();
+		    holiday.setHolidays(new ArrayList<String>());
 		    writeInFile(holiday);
 		   }
 		  } catch (IOException e) {

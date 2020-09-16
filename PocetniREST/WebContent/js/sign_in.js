@@ -1,4 +1,7 @@
 $(document).ready(function() {
+	
+	 $('#signin_username').val('');
+	 $('#signin_password').val('');
 
 	$('form#sign_in').submit(function(event) {
 		event.preventDefault();
@@ -32,6 +35,10 @@ $(document).ready(function() {
 				toastr["success"]("Uspješno ste se prijavili");
 				$('#error_uname').attr("hidden",true);
 				$('#error_pass').attr("hidden",true);
+				
+			    $('#signin_username').val('');
+			    $('#signin_password').val('');
+				 
 				$("#signin_close").click();
 				
 				setTimeout(function() {
@@ -41,6 +48,8 @@ $(document).ready(function() {
 			},
 			error: function(jqXHR, textStatus, errorThrown){
 				toastr["error"](jqXHR.responseText);
+				$('#signin_username').val('');
+			    $('#signin_password').val('');
 			}
 		});
 		

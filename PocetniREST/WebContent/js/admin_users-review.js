@@ -110,6 +110,13 @@ $(document).ready(function() {
 				$('#error_psw1').attr("hidden",true);
 				$('#error_psw-repeat1').attr("hidden",true);
 				
+				$('#host_name').val('');
+				$('#host_surname').val('');
+				$('#host_username').val('');
+				$('#host_psw').val('');
+				$('#host_psw-repeat').val('');
+				$('#host_male').prop("checked",true);
+				
 				toastr["success"]("Uspješno ste dodali domaćina");
 				$("#close_btn").click();
 				
