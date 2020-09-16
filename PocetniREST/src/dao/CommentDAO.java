@@ -1,7 +1,12 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -37,7 +42,7 @@ public class CommentDAO {
 		ArrayList<Comment> comments = new ArrayList<Comment>();
 		ObjectMapper mapper = new ObjectMapper();	
 		try {
-			comments = mapper.readValue(file, new TypeReference<ArrayList<Comment>>(){});
+			comments = mapper.readValue(Paths.get(path).toFile(), new TypeReference<ArrayList<Comment>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -47,7 +52,10 @@ public class CommentDAO {
 	private void writeInFile(ArrayList<Comment> comments) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, comments);
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(comments);
+            BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
+		    writer.write(json);  
+		    writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

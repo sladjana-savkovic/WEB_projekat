@@ -1,11 +1,15 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Holiday;
 
@@ -57,7 +61,7 @@ public class HolidayDAO {
 		Holiday holidays = new Holiday();
 		ObjectMapper mapper = new ObjectMapper();	
 		try {
-			holidays = mapper.readValue(file, new TypeReference<Holiday>(){});
+			holidays = mapper.readValue(Paths.get(path).toFile(), new TypeReference<Holiday>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -66,9 +70,11 @@ public class HolidayDAO {
 	
 	private void writeInFile(Holiday holiday) {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		try {
-			mapper.writerWithDefaultPrettyPrinter().writeValue(file, holiday);
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(holiday);
+			BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
+		    writer.write(json);  
+		    writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

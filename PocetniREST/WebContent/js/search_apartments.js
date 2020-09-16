@@ -386,8 +386,8 @@ function deleteApartment(id){
 					$.ajax({
 						type: "DELETE",
 						url: "rest/apartments/delete",
-						contentType: "application/json",
 						data:id,
+						contentType: "application/json",
 						success: function(){
 							$('a#no_delete').click();
 							toastr["success"]("Uspješno ste obrisali apartman");

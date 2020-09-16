@@ -1,7 +1,12 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -39,7 +44,7 @@ public class ReservationDAO {
 		ArrayList<Reservation> reservations = new ArrayList<Reservation>();
 		ObjectMapper mapper = new ObjectMapper();	
 		try {
-			reservations = mapper.readValue(file, new TypeReference<ArrayList<Reservation>>(){});
+			reservations = mapper.readValue(Paths.get(path).toFile(), new TypeReference<ArrayList<Reservation>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -49,7 +54,10 @@ public class ReservationDAO {
 	private void writeInFile(ArrayList<Reservation> reservations) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-            mapper.writerWithDefaultPrettyPrinter().writeValue(file, reservations);
+            String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(reservations);
+            BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
+		    writer.write(json);  
+		    writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

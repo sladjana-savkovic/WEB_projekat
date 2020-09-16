@@ -1,7 +1,12 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.time.LocalDate;
 import java.time.Period;
 import java.util.ArrayList;
@@ -9,7 +14,6 @@ import java.util.Collections;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.SerializationFeature;
 
 import beans.Apartment;
 import beans.Reservation;
@@ -445,17 +449,20 @@ public class ApartmentDAO {
 		ArrayList<Apartment> apartments = new ArrayList<Apartment>();
 		ObjectMapper mapper = new ObjectMapper();	
 		try {
-			apartments = mapper.readValue(file, new TypeReference<ArrayList<Apartment>>(){});
+			apartments = mapper.readValue(Paths.get(path).toFile(), new TypeReference<ArrayList<Apartment>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
 		return apartments;
 	}
+	
 	private void writeInFile(ArrayList<Apartment> apartments) {
 		ObjectMapper mapper = new ObjectMapper();
-		mapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 		try {
-			mapper.writerWithDefaultPrettyPrinter().writeValue(file, apartments);
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(apartments);
+			BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
+		    writer.write(json);  
+		    writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

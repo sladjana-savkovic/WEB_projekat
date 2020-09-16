@@ -1,7 +1,12 @@
 package dao;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 
 import com.fasterxml.jackson.core.type.TypeReference;
@@ -188,7 +193,7 @@ public class UserDAO {
 		ArrayList<User> users = new ArrayList<User>();
 		ObjectMapper mapper = new ObjectMapper();	
 		try {
-			users = mapper.readValue(file, new TypeReference<ArrayList<User>>(){});
+			users = mapper.readValue(Paths.get(path).toFile(), new TypeReference<ArrayList<User>>(){});
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -197,7 +202,10 @@ public class UserDAO {
 	private void writeInFile(ArrayList<User> users) {
 		ObjectMapper mapper = new ObjectMapper();
 		try {
-			mapper.writerWithDefaultPrettyPrinter().writeValue(file, users);
+			String json = mapper.writerWithDefaultPrettyPrinter().writeValueAsString(users);
+			BufferedWriter writer = new BufferedWriter (new OutputStreamWriter(new FileOutputStream(path), StandardCharsets.UTF_8));
+		    writer.write(json);  
+		    writer.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
