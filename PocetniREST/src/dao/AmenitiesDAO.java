@@ -78,6 +78,16 @@ public class AmenitiesDAO {
 		return null;
 	}
 	
+	public String getAmenitiesByName(String name) {
+		ArrayList<Amenities> amenitiesFromFile = readFromFile();
+		for(Amenities a : amenitiesFromFile) {
+			if(a.getName().equals(name) && !a.isDeleted()) {
+				return a.getName();
+			}
+		}
+		return null;
+	}
+	
 	public ArrayList<Amenities> getAllAmenities(){
 		ArrayList<Amenities> amenitiesFromFile = readFromFile();
 		ArrayList<Amenities> retVal = new ArrayList<Amenities>();
