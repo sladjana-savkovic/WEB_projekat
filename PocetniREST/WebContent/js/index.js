@@ -1,9 +1,34 @@
 $(document).ready(function() {
 	
+	$('input[type="checkbox"]').each(function(){
+	  	$(this).prop('checked', false);
+	});
+	
 	let split_href = window.location.href.split('/');
 	
 	if(split_href[split_href.length - 1] == "guest_new-reservation.html"){
 		checkLoggedUser();
+		
+		//form - getting amenities filters
+		$.ajax({
+			type:"GET", 
+			url: "rest/amenities",
+			contentType: "application/json",
+			success:function(amenities){
+				for (let a of amenities) {
+					let a_div = $('<div class="form-check">'
+								+ '<input type="checkbox" class="form-check-input" id="' + a.id + '">'
+								+ '<label class="form-check-label" >' + a.name + '</label></div>');
+					
+					$('div#filter_amenities').append(a_div);
+				}
+				
+			},
+			error:function(){
+				console.log('error getting amenities');
+			}
+		});
+		
 	}
 	
 	//map
@@ -62,6 +87,58 @@ $(document).ready(function() {
 		error:function(){
 			console.log('error getting apartments');
 		}
+	});
+	
+	$('#filter').click(function() {
+		
+		var filter_types = [];
+		var filter_amenities = [];
+		var filter_status = [];
+		
+		if($('#apartmentFilter').is(":checked")){
+			filter_types.push("WHOLE_APARTMENT");
+		}
+		if($('#roomFilter').is(":checked")){
+			filter_types.push("ROOM");
+		}
+		
+		filter_status.push("active");
+		
+		$.ajax({
+			type:"GET", 
+			url: "rest/amenities",
+			contentType: "application/json",
+			success:function(amenities){
+				for (let am of amenities) {
+					if($('input#' + am.id).is(":checked")){
+						filter_amenities.push(am.id);
+					}
+				}
+				$.ajax({
+					type:"POST", 
+					url: "rest/apartments/filter",
+					contentType: "application/json",
+					data:JSON.stringify({ 
+						types: filter_types, 
+						amenities: filter_amenities, 
+						status: filter_status}),
+					success:function(apartments){
+						$('div#apartments').empty();
+						for (let a of apartments) {
+							addApartmentTable(a);
+						}
+						
+					},
+					error:function(){
+						console.log('error getting apartments');
+					}
+				});
+			},
+			error:function(){
+				console.log('error getting amenities');
+			}
+		});
+
 	});
 	  
 	  $('#first_lowest').click(function() {

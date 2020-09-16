@@ -52,7 +52,6 @@ public class ReservationService {
 	@Consumes(MediaType.APPLICATION_JSON)
 	public void acceptReservation(int id) {
 		ReservationDAO reservationDAO = getReservationDAO();
-		ApartmentDAO apartmentDAO = new ApartmentDAO();	
 		Reservation r = reservationDAO.getReservationById(id);
 		
 		if(r != null) {

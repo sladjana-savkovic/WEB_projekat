@@ -148,6 +148,12 @@ public class ApartmentService {
 			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 					filter.getStatus(),apartmentDAO.getAllApartments());
 		}
+		
+		if (loggedUser.getTypeOfUser() == TypeOfUser.GUEST) {
+			return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
+					filter.getStatus(),apartmentDAO.getAllApartments());
+		}
+		
 		return apartmentDAO.filterApartmentsByTypeAmenitiesAndStatus(filter.getTypes(), filter.getAmenities(), 
 				filter.getStatus(),apartmentDAO.getApartmentsByHost(loggedUser.getUsername()));
 	}
