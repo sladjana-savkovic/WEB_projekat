@@ -26,7 +26,7 @@ $(document).ready(function() {
 		
 		if(!name){
 		    $('#name_holiday').css("border","1px solid red");
-		    toastr["error"]("Unesite naziv datum!");
+		    toastr["error"]("Unesite datum!");
 			return;
 		}
 		

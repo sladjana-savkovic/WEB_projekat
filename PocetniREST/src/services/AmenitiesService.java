@@ -14,6 +14,8 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import beans.Amenities;
 import dao.AmenitiesDAO;
@@ -57,17 +59,25 @@ public class AmenitiesService {
 	@POST
 	@Path("/amenities/add")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void addAmenities(Amenities amenities) {
+	public Response addAmenities(Amenities amenities) {
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();	
+		if(amenitiesDAO.getAmenitiesByName(amenities.getName()) != null) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
 		amenitiesDAO.addNewAmenities(amenities);
+		return Response.ok().build();
 	}
 	
 	@PUT
 	@Path("/amenities/edit")
 	@Consumes(MediaType.APPLICATION_JSON)
-	public void editAmenities(Amenities amenities) {
+	public Response editAmenities(Amenities amenities) {
 		AmenitiesDAO amenitiesDAO = getAmenitiesDAO();
+		if(amenitiesDAO.getAmenitiesByName(amenities.getName()) != null) {
+			return Response.status(Status.BAD_REQUEST).build();
+		}
 		amenitiesDAO.editNameOfAmenities(amenities);
+		return Response.ok().build();
 	}
 	
 	@GET

@@ -280,8 +280,8 @@ $(document).ready(function() {
 					contentType: "application/json",
 					success:function(){
 						if(chosen_images.length > 0){
-							
-							for(var file of chosen_images){								
+							for(var file of chosen_images){	
+								
 					            var extension = file.name.split(".").pop();
 					            var type = "";
 					            
@@ -300,6 +300,7 @@ $(document).ready(function() {
 					            request.setRequestHeader("Content-Type", type);
 					            request.setRequestHeader("Image-Name", name);
 					            request.send(file);
+								
 							}
 						}
 						toastr["success"]("Uspješno ste se dodali apartman");

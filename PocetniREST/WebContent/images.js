@@ -12,6 +12,8 @@ function myFunction(imgs) {
   expandImg.style.width = "800px";
   expandImg.style.height = "500px";
   
+  $('#close_image').attr("hidden",false);
+  
 }
 
 $(document).ready(function() {

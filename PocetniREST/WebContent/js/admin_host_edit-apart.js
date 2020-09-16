@@ -403,25 +403,26 @@ $(document).ready(function() {
 						data:id,
 						success: function(){
 							if(chosen_images.length > 0){
-								for(var file of chosen_images){		
-						            var extension = file.name.split(".").pop();
-						            var type = "";
-						            
-						            if (extension === "jpg" || extension === "jpeg" ||
-						                extension === "JPG" || extension === "JPEG") {
-						                type = "image/jpeg";
-						            } else if (extension === "png" || extension === "PNG") {
-						                type = "image/png";
-						            } else {
-						                alert("Invalid file type");
-						                return;
-						            }  
-						            
-						            var request = new XMLHttpRequest();
-						            request.open("POST", "rest/apartments/" + id +"/image");
-						            request.setRequestHeader("Content-Type", type);
-						            request.setRequestHeader("Image-Name", name);
-						            request.send(file);
+								
+								for(var file of chosen_images){	
+									
+									var extension = file.name.split(".").pop();
+								    var type = "";
+								    
+								    if (extension === "jpg" || extension === "jpeg" ||
+								        extension === "JPG" || extension === "JPEG") {
+								        type = "image/jpeg";
+								    } else if (extension === "png" || extension === "PNG") {
+								        type = "image/png";
+								    } else {
+								        alert("Invalid file type");
+								        return;
+								    }  
+								    var request = new XMLHttpRequest();
+								    request.open("POST", "rest/apartments/" + id +"/image");
+								    request.setRequestHeader("Content-Type", type);
+								    request.setRequestHeader("Image-Name", name);
+								    request.send(file);
 								}
 							}
 							
@@ -438,8 +439,6 @@ $(document).ready(function() {
 					});
 				}
 				else{
-					
-					alert("nije mijenjalo slike");
 					
 					toastr["success"]("Uspješno ste izmijenili apartman.");
 					if(userType == "HOST"){

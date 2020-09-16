@@ -1,6 +1,7 @@
 $(document).ready(function() {
 	
 	checkLoggedUser();
+	$('#guest_name').val(''); 
 	
 	$('input[type="checkbox"]').each(function(){
 	  	$(this).prop('checked', false);

@@ -55,7 +55,7 @@ $(document).ready(function() {
 					      }, 500); 
 					},
 					error:function(){
-						toastr["error"]("Došlo je do greške prilikom dodavanja sadržaja!");
+						toastr["error"]("Već postoji sadržaj sa unesenim nazivom!");
 					}
 				});
 			},
@@ -91,7 +91,7 @@ function deleteAmenities(id){
 		      }, 50); 
 		},
 		error:function(){
-			toastr["error"]("Došlo je do greške prilikom brisanja sadržaja!");
+			console.log('');
 		}
 	})
 }
@@ -109,7 +109,7 @@ function editAmenities(id){
 			$('#edit_name').attr("disabled",false);
 		},
 		error:function(){
-			toastr["error"]("Došlo je do greške prilikom učitavanja sadržaja!");
+			console.log("Došlo je do greške prilikom učitavanja sadržaja!");
 		}
 	});
 	
@@ -138,7 +138,7 @@ function editAmenities(id){
 					location.reload(); }, 1000); 
 			},
 			error:function(){
-				toastr["error"]("Došlo je do greške prilikom učitavanja sadržaja!");
+				toastr["error"]("Već postoji sadržaj sa unesenim nazivom!");
 			}
 		});
 		
