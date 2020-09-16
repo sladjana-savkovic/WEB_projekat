@@ -1,5 +1,6 @@
 $(document).ready(function() {
 	
+	var old_password = "";
 	var username = "";
 		
 	$('a#edit_profile').click(function(event){	
@@ -16,9 +17,8 @@ $(document).ready(function() {
 				}else{
 					$('#female').attr('checked', 'checked');
 				}
-				$('#psw').val(user.password);
-				$('#psw-repeat').val(user.password);
 				username = user.username;
+				old_password = user.password;
 			},
 			error:function(){
 				console.log("Došlo je do greške prilikom učitavanja korisnika!");
@@ -32,6 +32,7 @@ $(document).ready(function() {
 			
 		let name = $('#name').val();
 		let surname = $('#surname').val();
+		let old_pass = $('#old_psw').val();
 		let password = $('#psw').val();
 		let password_repeat = $('#psw-repeat').val();
 		let gender = 0;
@@ -53,8 +54,15 @@ $(document).ready(function() {
 			return;
 		}
 		
+		if(old_pass != old_password){
+			$('#error_surname').attr("hidden",true);
+			$('#error_old_psw').text('Pogrešna stara lozinka');
+			$("#error_old_psw").attr("hidden",false);
+			return;
+		}
+		
 		if(!password){ 		
-			$('#error_username').attr("hidden",true);
+			$('#error_old_psw').attr("hidden",true);
 			$('#error_psw').text('Unos lozinke je obavezan');
 			$("#error_psw").attr("hidden",false);
 			return;
@@ -73,6 +81,8 @@ $(document).ready(function() {
 			$("#error_psw-repeat").attr("hidden",false);
 			return;
 		}
+		
+		$("#error_psw-repeat").attr("hidden",true);
 	
 		$.ajax({
 			type: "POST",
@@ -88,11 +98,13 @@ $(document).ready(function() {
 			success:function(data){
 				$('#error_name').attr("hidden",true);
 				$('#error_surname').attr("hidden",true);
+				$('#error_old_psw').attr("hidden",true);
 				$('#error_psw').attr("hidden",true);
 				$('#error_psw-repeat').attr("hidden",true);
 				
 				$('#name').val('');
 				$('#surname').val('');
+				$('#old_psw').val('');
 				$('#psw').val('');
 				$('#psw-repeat').val('');
 				

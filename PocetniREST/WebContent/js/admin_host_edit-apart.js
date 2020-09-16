@@ -438,6 +438,9 @@ $(document).ready(function() {
 					});
 				}
 				else{
+					
+					alert("nije mijenjalo slike");
+					
 					toastr["success"]("Uspješno ste izmijenili apartman.");
 					if(userType == "HOST"){
 						window.location.href = "host_apartments.html";

@@ -232,7 +232,9 @@ public class UsersService {
 		if(loggedUser == null) {
 			return Response.status(Response.Status.BAD_REQUEST).build();
 		}
-		return Response.ok().entity(loggedUser).build();
+		UserDAO userDAO = getUserDAO();
+		User retVal = userDAO.getUser(loggedUser.getUsername());
+		return Response.ok().entity(retVal).build();
 	}
 	
 }
