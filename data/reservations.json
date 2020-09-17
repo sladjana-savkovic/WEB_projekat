@@ -1,28 +1,46 @@
 [ {
   "id" : 1,
   "apartmentId" : 1,
-  "startDate" : "2020-09-22",
+  "startDate" : "2020-09-17",
   "numberOfNights" : 3,
-  "totalPrice" : 7625.0,
-  "message" : "",
-  "guestUsername" : "maraa",
-  "status" : "ACCEPTED"
+  "totalPrice" : 2800.0,
+  "message" : "Vidimo se uskoro",
+  "guestUsername" : "pera123",
+  "status" : "REFUSED"
 }, {
   "id" : 2,
   "apartmentId" : 3,
   "startDate" : "2020-09-13",
-  "numberOfNights" : 2,
-  "totalPrice" : 6650.0,
-  "message" : "",
-  "guestUsername" : "maraa",
-  "status" : "REFUSED"
+  "numberOfNights" : 3,
+  "totalPrice" : 4350.0,
+  "message" : "Dolazim sa kućnim ljubimcem",
+  "guestUsername" : "mika123",
+  "status" : "FINISHED"
 }, {
   "id" : 3,
-  "apartmentId" : 3,
-  "startDate" : "2020-09-18",
+  "apartmentId" : 1,
+  "startDate" : "2020-09-23",
   "numberOfNights" : 3,
-  "totalPrice" : 9450.0,
+  "totalPrice" : 2900.0,
   "message" : "",
-  "guestUsername" : "maraa",
-  "status" : "ACCEPTED"
+  "guestUsername" : "pera123",
+  "status" : "REFUSED"
+}, {
+  "id" : 4,
+  "apartmentId" : 2,
+  "startDate" : "2020-09-26",
+  "numberOfNights" : 3,
+  "totalPrice" : 3640.0,
+  "message" : "",
+  "guestUsername" : "pera123",
+  "status" : "CREATED"
+}, {
+  "id" : 5,
+  "apartmentId" : 3,
+  "startDate" : "2020-10-10",
+  "numberOfNights" : 3,
+  "totalPrice" : 4200.0,
+  "message" : "",
+  "guestUsername" : "pera123",
+  "status" : "REFUSED"
 } ]

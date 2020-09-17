@@ -280,11 +280,10 @@ $(document).ready(function() {
 					contentType: "application/json",
 					success:function(){
 						if(chosen_images.length > 0){
-							for(var file of chosen_images){	
-								
+							for(var file of chosen_images){		
 					            var extension = file.name.split(".").pop();
 					            var type = "";
-					            
+
 					            if (extension === "jpg" || extension === "jpeg" ||
 					                extension === "JPG" || extension === "JPEG") {
 					                type = "image/jpeg";
@@ -294,11 +293,11 @@ $(document).ready(function() {
 					                alert("Invalid file type");
 					                return;
 					            }  
-					            
+
 					            var request = new XMLHttpRequest();
-					            request.open("POST", "rest/apartments/" + new_id +"/image");
+					            request.open("POST", "rest/apartments/" + id +"/image");
 					            request.setRequestHeader("Content-Type", type);
-					            request.setRequestHeader("Image-Name", name);
+					            request.setRequestHeader("Content-Length", file.length);
 					            request.send(file);
 								
 							}

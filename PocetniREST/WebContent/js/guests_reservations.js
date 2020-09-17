@@ -182,6 +182,7 @@ function commentApartment(apartmentId){
 					contentType: "application/json",
 					success:function(){
 						toastr["success"]("Uspješno ste dodali komentar");
+						$('#text_comment').val('');
 						setTimeout(function(){
 					           location.reload(); 
 					      }, 50); 

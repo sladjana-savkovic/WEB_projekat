@@ -1,145 +1,57 @@
 [ {
-  "username" : "marko88",
-  "password" : "lozinka",
+  "username" : "marko91",
+  "password" : "sifra",
   "name" : "Marko",
   "surname" : "Marković",
   "gender" : "MALE",
   "typeOfUser" : "ADMIN",
   "blocked" : false
 }, {
-  "username" : "zarko65",
-  "password" : "sifra789",
-  "name" : "Žarko",
-  "surname" : "Žarkić",
+  "username" : "djole92",
+  "password" : "sifra",
+  "name" : "Đorđe",
+  "surname" : "Đorđević",
   "gender" : "MALE",
   "typeOfUser" : "ADMIN",
   "blocked" : false
 }, {
-  "username" : "zaregoci",
+  "username" : "pera123",
   "password" : "123",
-  "name" : "Zare",
-  "surname" : "Zaric",
-  "gender" : "MALE",
-  "typeOfUser" : "HOST",
-  "blocked" : true
-}, {
-  "username" : "mare",
-  "password" : "111",
-  "name" : "Mare",
-  "surname" : "Maric",
-  "gender" : "MALE",
-  "typeOfUser" : "HOST",
-  "blocked" : true
-}, {
-  "username" : "dara",
-  "password" : "111",
-  "name" : "Dara",
-  "surname" : "Daric",
-  "gender" : "FEMALE",
-  "typeOfUser" : "HOST",
-  "blocked" : false
-}, {
-  "username" : "gaga998",
-  "password" : "gaga",
-  "name" : "Dragana",
-  "surname" : "Carapic",
-  "gender" : "FEMALE",
-  "typeOfUser" : "HOST",
-  "blocked" : false
-}, {
-  "username" : "pero123",
-  "password" : "sifra123",
   "name" : "Pera",
   "surname" : "Perić",
   "gender" : "MALE",
   "typeOfUser" : "GUEST",
-  "blocked" : true
-}, {
-  "username" : "mika789",
-  "password" : "sifra789",
-  "name" : "Mika",
-  "surname" : "Mikić",
-  "gender" : "MALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : true
-}, {
-  "username" : "mara",
-  "password" : "maramica",
-  "name" : "Maraica",
-  "surname" : "Marić",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : true
-}, {
-  "username" : "marko",
-  "password" : "marko",
-  "name" : "Marko",
-  "surname" : "Kraljevic",
-  "gender" : "MALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : true
-}, {
-  "username" : "darka",
-  "password" : "1234",
-  "name" : "Dara",
-  "surname" : "Daric",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : true
-}, {
-  "username" : "sladja97",
-  "password" : "sladja",
-  "name" : "Sladja",
-  "surname" : "Savkovic",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
   "blocked" : false
 }, {
-  "username" : "dragan1996",
-  "password" : "dragan",
-  "name" : "Dragan",
-  "surname" : "Dragic",
-  "gender" : "MALE",
+  "username" : "dara",
+  "password" : "111",
+  "name" : "Dara",
+  "surname" : "Darić",
+  "gender" : "FEMALE",
   "typeOfUser" : "HOST",
   "blocked" : false
 }, {
-  "username" : "labilna",
-  "password" : "labilna",
-  "name" : "Ana",
-  "surname" : "Nikolić",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : false
-}, {
-  "username" : "mmarijana",
-  "password" : "mara",
-  "name" : "Marijana",
-  "surname" : "Mateus",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : false
-}, {
-  "username" : "luka988",
-  "password" : "luka",
-  "name" : "Luka",
-  "surname" : "Kanacki",
-  "gender" : "MALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : false
-}, {
-  "username" : "maraa",
-  "password" : "123",
-  "name" : "Mara",
-  "surname" : "Maric",
-  "gender" : "FEMALE",
-  "typeOfUser" : "GUEST",
-  "blocked" : false
-}, {
   "username" : "aleksa991",
-  "password" : "milaa",
+  "password" : "aleksa",
   "name" : "Aleksa",
   "surname" : "Ozegovic",
   "gender" : "MALE",
   "typeOfUser" : "HOST",
+  "blocked" : true
+}, {
+  "username" : "mile",
+  "password" : "111",
+  "name" : "Mile",
+  "surname" : "Milić",
+  "gender" : "MALE",
+  "typeOfUser" : "HOST",
+  "blocked" : false
+}, {
+  "username" : "mika123",
+  "password" : "123",
+  "name" : "Mika",
+  "surname" : "Mikić",
+  "gender" : "MALE",
+  "typeOfUser" : "GUEST",
   "blocked" : false
 } ]

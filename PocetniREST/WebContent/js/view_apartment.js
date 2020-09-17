@@ -256,7 +256,7 @@ function newReservation(apartmentId){
 					return;
 				}
 				
-				$("#name_of_apartment").append('<strong>' + apartment.name + '</strong>')
+				$("#name_of_apartment").html('<strong>' + apartment.name + '</strong>')
 				
 				let dates = apartment.availableDates;
 			

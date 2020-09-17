@@ -1,22 +1,29 @@
 [ {
-  "id" : 0,
-  "guestUsername" : "ana967",
-  "apartmentId" : 0,
-  "description" : "Zadovoljna sam!",
+  "id" : 1,
+  "guestUsername" : "pera123",
+  "apartmentId" : 1,
+  "description" : "Odličan smještaj",
+  "rating" : 4,
+  "status" : "APPROVED"
+}, {
+  "id" : 2,
+  "guestUsername" : "mika123",
+  "apartmentId" : 3,
+  "description" : "Najbolji smeštaj",
   "rating" : 5,
   "status" : "APPROVED"
 }, {
-  "id" : 1,
-  "guestUsername" : "tara88",
+  "id" : 3,
+  "guestUsername" : "pera123",
   "apartmentId" : 1,
-  "description" : "Prosječan apartman",
+  "description" : "Losa higijena apartmana",
+  "rating" : 1,
+  "status" : "CREATED"
+}, {
+  "id" : 4,
+  "guestUsername" : "pera123",
+  "apartmentId" : 3,
+  "description" : "",
   "rating" : 3,
   "status" : "DISAPPROVED"
-}, {
-  "id" : 2,
-  "guestUsername" : "milica967",
-  "apartmentId" : 1,
-  "description" : "Jako loše!!!",
-  "rating" : 1,
-  "status" : "APPROVED"
 } ]

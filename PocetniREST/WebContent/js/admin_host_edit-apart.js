@@ -421,7 +421,7 @@ $(document).ready(function() {
 								    var request = new XMLHttpRequest();
 								    request.open("POST", "rest/apartments/" + id +"/image");
 								    request.setRequestHeader("Content-Type", type);
-								    request.setRequestHeader("Image-Name", name);
+								    request.setRequestHeader("Content-Length", file.length);
 								    request.send(file);
 								}
 							}
